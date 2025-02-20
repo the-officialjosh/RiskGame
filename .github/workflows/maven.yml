@@ -6,6 +6,8 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
+
+
 name: Java CI with Maven
 
 on:
@@ -21,7 +23,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
-      security-events: write  # 🔥 Grants permission for dependency submission
+      security-events: write
 
     steps:
     - name: Checkout repository
@@ -34,9 +36,16 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Verify Java version
-      run: java -version
+    - name: Compile the code
+      run: mvn compile
+
+    - name: Run tests
+      run: mvn test  # Ensures all unit tests pass before allowing push
+
+    - name: Generate Javadoc
+      run: mvn javadoc:javadoc  # Generates Javadoc to ensure documentation builds correctly
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
+  
