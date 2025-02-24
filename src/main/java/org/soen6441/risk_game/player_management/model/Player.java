@@ -3,6 +3,7 @@ package org.soen6441.risk_game.player_management.model;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.orders.model.Order;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +26,7 @@ public class Player {
         this.d_name = p_name;
         this.d_numberOfReinforcementsArmies = p_numberOfReinforcementsArmies;
         this.d_orders = p_orders;
+        this.d_countries_owned = new ArrayList<>();
     }
 
     /**
@@ -110,9 +112,9 @@ public class Player {
     /**
      * Sets d owned countries.
      *
-     * @param d_countries_owned the d owned countries
+     * @param d_country_owned the d owned country
      */
-    public void setD_countries_owned(List<Country> d_countries_owned) {
-        this.d_countries_owned = d_countries_owned;
+    public void setD_countries_owned(Country d_country_owned) {
+        this.d_countries_owned.add(d_country_owned);
     }
 }
