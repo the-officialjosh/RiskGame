@@ -31,24 +31,35 @@ public class PlayerController {
                 break;
             }
             if(!l_command.equals("gameplayer")){
-                System.out.println("Invalid Command (To add player use this command \"gameplayer -add nameofplayer\"");
+                DisplayToUser.instructionMessage("Invalid Command (To add player use this command \"gameplayer -add nameofplayer\"");
                 continue;
             }
             String l_action = l_addPlayerCommandArray[1];
             if(!l_action.equals("-add") && !l_action.equals("-remove")){
-                System.out.println("Invalid Command (To add player use this command \"gameplayer -add nameofplayer\"");
+                DisplayToUser.instructionMessage("Invalid Command (To add player use this command \"gameplayer -add nameofplayer\"");
                 continue;
             }
             if(l_action.equals("-add")){
                 Player player = new Player(l_addPlayerCommandArray[2], 0, new ArrayList<Order>());
                 playerList.add(player);
+                DisplayToUser.instructionMessage("Player added.");
+            }
+            if(l_action.equals("-remove")){
+                if(!playerList.isEmpty()){
+                   boolean isRemoved = playerList.removeIf(player -> player.getName().equalsIgnoreCase(l_addPlayerCommandArray[2]));
+                   if(isRemoved){
+                       DisplayToUser.instructionMessage("Player removed");
+                   }else {
+                       DisplayToUser.instructionMessage("Could not found player with this name");
+                   }
+                }else {
+                    DisplayToUser.instructionMessage("There are no players to remove.");
+                }
             }
         }while (true);
-
+//        for(Player player: playerList){
+//            System.out.println(player.getName());
+//        }
         p_gameSession.setPlayers(playerList);
-
-
     }
-
-    //remove player
 }
