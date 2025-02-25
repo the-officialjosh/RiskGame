@@ -1,6 +1,7 @@
 package org.soen6441.risk_game.player_management.controller;
 
 import org.soen6441.risk_game.game_engine.model.GameSession;
+import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.orders.model.Order;
 import org.soen6441.risk_game.player_management.model.Player;
 
@@ -17,31 +18,37 @@ public class PlayerController {
      * @param p_gameSession The game session.
      */
     public void loadPlayers(GameSession p_gameSession) {
+        DisplayToUser.instructionMessage("Add players to the game by using (\"gameplayer -add nameofplayer\") command.\nAfter adding players you can use (\"assigncountries\")command");
         Scanner l_scanner = new Scanner(System.in);
-        String l_addPlayerCommand = l_scanner.nextLine();
-        String[] l_addPlayerCommandArray = l_addPlayerCommand.split(" ");
-        String l_command = l_addPlayerCommandArray[0];
-        String l_action = l_addPlayerCommandArray[1];
+        String l_command = "";
+        String l_addPlayerCommand;
         List<Player> playerList = new ArrayList<>();
-        if(!l_command.equals("gameplayer")){
-            System.out.println("Invalid Command");
-            return;
-        }
-        if(!l_action.equals("-add") && !l_action.equals("-remove")){
-            System.out.println("Invalid Command");
-            return;
-        }
-        if(l_action.equals("-add")){
-            for(int i= 2; i < l_addPlayerCommandArray.length; i++){
-                Player player = new Player(l_addPlayerCommandArray[i],0,new ArrayList<Order>());
+        do{
+            l_addPlayerCommand = l_scanner.nextLine();
+            String[] l_addPlayerCommandArray = l_addPlayerCommand.split(" ");
+            l_command = l_addPlayerCommandArray[0];
+            if(l_command.equals("assigncountries")){
+                break;
+            }
+            if(!l_command.equals("gameplayer")){
+                System.out.println("Invalid Command (To add player use this command \"gameplayer -add nameofplayer\"");
+                continue;
+            }
+            String l_action = l_addPlayerCommandArray[1];
+            if(!l_action.equals("-add") && !l_action.equals("-remove")){
+                System.out.println("Invalid Command (To add player use this command \"gameplayer -add nameofplayer\"");
+                continue;
+            }
+            if(l_action.equals("-add")){
+                Player player = new Player(l_addPlayerCommandArray[2], 0, new ArrayList<Order>());
                 playerList.add(player);
             }
-        }
-//        for(int i = 0; i < playerList.size(); i++){
-//            System.out.println(playerList.get(i).getName());
-//        }
+        }while (true);
+
         p_gameSession.setPlayers(playerList);
 
 
     }
+
+    //remove player
 }
