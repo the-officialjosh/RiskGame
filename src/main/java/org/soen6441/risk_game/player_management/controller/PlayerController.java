@@ -40,8 +40,13 @@ public class PlayerController {
                 continue;
             }
             if(l_action.equals("-add")){
-                Player player = new Player(l_addPlayerCommandArray[2], 0, new ArrayList<Order>());
-                playerList.add(player);
+                Player playerToAdd = new Player(l_addPlayerCommandArray[2], 0, new ArrayList<Order>());
+                boolean exists = playerList.stream().anyMatch(player -> player.getName().equalsIgnoreCase(playerToAdd.getName()));
+                if(exists){
+                    DisplayToUser.instructionMessage("Player already exist. Try with different name");
+                    continue;
+                }
+                playerList.add(playerToAdd);
                 DisplayToUser.instructionMessage("Player added.");
             }
             if(l_action.equals("-remove")){
