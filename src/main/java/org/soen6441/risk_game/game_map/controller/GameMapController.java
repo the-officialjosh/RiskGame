@@ -125,7 +125,7 @@ public class GameMapController {
     public void addContinent(GameMap gameMap, String continentName, int continentValue) {
         Continent continent = new Continent(continentName, new ArrayList<>(), continentValue);
         gameMap.getContinents().add(continent);
-        displayToUser.displayMessage("Continent " + continentName + " added.");
+        displayToUser.instructionMessage("Continent " + continentName + " added.");
     }
 
     /**
@@ -135,7 +135,7 @@ public class GameMapController {
      */
     public void removeContinent(GameMap gameMap, String continentName) {
         gameMap.getContinents().removeIf(continent -> continent.getName().equals(continentName));
-        displayToUser.displayMessage("Continent " + continentName + " removed.");
+        displayToUser.instructionMessage("Continent " + continentName + " removed.");
     }
 
     /**
@@ -149,7 +149,7 @@ public class GameMapController {
             if (continent.getName().equals(continentName)) {
                 Country country = new Country(gameMap.getCountries().size() + 1, countryName, new ArrayList<Country>(), new HashMap<Player, Integer>());
                 continent.getCountries().add(country);
-                displayToUser.displayMessage("Country " + countryName + " added to continent " + continentName + ".");
+                displayToUser.instructionMessage("Country " + countryName + " added to continent " + continentName + ".");
                 break;
             }
         }
@@ -164,7 +164,7 @@ public class GameMapController {
         for (Continent continent : gameMap.getContinents()) {
             continent.getCountries().removeIf(country -> country.getName().equals(countryName));
         }
-        displayToUser.displayMessage("Country " + countryName + " removed.");
+        displayToUser.instructionMessage("Country " + countryName + " removed.");
     }
 
     /**
@@ -188,7 +188,7 @@ public class GameMapController {
         }
         if (country != null && neighbor != null) {
             country.getAdjacentCountries().add(neighbor);
-            displayToUser.displayMessage("Neighbor " + neighborName + " added to country " + countryName + ".");
+            displayToUser.instructionMessage("Neighbor " + neighborName + " added to country " + countryName + ".");
         }
     }
 
@@ -203,7 +203,7 @@ public class GameMapController {
             for (Country country : continent.getCountries()) {
                 if (country.getName().equals(countryName)) {
                     country.getAdjacentCountries().removeIf(neighbor -> neighbor.getName().equals(neighborName));
-                    displayToUser.displayMessage("Neighbor " + neighborName + " removed from country " + countryName + ".");
+                    displayToUser.instructionMessage("Neighbor " + neighborName + " removed from country " + countryName + ".");
                 }
             }
         }
