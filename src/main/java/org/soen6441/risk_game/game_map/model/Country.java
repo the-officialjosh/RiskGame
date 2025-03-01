@@ -1,7 +1,13 @@
 package org.soen6441.risk_game.game_map.model;
+
 import org.soen6441.risk_game.player_management.model.Player;
+import org.soen6441.risk_game.player_management.model.Player;
+
+
 import java.util.List;
 import java.util.Map;
+
+import org.soen6441.risk_game.player_management.model.Player;
 
 /**
  * This class represents the country entity.
@@ -99,5 +105,21 @@ public class Country {
      */
     public void setD_ownedBy(String d_ownedBy) {
         this.d_ownedBy = d_ownedBy;
+    }
+
+    /**
+     * Adds an adjacent country.
+     * @param neighbor The neighbor country to add.
+     */
+    public void addNeighbor(Country neighbor) {
+        d_adjacentCountries.add(neighbor);
+    }
+
+    /**
+     * Removes an adjacent country.
+     * @param neighborName The name of the neighbor country to remove.
+     */
+    public void removeNeighbor(String neighborName) {
+        d_adjacentCountries.removeIf(neighbor -> neighbor.getName().equals(neighborName));
     }
 }
