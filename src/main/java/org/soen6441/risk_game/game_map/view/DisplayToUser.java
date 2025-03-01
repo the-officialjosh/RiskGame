@@ -21,4 +21,11 @@ public class DisplayToUser {
     public void startupPhaseEndMessage() {
         System.out.println("*********************** Startup Phase Successfully Ended ***********************\n");
     }
+        /**
+     * Display a message to the user.
+     * @param message The message to display.
+     */
+    public void displayMessage(String message) {
+        System.out.println(message);
+    }
 }
