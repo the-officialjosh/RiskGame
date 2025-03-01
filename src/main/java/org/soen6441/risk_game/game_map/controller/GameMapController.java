@@ -11,8 +11,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.HashMap;
 
 /**
@@ -20,7 +18,7 @@ import java.util.HashMap;
  * the map related logics.
  */
 public class GameMapController {
-    private DisplayToUser displayToUser = new DisplayToUser();
+    private final DisplayToUser displayToUser = new DisplayToUser();
     /**
      * Handles the load map step
      * @param p_gameSession The game session.
@@ -61,7 +59,7 @@ public class GameMapController {
                     int countryId = Integer.parseInt(parts[0]);
                     String countryName = parts[1];
                     String continentName = parts[2];
-                    Country country = new Country(countryId, countryName, new ArrayList<>(), new HashMap<Player, Integer>());
+                    Country country = new Country(countryId, countryName, new ArrayList<>(), new HashMap<>());
                     for (Continent continent : gameMap.getContinents()) {
                         if (continent.getName().equals(continentName)) {
                             continent.getCountries().add(country);
@@ -74,7 +72,6 @@ public class GameMapController {
             p_gameSession.setMap(gameMap);
 
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -232,38 +229,31 @@ public class GameMapController {
         String cmd = parts[0];
 
         switch (cmd) {
-            case "editcontinent":
+            case "editcontinent" -> {
                 if (parts[1].equals("-add")) {
                     addContinent(gameMap, parts[2], Integer.parseInt(parts[3]));
                 } else if (parts[1].equals("-remove")) {
                     removeContinent(gameMap, parts[2]);
                 }
-                break;
-            case "editcountry":
+            }
+            case "editcountry" -> {
                 if (parts[1].equals("-add")) {
                     addCountry(gameMap, parts[2], parts[3]);
                 } else if (parts[1].equals("-remove")) {
                     removeCountry(gameMap, parts[2]);
                 }
-                break;
-            case "editneighbor":
+            }
+            case "editneighbor" -> {
                 if (parts[1].equals("-add")) {
                     addNeighbor(gameMap, parts[2], parts[3]);
                 } else if (parts[1].equals("-remove")) {
                     removeNeighbor(gameMap, parts[2], parts[3]);
                 }
-                break;
-            case "showmap":
-                showMap(gameMap);
-                break;
-            case "savemap":
-                saveMap(gameMap, parts[1]);
-                break;
-            case "validatemap":
-                validateMap(gameMap);
-                break;
-            default:
-                System.out.println("Invalid command");
+            }
+            case "showmap" -> showMap(gameMap);
+            case "savemap" -> saveMap(gameMap, parts[1]);
+            case "validatemap" -> validateMap(gameMap);
+            default -> System.out.println("Invalid command");
         }
     }
 }
