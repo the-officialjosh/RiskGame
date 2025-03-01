@@ -13,12 +13,15 @@ import java.util.Scanner;
  * This class holds all the logic for players management.
  */
 public class PlayerController {
+
+    private DisplayToUser d_displayToUser = new DisplayToUser();
+
     /**
      * This method handles the players loading step.
      * @param p_gameSession The game session.
      */
     public void loadPlayers(GameSession p_gameSession) {
-        DisplayToUser.instructionMessage("Add players to the game by using (\"gameplayer -add nameofplayer\") command.\nAfter adding players you can use (\"assigncountries\")command");
+        d_displayToUser.instructionMessage("Add players to the game by using (\"gameplayer -add nameofplayer\") command.\nAfter adding players you can use (\"assigncountries\")command");
         Scanner l_scanner = new Scanner(System.in);
         String l_command = "";
         String l_addPlayerCommand;
@@ -31,34 +34,34 @@ public class PlayerController {
                 break;
             }
             if(!l_command.equals("gameplayer")){
-                DisplayToUser.instructionMessage("Invalid Command (To add player use this command \"gameplayer -add nameofplayer\"");
+                d_displayToUser.instructionMessage("Invalid Command (To add player use this command \"gameplayer -add nameofplayer\"");
                 continue;
             }
             String l_action = l_addPlayerCommandArray[1];
             if(!l_action.equals("-add") && !l_action.equals("-remove")){
-                DisplayToUser.instructionMessage("Invalid Command (To add player use this command \"gameplayer -add nameofplayer\"");
+                d_displayToUser.instructionMessage("Invalid Command (To add player use this command \"gameplayer -add nameofplayer\"");
                 continue;
             }
             if(l_action.equals("-add")){
                 Player playerToAdd = new Player(l_addPlayerCommandArray[2], 0, new ArrayList<Order>());
                 boolean exists = playerList.stream().anyMatch(player -> player.getName().equalsIgnoreCase(playerToAdd.getName()));
                 if(exists){
-                    DisplayToUser.instructionMessage("Player already exist. Try with different name");
+                    d_displayToUser.instructionMessage("Player already exist. Try with different name");
                     continue;
                 }
                 playerList.add(playerToAdd);
-                DisplayToUser.instructionMessage("Player added.");
+                d_displayToUser.instructionMessage("Player added.");
             }
             if(l_action.equals("-remove")){
                 if(!playerList.isEmpty()){
                    boolean isRemoved = playerList.removeIf(player -> player.getName().equalsIgnoreCase(l_addPlayerCommandArray[2]));
                    if(isRemoved){
-                       DisplayToUser.instructionMessage("Player removed");
+                       d_displayToUser.instructionMessage("Player removed");
                    }else {
-                       DisplayToUser.instructionMessage("Could not found player with this name");
+                       d_displayToUser.instructionMessage("Could not found player with this name");
                    }
                 }else {
-                    DisplayToUser.instructionMessage("There are no players to remove.");
+                    d_displayToUser.instructionMessage("There are no players to remove.");
                 }
             }
         }while (true);
