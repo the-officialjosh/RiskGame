@@ -1,5 +1,9 @@
 package org.soen6441.risk_game.game_map.model;
 
+import org.soen6441.risk_game.player_management.model.Player;
+import org.soen6441.risk_game.player_management.model.Player;
+
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +15,7 @@ import org.soen6441.risk_game.player_management.model.Player;
 public class Country {
     private int d_countryId;
     private String d_name;
+    private Player d_ownedBy;
     private List<Country> d_adjacentCountries;
     private Map<Player, Integer> d_existingArmies;
 
@@ -83,7 +88,26 @@ public class Country {
     public void setExistingArmies(Map<Player, Integer> p_existingArmies) {
         this.d_existingArmies = p_existingArmies;
     }
-        /**
+
+    /**
+     * Gets d owned by.
+     *
+     * @return the d owned by
+     */
+    public Player getD_ownedBy() {
+        return d_ownedBy;
+    }
+
+    /**
+     * Sets d owned by.
+     *
+     * @param d_ownedBy the d owned by
+     */
+    public void setD_ownedBy(Player d_ownedBy) {
+        this.d_ownedBy = d_ownedBy;
+    }
+
+    /**
      * Adds an adjacent country.
      * @param neighbor The neighbor country to add.
      */
