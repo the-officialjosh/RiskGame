@@ -2,6 +2,7 @@ package org.soen6441.risk_game.player_management.model;
 
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
+import org.soen6441.risk_game.orders.model.Deploy;
 import org.soen6441.risk_game.orders.model.Order;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,10 +81,10 @@ public class Player {
     /**
      * Setter for field.
      *
-     * @param p_orders the p orders
+     * @param p_order the p orders
      */
-    public void setOrders(List<Order> p_orders) {
-        this.d_orders = p_orders;
+    public void setOrders(Order p_order) {
+        this.d_orders.add(p_order);
     }
 
     /**
@@ -116,6 +117,8 @@ public class Player {
                 continue;
             }
             d_numberOfReinforcementsArmies -= l_numOfArmies;
+            Deploy deployOrder = new Deploy(this,l_numOfArmies);
+            this.setOrders(deployOrder);
             break;
         }
 
