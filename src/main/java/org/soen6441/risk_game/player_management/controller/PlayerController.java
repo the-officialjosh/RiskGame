@@ -18,6 +18,7 @@ public class PlayerController {
 
     /**
      * This method handles the players loading step.
+     *
      * @param p_gameSession The game session.
      */
     public void loadPlayers(GameSession p_gameSession) {
@@ -26,48 +27,61 @@ public class PlayerController {
         String l_command = "";
         String l_addPlayerCommand;
         List<Player> playerList = new ArrayList<>();
-        do{
+        do {
             l_addPlayerCommand = l_scanner.nextLine();
             String[] l_addPlayerCommandArray = l_addPlayerCommand.split(" ");
             l_command = l_addPlayerCommandArray[0];
-            if(l_command.equals("assigncountries")){
+            if (l_command.equals("assigncountries")) {
                 break;
             }
-            if(!l_command.equals("gameplayer")){
+            if (!l_command.equals("gameplayer")) {
                 d_displayToUser.instructionMessage("Invalid Command (To add player use this command \"gameplayer -add nameofplayer\"");
                 continue;
             }
             String l_action = l_addPlayerCommandArray[1];
-            if(!l_action.equals("-add") && !l_action.equals("-remove")){
+            if (!l_action.equals("-add") && !l_action.equals("-remove")) {
                 d_displayToUser.instructionMessage("Invalid Command (To add player use this command \"gameplayer -add nameofplayer\"");
                 continue;
             }
-            if(l_action.equals("-add")){
+            if (l_action.equals("-add")) {
                 Player playerToAdd = new Player(l_addPlayerCommandArray[2], 0, new ArrayList<Order>());
                 boolean exists = playerList.stream().anyMatch(player -> player.getName().equalsIgnoreCase(playerToAdd.getName()));
-                if(exists){
+                if (exists) {
                     d_displayToUser.instructionMessage("Player already exist. Try with different name");
                     continue;
                 }
                 playerList.add(playerToAdd);
                 d_displayToUser.instructionMessage("Player added.");
             }
-            if(l_action.equals("-remove")){
-                if(!playerList.isEmpty()){
-                   boolean isRemoved = playerList.removeIf(player -> player.getName().equalsIgnoreCase(l_addPlayerCommandArray[2]));
-                   if(isRemoved){
-                       d_displayToUser.instructionMessage("Player removed");
-                   }else {
-                       d_displayToUser.instructionMessage("Could not found player with this name");
-                   }
-                }else {
+            if (l_action.equals("-remove")) {
+                if (!playerList.isEmpty()) {
+                    boolean isRemoved = playerList.removeIf(player -> player.getName().equalsIgnoreCase(l_addPlayerCommandArray[2]));
+                    if (isRemoved) {
+                        d_displayToUser.instructionMessage("Player removed");
+                    } else {
+                        d_displayToUser.instructionMessage("Could not found player with this name");
+                    }
+                } else {
                     d_displayToUser.instructionMessage("There are no players to remove.");
                 }
             }
-        }while (true);
-//        for(Player player: playerList){
-//            System.out.println(player.getName());
-//        }
+        } while (true);
         p_gameSession.setPlayers(playerList);
+    }
+
+    public void issueOrderPhase(GameSession p_gameSession) {
+        boolean allArmiesDeployed;
+        do {
+            allArmiesDeployed = true;
+            for (Player player : p_gameSession.getPlayers()) {
+                if (player.hasReinforcementsArmies()) {
+                    player.issue_order();
+                }
+                if (!player.isReinforcementPhaseComplete()) {
+                    allArmiesDeployed = false;
+                }
+            }
+        } while (!allArmiesDeployed);
+        d_displayToUser.instructionMessage("All armies has been deployed");
     }
 }

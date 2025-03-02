@@ -42,26 +42,11 @@ public class GameEngine {
             l_gameMapController.assignReinforcements(l_gameSession);
 
             // Issue order phase TODO...
-            startIssueOrderPhase(l_gameSession,l_displayToUser);
+            l_playerController.issueOrderPhase(l_gameSession);
             // Execute order phase TODO...
 
         }
     }
 
-    private static void startIssueOrderPhase(GameSession p_gameSession,DisplayToUser displayToUser){
-        boolean allArmiesDeployed;
-        do{
-            allArmiesDeployed = true;
-            for(Player player: p_gameSession.getPlayers()){
-                if(player.hasReinforcementsArmies()){
-                    player.issue_order();
-                }
-                if(!player.isReinforcementPhaseComplete()){
-                    allArmiesDeployed = false;
-                }
-            }
-        }while (!allArmiesDeployed);
-        displayToUser.instructionMessage("All armies has been deployed");
 
-    }
 }
