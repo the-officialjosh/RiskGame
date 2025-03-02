@@ -105,7 +105,7 @@ public class GameMapController {
                 randomNumber = rn.nextInt(d_countries.size());
             }
         }
-        p_gameSession.setCountriesControllers(d_assignedSigned);
+        //p_gameSession.setCountriesControllers(d_assignedSigned);
     }
 
     /**
@@ -113,7 +113,9 @@ public class GameMapController {
      * @param p_gameSession The game session.
      */
     public void assignReinforcements(GameSession p_gameSession) {
-        // Implement logic to assign reinforcements
+        for (int i = 0; i < p_gameSession.getPlayers().size(); i++) {
+            p_gameSession.getPlayers().get(i).reinforcement(3);
+        }
     }
 
     /**
