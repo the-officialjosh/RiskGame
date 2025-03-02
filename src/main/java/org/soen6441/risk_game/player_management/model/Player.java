@@ -1,10 +1,11 @@
 package org.soen6441.risk_game.player_management.model;
 
 import org.soen6441.risk_game.game_map.model.Country;
+import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.orders.model.Order;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * This class represents the player entity.
@@ -14,6 +15,7 @@ public class Player {
     private int d_numberOfReinforcementsArmies;
     private List<Order> d_orders;
     private List<Country> d_countries_owned;
+    private final DisplayToUser d_displayToUser;
 
     /**
      * Constructor for class.
@@ -27,6 +29,7 @@ public class Player {
         this.d_numberOfReinforcementsArmies = p_numberOfReinforcementsArmies;
         this.d_orders = p_orders;
         this.d_countries_owned = new ArrayList<>();
+        this.d_displayToUser = new DisplayToUser();
     }
 
     /**
@@ -88,6 +91,33 @@ public class Player {
      * the orders he wants to execute.
      */
     public void issue_order() {
+        Scanner l_scanner = new Scanner(System.in);
+        if(d_numberOfReinforcementsArmies <= 0 ){
+            d_displayToUser.instructionMessage(this.d_name+ "has no reinforcement left.");
+        }
+        String l_command = l_scanner.nextLine().trim();
+        while (true){
+            String[] l_command_parts = l_command.split(" ");
+            if(l_command_parts.length != 3 || !l_command_parts[0].equalsIgnoreCase("deploy")){
+                d_displayToUser.instructionMessage("Invalid Command, try this command: \"deploy <countryID> <numberOfArmies>\"");
+                continue;
+            }
+            String l_countryID = l_command_parts[1];
+            int l_numOfArmies;
+            try {
+                l_numOfArmies = Integer.parseInt(l_command_parts[2]);
+            }catch (NumberFormatException e){
+                d_displayToUser.instructionMessage("Invalid number of armies. please enter valid armies");
+                continue;
+            }
+
+            if(l_numOfArmies > d_numberOfReinforcementsArmies){
+                d_displayToUser.instructionMessage("You can not deploy more the your reinforcement armies. You have "+d_numberOfReinforcementsArmies+" of armies. try again");
+                continue;
+            }
+            d_numberOfReinforcementsArmies -= l_numOfArmies;
+            break;
+        }
 
     }
 
