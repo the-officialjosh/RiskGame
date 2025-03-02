@@ -4,6 +4,7 @@ import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.player_management.controller.PlayerController;
+import org.soen6441.risk_game.player_management.model.Player;
 
 /**
  * GameEngine class which is serving as the game entry point as well as handling
@@ -41,9 +42,26 @@ public class GameEngine {
             l_gameMapController.assignReinforcements(l_gameSession);
 
             // Issue order phase TODO...
-
+            startIssueOrderPhase(l_gameSession,l_displayToUser);
             // Execute order phase TODO...
 
         }
+    }
+
+    private static void startIssueOrderPhase(GameSession p_gameSession,DisplayToUser displayToUser){
+        boolean allArmiesDeployed;
+        do{
+            allArmiesDeployed = true;
+            for(Player player: p_gameSession.getPlayers()){
+                if(player.hasReinforcementsArmies()){
+                    player.issue_order();
+                }
+                if(!player.isReinforcementPhaseComplete()){
+                    allArmiesDeployed = false;
+                }
+            }
+        }while (!allArmiesDeployed);
+        displayToUser.instructionMessage("All armies has been deployed");
+
     }
 }

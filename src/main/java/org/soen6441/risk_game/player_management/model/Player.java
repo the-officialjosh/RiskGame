@@ -117,4 +117,17 @@ public class Player {
     public void setD_countries_owned(Country d_country_owned) {
         this.d_countries_owned.add(d_country_owned);
     }
+
+    /**
+     * Has reinforcements armies boolean.
+     *
+     * @return the boolean
+     */
+    public boolean hasReinforcementsArmies(){
+        return d_numberOfReinforcementsArmies > 0;
+    }
+
+    public boolean isReinforcementPhaseComplete(){
+        return d_numberOfReinforcementsArmies == 0;
+    }
 }
