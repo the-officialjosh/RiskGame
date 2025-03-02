@@ -7,13 +7,16 @@ import java.util.List;
  * This class represents the global map for the game.
  */
 public class GameMap {
+    private String d_name;
     private List<Continent> d_continents;
 
     /**
      * Constructor for class.
+     * @param p_name
      * @param p_continents
      */
-    public GameMap(List<Continent> p_continents) {
+    public GameMap(String p_name, List<Continent> p_continents) {
+        this.d_name = p_name;
         this.d_continents = p_continents;
     }
 
@@ -56,5 +59,21 @@ public class GameMap {
             countries.addAll(continent.getCountries());
         }
         return countries;
+    }
+
+    /**
+     * Getter for field.
+     * @return The field.
+     */
+    public String getD_name() {
+        return d_name;
+    }
+
+    /**
+     * Setter for the field.
+     * @param d_name the field to use.
+     */
+    public void setD_name(String d_name) {
+        this.d_name = d_name;
     }
 }
