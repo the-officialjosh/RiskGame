@@ -96,19 +96,20 @@ public class Player {
         if(d_numberOfReinforcementsArmies <= 0 ){
             d_displayToUser.instructionMessage(this.d_name+ "has no reinforcement left.");
         }
-        String l_command = l_scanner.nextLine().trim();
         while (true){
+            String l_command = l_scanner.nextLine().trim();
             String[] l_command_parts = l_command.split(" ");
             if(l_command_parts.length != 3 || !l_command_parts[0].equalsIgnoreCase("deploy")){
                 d_displayToUser.instructionMessage("Invalid Command, try this command: \"deploy <countryID> <numberOfArmies>\"");
                 continue;
             }
-            String l_countryID = l_command_parts[1];
+            int l_countryID;
             int l_numOfArmies;
             try {
+                l_countryID = Integer.parseInt(l_command_parts[1]);
                 l_numOfArmies = Integer.parseInt(l_command_parts[2]);
             }catch (NumberFormatException e){
-                d_displayToUser.instructionMessage("Invalid number of armies. please enter valid armies");
+                d_displayToUser.instructionMessage("Invalid number of armies or countryID. please enter valid values");
                 continue;
             }
 
@@ -117,7 +118,7 @@ public class Player {
                 continue;
             }
             d_numberOfReinforcementsArmies -= l_numOfArmies;
-            Deploy deployOrder = new Deploy(this,l_numOfArmies);
+            Deploy deployOrder = new Deploy(this,l_numOfArmies,l_countryID);
             this.setOrders(deployOrder);
             break;
         }
