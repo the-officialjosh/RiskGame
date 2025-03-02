@@ -6,19 +6,24 @@ import java.util.List;
  * Entity representing the continents of the game.
  */
 public class Continent {
+    private int d_continentId;
     private String d_name;
     private List<Country> d_countries;
-    private int d_value;
+    private int d_controlValue;
+
+    public static int continentIdCounter = 1;
     /**
      * Contructor for the class.
      * @param p_name The name of the continent.
      * @param p_countries The countries that will be inside the continent.
-     * @param p_value The value of the continent.
+     * @param p_controlValue The value of the continent.
      */
-    public Continent(String p_name, List<Country> p_countries, int p_value) {
+    public Continent(String p_name, List<Country> p_countries, int p_controlValue) {
+        this.d_continentId = continentIdCounter;
+        continentIdCounter++;
         this.d_name = p_name;
         this.d_countries = p_countries;
-        this.d_value = p_value;
+        this.d_controlValue = p_controlValue;
     }
 
     /**
@@ -56,16 +61,16 @@ public class Continent {
      * Returns the value of the continent.
      * @return The value of the continent.
      */
-    public int getValue() {
-        return d_value;
+    public int getControlValue() {
+        return d_controlValue;
     }
 
     /**
      * Sets the value of the continent.
-     * @param p_value The value of the continent.
+     * @param p_controlValue The value of the continent.
      */
-    public void setValue(int p_value) {
-        this.d_value = p_value;
+    public void setControlValue(int p_controlValue) {
+        this.d_controlValue = p_controlValue;
     }
 
     /**
@@ -82,5 +87,21 @@ public class Continent {
      */
     public void removeCountry(String countryName) {
         d_countries.removeIf(country -> country.getName().equals(countryName));
+    }
+
+    /**
+     * Gets the continent id.
+     * @return the continent id.
+     */
+    public int getD_continentId() {
+        return d_continentId;
+    }
+
+    /**
+     * Sets the continent id.
+     * @param p_continentId the continent id to set.
+     */
+    public void setD_continentId(int p_continentId) {
+        this.d_continentId = d_continentId;
     }
 }

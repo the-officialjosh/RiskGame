@@ -15,7 +15,7 @@ import org.soen6441.risk_game.player_management.model.Player;
 public class Country {
     private int d_countryId;
     private String d_name;
-    private String d_ownedBy;
+    private Player d_ownedBy;
     private List<Country> d_adjacentCountries;
     private Map<Player, Integer> d_existingArmies;
 
@@ -94,7 +94,7 @@ public class Country {
      *
      * @return the d owned by
      */
-    public String getD_ownedBy() {
+    public Player getD_ownedBy() {
         return d_ownedBy;
     }
 
@@ -103,7 +103,7 @@ public class Country {
      *
      * @param d_ownedBy the d owned by
      */
-    public void setD_ownedBy(String d_ownedBy) {
+    public void setD_ownedBy(Player d_ownedBy) {
         this.d_ownedBy = d_ownedBy;
     }
 
