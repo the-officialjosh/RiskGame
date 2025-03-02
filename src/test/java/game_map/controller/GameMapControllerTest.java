@@ -1,4 +1,7 @@
-import java.util.ArrayList; // map tests
+
+package game_map.controller;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
