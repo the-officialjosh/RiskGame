@@ -28,8 +28,8 @@ public class GameEngine {
 
         l_displayToUser.welcomeMessage();
         l_displayToUser.startupPhaseBeginningMessage();
-        // Load map step
-        l_gameMapController.loadMap(l_gameSession);
+        // Map management step
+        l_gameMapController.handleMapManagementStep(l_gameSession);
         // Load players step
         l_playerController.loadPlayers(l_gameSession);
         // Assign countries step
