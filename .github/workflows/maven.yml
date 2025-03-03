@@ -45,6 +45,22 @@ jobs:
     - name: Generate Javadoc
       run: mvn javadoc:javadoc  # Generates Javadoc to ensure documentation builds correctly
 
+    - name: Move Javadoc to javadoc folder
+      run: |
+        rm -rf javadoc  # Delete old Javadoc
+        mkdir -p javadoc
+        cp -r target/site/apidocs/* javadoc/
+
+    - name: Commit and Push Javadoc to main branch
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions@github.com"
+        git add javadoc/
+        git commit -m "Auto-update Javadoc"
+        git push origin main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
