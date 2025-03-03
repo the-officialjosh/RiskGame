@@ -9,6 +9,7 @@ import org.soen6441.risk_game.player_management.model.Player;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * GameMap controller class which is responsible for handling all
@@ -330,10 +331,12 @@ public class GameMapController {
     /**
      * Validates the map. A map is valid if it has at least 3 continents,
      * 5 countries and 5 borders.
+     * Also a map is
      * @param p_gameMap The game map.
      */
     public boolean validateMap(GameMap p_gameMap) {
         // Implement logic to validate the map
+        // First verify the number of continents, countries and borders.
         int l_continentsNumber = Continent.continentIdCounter - 1, l_countriesNumber = 0, l_bordersNumber = 0;
         for (Continent l_continent : p_gameMap.getContinents()) {
             for (Country l_country : l_continent.getCountries()) {
@@ -342,13 +345,32 @@ public class GameMapController {
             }
         }
         l_bordersNumber /= 2;
+        // Then verify if all countries are connected
+        HashSet<Country> l_connectedCountries = new HashSet<Country>();
+        connectionVerification(p_gameMap.getContinents().getFirst().getCountries().getFirst(), l_connectedCountries);
+        boolean l_countriesAreConnected = l_countriesNumber == l_connectedCountries.size();
         if (l_continentsNumber < 3)
             d_displayToUser.instructionMessage("Invalid map since it should have at least 3 continents! Currently it has only: " + l_continentsNumber + " continents.");
         if (l_countriesNumber < 5)
             d_displayToUser.instructionMessage("Invalid map since it should have at least 5 countries! Currently it has only: " + l_countriesNumber + " countries.");
         if (l_bordersNumber < 5)
             d_displayToUser.instructionMessage("Invalid map since it should have at least 5 borders! Currently it has only: " + l_bordersNumber + " borders.");
-        return !((l_continentsNumber < 3) || (l_countriesNumber < 5) || (l_bordersNumber < 5));
+        if (!l_countriesAreConnected)
+            d_displayToUser.instructionMessage("Invalid map since the countries are not connected. The map should be totally connected for the game.");
+        return !((l_continentsNumber < 3) || (l_countriesNumber < 5) || (l_bordersNumber < 5) || !l_countriesAreConnected);
+    }
+
+    /**
+     * Internal method to verify countries connection.
+     * @param country the country used as a starting point.
+     */
+    private void connectionVerification(Country country, Set<Country> connectedCountries) {
+        country.getAdjacentCountries().forEach(adjacentCountry -> {
+            if (!connectedCountries.contains(adjacentCountry)) {
+                connectedCountries.add(adjacentCountry);
+                connectionVerification(adjacentCountry, connectedCountries);
+            }
+        });
     }
 
     /**
@@ -362,7 +384,7 @@ public class GameMapController {
         String l_cmd = l_parts[0];
 
         switch (l_cmd) {
-            case "editmap":
+            case "loadmap","editmap":
                 loadMap(p_gameSession, l_parts[1]);
                 break;
             case "editcontinent":
