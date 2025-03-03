@@ -110,7 +110,7 @@ public class Player {
             d_displayToUser.instructionMessage(this.d_name+ "has no reinforcement left.");
         }
         while (true){
-            d_displayToUser.instructionMessage("Enter the deploy army command \"deploy <countryID> <numberOfArmies>\"");
+            d_displayToUser.instructionMessage(this.getName()+" enter the deploy army command \"deploy <countryID> <numberOfArmies>\"");
             String l_command = l_scanner.nextLine().trim();
             String[] l_command_parts = l_command.split(" ");
             if(l_command_parts.length != 3 || !l_command_parts[0].equalsIgnoreCase("deploy")){
