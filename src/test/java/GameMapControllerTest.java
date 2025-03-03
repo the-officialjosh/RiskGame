@@ -17,7 +17,7 @@ public class GameMapControllerTest {
     public void setUp() {
         gameMapController = new GameMapController();
         gameSession = new GameSession();
-        gameMap = new GameMap(new ArrayList<>());
+        gameMap = new GameMap("my_map", new ArrayList<>());
         gameSession.setMap(gameMap);
     }
 
@@ -51,6 +51,21 @@ public class GameMapControllerTest {
         assertEquals(0, gameMap.getContinents().get(0).getCountries().size());
     }
 
+    @Test
+    public void testConnectedMapIsValid() {
+        gameMapController.loadMap(gameSession, "europe.map");
+        assertEquals(gameMapController.validateMap(gameSession.getMap()), true);
+    }
 
+    @Test
+    public void testUnconnectedMapIsInvalid() {
+        gameMapController.loadMap(gameSession, "tests/bigeurope-unconnected.map");
+        assertEquals(gameMapController.validateMap(gameSession.getMap()), false);
+    }
 
+    @Test
+    public void testUnconnectedContinentIsInvalid() {
+        gameMapController.loadMap(gameSession, "tests/bigeurope-continent-subgraph-unconnected.map");
+        assertEquals(gameMapController.validateMap(gameSession.getMap()), false);
+    }
 }
