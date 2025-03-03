@@ -10,15 +10,16 @@ public class Deploy implements Order {
 
     private Player d_issuer;
     private int d_numberOfDeployedArmies;
-
+    private int d_countryId;
     /**
      * Constructor for class.
      * @param p_issuer
      * @param p_numberOfDeployedArmies
      */
-    public Deploy(Player p_issuer, int p_numberOfDeployedArmies) {
+    public Deploy(Player p_issuer, int p_numberOfDeployedArmies, int d_countryId) {
         this.d_issuer = p_issuer;
         this.d_numberOfDeployedArmies = p_numberOfDeployedArmies;
+        this.d_countryId = d_countryId;
     }
 
     /**

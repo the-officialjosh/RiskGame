@@ -4,6 +4,7 @@ import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.player_management.controller.PlayerController;
+import org.soen6441.risk_game.player_management.model.Player;
 
 /**
  * GameEngine class which is serving as the game entry point as well as handling
@@ -41,9 +42,11 @@ public class GameEngine {
             l_gameMapController.assignReinforcements(l_gameSession);
 
             // Issue order phase TODO...
-
+            l_playerController.issueOrderPhase(l_gameSession);
             // Execute order phase TODO...
 
         }
     }
+
+
 }
