@@ -61,12 +61,25 @@ public class Player {
     }
 
     /**
-     * Setter for field.
+     * Sets number of reinforcements armies.
      *
      * @param p_numberOfReinforcementsArmies the p number of reinforcements armies
      */
     public void setNumberOfReinforcementsArmies(int p_numberOfReinforcementsArmies) {
         this.d_numberOfReinforcementsArmies = p_numberOfReinforcementsArmies;
+    }
+
+    /**
+     * Function to calculate correct number of reinforcement.
+     *
+     * @param p_minimumNumberOfReinforcementsArmies the p minimum number of reinforcements armies per round.
+     */
+    public void reinforcement(int p_minimumNumberOfReinforcementsArmies) {
+        int l_totalNewArmies;
+        int l_countriesCount = this.d_countries_owned.size();
+        l_totalNewArmies = l_countriesCount / 3;
+        l_totalNewArmies = Math.max(l_totalNewArmies, p_minimumNumberOfReinforcementsArmies);
+        setNumberOfReinforcementsArmies(l_totalNewArmies);
     }
 
     /**

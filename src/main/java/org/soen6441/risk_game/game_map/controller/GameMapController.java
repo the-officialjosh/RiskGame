@@ -9,6 +9,7 @@ import org.soen6441.risk_game.player_management.model.Player;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * GameMap controller class which is responsible for handling all
@@ -120,31 +121,35 @@ public class GameMapController {
      */
     public void assignCountries(GameSession p_gameSession) {
         List<Player> d_players = p_gameSession.getPlayers();
-        List<Continent> d_continents = p_gameSession.getMap().getContinents();
-        List<Country> d_countries = new ArrayList<Country>();
-        Map<Country, Player> d_assignedSigned = new HashMap<>();
+        List<Country> d_countries = p_gameSession.getMap().getCountries();
 
-        for (int i = 0; i < d_continents.size(); i++) {
-            for (int j = 0; j < d_continents.get(i).getCountries().size(); j++) {
-                d_countries.add(d_continents.get(i).getCountries().get(i));
+        if (d_countries.size() < d_players.size()) {
+            System.out.println("In here");
+            for (int i = d_players.size(); i > d_countries.size(); i--) {
+                String l_message = "Player " + d_players.get(i - 1).getName() + " has been removed from the players list.";
+                System.out.println(l_message);
+                d_players.remove(i - 1);
             }
+            System.out.println("Number of players is more than countries, see you in next games.");
         }
 
-        for (int i = 0; i < d_countries.size(); i++) {
+        for (int i = 0, j = 0; i < d_countries.size(); i++, j++) {
+            if (j == d_players.size())
+                j = 0;
             Random rn = new Random();
-            int randomNumber = rn.nextInt(d_countries.size());
+            int random = rn.nextInt(d_countries.size());
 
             while (true) {
-                if (d_countries.get(randomNumber).getD_ownedBy() != null) {
-                    d_countries.get(randomNumber).setD_ownedBy(d_players.get(i));
-                    d_players.get(i).setD_countries_owned(d_countries.get(randomNumber));
-                    d_assignedSigned.put(d_countries.get(randomNumber), d_players.get(i));
+                if (d_countries.get(random).getD_ownedBy() == null) {
+                    d_countries.get(random).setD_ownedBy(d_players.get(j));
+                    d_players.get(j).setD_countries_owned(d_countries.get(random));
                     break;
                 }
-                randomNumber = rn.nextInt(d_countries.size());
+                random = rn.nextInt(d_countries.size());
             }
         }
-        p_gameSession.setCountriesControllers(d_assignedSigned);
+
+        System.out.println("Countries has been assigned to all players.");
     }
 
     /**
@@ -152,7 +157,9 @@ public class GameMapController {
      * @param p_gameSession The game session.
      */
     public void assignReinforcements(GameSession p_gameSession) {
-        // Implement logic to assign reinforcements
+        for (int i = 0; i < p_gameSession.getPlayers().size(); i++) {
+            p_gameSession.getPlayers().get(i).reinforcement(3);
+        }
     }
 
     /**
@@ -330,10 +337,12 @@ public class GameMapController {
     /**
      * Validates the map. A map is valid if it has at least 3 continents,
      * 5 countries and 5 borders.
+     * Also a map is
      * @param p_gameMap The game map.
      */
     public boolean validateMap(GameMap p_gameMap) {
         // Implement logic to validate the map
+        // First verify the number of continents, countries and borders.
         int l_continentsNumber = Continent.continentIdCounter - 1, l_countriesNumber = 0, l_bordersNumber = 0;
         for (Continent l_continent : p_gameMap.getContinents()) {
             for (Country l_country : l_continent.getCountries()) {
@@ -342,13 +351,32 @@ public class GameMapController {
             }
         }
         l_bordersNumber /= 2;
+        // Then verify if all countries are connected
+        HashSet<Country> l_connectedCountries = new HashSet<Country>();
+        connectionVerification(p_gameMap.getContinents().getFirst().getCountries().getFirst(), l_connectedCountries);
+        boolean l_countriesAreConnected = l_countriesNumber == l_connectedCountries.size();
         if (l_continentsNumber < 3)
             d_displayToUser.instructionMessage("Invalid map since it should have at least 3 continents! Currently it has only: " + l_continentsNumber + " continents.");
         if (l_countriesNumber < 5)
             d_displayToUser.instructionMessage("Invalid map since it should have at least 5 countries! Currently it has only: " + l_countriesNumber + " countries.");
         if (l_bordersNumber < 5)
             d_displayToUser.instructionMessage("Invalid map since it should have at least 5 borders! Currently it has only: " + l_bordersNumber + " borders.");
-        return !((l_continentsNumber < 3) || (l_countriesNumber < 5) || (l_bordersNumber < 5));
+        if (!l_countriesAreConnected)
+            d_displayToUser.instructionMessage("Invalid map since the countries are not connected. The map should be totally connected for the game.");
+        return !((l_continentsNumber < 3) || (l_countriesNumber < 5) || (l_bordersNumber < 5) || !l_countriesAreConnected);
+    }
+
+    /**
+     * Internal method to verify countries connection.
+     * @param country the country used as a starting point.
+     */
+    private void connectionVerification(Country country, Set<Country> connectedCountries) {
+        country.getAdjacentCountries().forEach(adjacentCountry -> {
+            if (!connectedCountries.contains(adjacentCountry)) {
+                connectedCountries.add(adjacentCountry);
+                connectionVerification(adjacentCountry, connectedCountries);
+            }
+        });
     }
 
     /**
@@ -362,7 +390,7 @@ public class GameMapController {
         String l_cmd = l_parts[0];
 
         switch (l_cmd) {
-            case "editmap":
+            case "loadmap","editmap":
                 loadMap(p_gameSession, l_parts[1]);
                 break;
             case "editcontinent":
