@@ -120,31 +120,35 @@ public class GameMapController {
      */
     public void assignCountries(GameSession p_gameSession) {
         List<Player> d_players = p_gameSession.getPlayers();
-        List<Continent> d_continents = p_gameSession.getMap().getContinents();
-        List<Country> d_countries = new ArrayList<Country>();
-        Map<Country, Player> d_assignedSigned = new HashMap<>();
+        List<Country> d_countries = p_gameSession.getMap().getCountries();
 
-        for (int i = 0; i < d_continents.size(); i++) {
-            for (int j = 0; j < d_continents.get(i).getCountries().size(); j++) {
-                d_countries.add(d_continents.get(i).getCountries().get(i));
+        if (d_countries.size() < d_players.size()) {
+            System.out.println("In here");
+            for (int i = d_players.size(); i > d_countries.size(); i--) {
+                String l_message = "Player " + d_players.get(i - 1).getName() + " has been removed from the players list.";
+                System.out.println(l_message);
+                d_players.remove(i - 1);
             }
+            System.out.println("Number of players is more than countries, see you in next games.");
         }
 
-        for (int i = 0; i < d_countries.size(); i++) {
+        for (int i = 0, j = 0; i < d_countries.size(); i++, j++) {
+            if (j == d_players.size())
+                j = 0;
             Random rn = new Random();
-            int randomNumber = rn.nextInt(d_countries.size());
+            int random = rn.nextInt(d_countries.size());
 
             while (true) {
-                if (d_countries.get(randomNumber).getD_ownedBy() != null) {
-                    d_countries.get(randomNumber).setD_ownedBy(d_players.get(i));
-                    d_players.get(i).setD_countries_owned(d_countries.get(randomNumber));
-                    d_assignedSigned.put(d_countries.get(randomNumber), d_players.get(i));
+                if (d_countries.get(random).getD_ownedBy() == null) {
+                    d_countries.get(random).setD_ownedBy(d_players.get(j));
+                    d_players.get(j).setD_countries_owned(d_countries.get(random));
                     break;
                 }
-                randomNumber = rn.nextInt(d_countries.size());
+                random = rn.nextInt(d_countries.size());
             }
         }
-        p_gameSession.setCountriesControllers(d_assignedSigned);
+
+        System.out.println("Countries has been assigned to all players.");
     }
 
     /**
@@ -152,7 +156,9 @@ public class GameMapController {
      * @param p_gameSession The game session.
      */
     public void assignReinforcements(GameSession p_gameSession) {
-        // Implement logic to assign reinforcements
+        for (int i = 0; i < p_gameSession.getPlayers().size(); i++) {
+            p_gameSession.getPlayers().get(i).reinforcement(3);
+        }
     }
 
     /**

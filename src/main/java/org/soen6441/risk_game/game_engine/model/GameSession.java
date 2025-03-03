@@ -14,7 +14,7 @@ import java.util.Map;
 public class GameSession {
     private List<Player> d_players;
     private GameMap d_map;
-    private Map<Country, Player> d_countriesControllers;
+    //private Map<Country, Player> d_countriesControllers;
 
     /**
      * Returns the list of players.
@@ -52,15 +52,15 @@ public class GameSession {
      * Returns the countries controllers.
      * @return The countries controllers.
      */
-    public Map<Country, Player> getCountriesControllers() {
+    /*public Map<Country, Player> getCountriesControllers() {
         return d_countriesControllers;
-    }
+    }*/
 
     /**
      * Sets the countries controllers.
      * @param p_territoriesControllers The countries controllers.
      */
-    public void setCountriesControllers(Map<Country, Player> p_territoriesControllers) {
+    /*public void setCountriesControllers(Map<Country, Player> p_territoriesControllers) {
         this.d_countriesControllers = p_territoriesControllers;
-    }
+    }*/
 }
