@@ -266,18 +266,29 @@ public class GameMapController {
      * @param p_gameMap The game map.
      */
     public void showMap(GameMap p_gameMap) {
-        for (Continent l_continent : p_gameMap.getContinents()) {
-            System.out.println("Continent: " + l_continent.getName());
-            for (Country l_country : l_continent.getCountries()) {
-                System.out.println("  Country: " + l_country.getName());
-                System.out.print("    Neighbors: ");
-                for (Country neighbor : l_country.getAdjacentCountries()) {
-                    System.out.print(neighbor.getName() + " ");
+        if (p_gameMap == null)
+            d_displayToUser.instructionMessage("Can not run showmap since not map was loaded.");
+        else {
+            System.out.println(".................................... Map ....................................");
+            for (Continent l_continent : p_gameMap.getContinents()) {
+                System.out.println("                              Continent: " + l_continent.getName());
+                for (Country l_country : l_continent.getCountries()) {
+                    System.out.println("Country: " + l_country.getName() + " with id: " + l_country.getCountryId());
+                    System.out.println(">>>>> Owned by: " + (l_country.getD_ownedBy() == null ? "N/A" : l_country.getD_ownedBy().getName()));
+                    System.out.println(">>>>> Armies: ");
+                    for (Player l_player : l_country.getExistingArmies().keySet()) {
+                        System.out.println("-------------" + l_country.getExistingArmies().get(l_player) + " armies of: " + l_player.getName() + ".");
+                    }
+                    System.out.print(">>>>> Neighbors: ");
+                    for (Country neighbor : l_country.getAdjacentCountries()) {
+                        System.out.print(neighbor.getName() + " ");
+                    }
+                    System.out.println();
                 }
-                System.out.println();
             }
+            System.out.println(".................................... Map End ....................................");
         }
-    }
+        }
 
     /**
      * Saves the map to a file.
@@ -433,7 +444,9 @@ public class GameMapController {
     public void handleMapManagementStep(GameSession p_gameSession) {
         Scanner l_scanner = new Scanner(System.in);
         String l_command;
-        d_displayToUser.instructionMessage("----------------------- Map Management Step -----------------------\n");
+        d_displayToUser.instructionMessage("----------------------- Map Management Step -----------------------");
+        d_displayToUser.instructionMessage("You can use these instructions to manage the map of the game:");
+        d_displayToUser.instructionMessage("loadmap, editmap, savemap, showmap, validatemap, editcontinent, editcounty, editneighbour\n");
         boolean l_isUserStillInTheStep = true;
         do {
             l_command = l_scanner.nextLine();
