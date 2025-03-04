@@ -17,7 +17,7 @@ public class GameEngine {
      */
     public static void main(String[] args) {
         // Game Session
-        GameSession l_gameSession = new GameSession();
+        GameSession l_gameSession = GameSession.getInstance();
 
         // Controllers
         GameMapController l_gameMapController = new GameMapController();

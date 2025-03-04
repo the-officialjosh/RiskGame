@@ -79,7 +79,7 @@ public class PlayerController {
                 d_gameMapController.showMap(p_gameSession.getMap());
                 d_displayToUser.instructionMessage("\nReinforcement Armies");
                 d_displayToUser.instructionMessage("=====================");
-                d_displayToUser.instructionMessage(player.getName()+ "you have ("+player.getNumberOfReinforcementsArmies()+") reinforcement armies");
+                d_displayToUser.instructionMessage(player.getName()+ " you have ("+player.getNumberOfReinforcementsArmies()+") reinforcement armies");
 
                 if (player.hasReinforcementsArmies()) {
                     player.issue_order();

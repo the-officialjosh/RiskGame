@@ -16,7 +16,7 @@ public class GameMapControllerTest {
     @BeforeEach
     public void setUp() {
         gameMapController = new GameMapController();
-        gameSession = new GameSession();
+        gameSession = GameSession.getInstance();
         gameMap = new GameMap("my_map", new ArrayList<>());
         gameSession.setMap(gameMap);
     }
