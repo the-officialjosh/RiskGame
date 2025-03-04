@@ -2,6 +2,9 @@ package org.soen6441.risk_game.orders.model;
 
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.player_management.model.Player;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class represents the Deploy order.
@@ -56,6 +59,19 @@ public class Deploy implements Order {
      * @param p_gameSession The game session.
      */
     public void execute(GameSession p_gameSession) {
-
+        for (int i = 0; i <p_gameSession.getPlayers().size(); i++) {
+            List orders = p_gameSession.getPlayers().get(i).getOrders();
+            for (int j = 0; j < orders.size(); j++) {
+                Deploy order = (Deploy) orders.get(j);
+                for (int k = 0; k < p_gameSession.getMap().getCountries().size(); k++) {
+                    if(p_gameSession.getMap().getCountries().get(k).getCountryId()==order.d_countryId){
+                        Map<Player, Integer> map = new HashMap<>();
+                        map.put(p_gameSession.getPlayers().get(i),order.d_numberOfDeployedArmies);
+                        p_gameSession.getMap().getCountries().get(k).setExistingArmies(map);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
