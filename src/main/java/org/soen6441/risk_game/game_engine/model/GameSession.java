@@ -12,9 +12,16 @@ import java.util.Map;
  * all the information about the game.
  */
 public class GameSession {
+    private static final GameSession instance = new GameSession();
     private List<Player> d_players;
     private GameMap d_map;
     //private Map<Country, Player> d_countriesControllers;
+
+    private GameSession() {}
+
+    public static GameSession getInstance() {
+        return instance;
+    }
 
     /**
      * Returns the list of players.
