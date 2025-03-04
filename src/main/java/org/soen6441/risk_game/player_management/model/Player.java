@@ -111,7 +111,7 @@ public class Player {
             d_displayToUser.instructionMessage(this.d_name + "has no reinforcement left.");
         }
         while (true) {
-            d_displayToUser.instructionMessage(this.getName() + " enter the deploy army command \"deploy <countryID> <numberOfArmies>\"");
+          //  d_displayToUser.instructionMessage(this.getName() + " enter the deploy army command \"deploy <countryID> <numberOfArmies>\"");
             String l_command = l_scanner.nextLine().trim();
             String[] l_command_parts = l_command.split(" ");
             if (l_command_parts.length != 3 || !l_command_parts[0].equalsIgnoreCase("deploy")) {
@@ -197,7 +197,7 @@ public class Player {
      * @param countryID the country id
      * @return the country
      */
-    public static Country findCountryById(List<Country> countries, int countryID) {
+    public Country findCountryById(List<Country> countries, int countryID) {
         for (Country country : countries) {
             if (country.getCountryId() == countryID) {
                 return country;
@@ -213,7 +213,7 @@ public class Player {
      * @return the boolean
      */
     public boolean validNumberOfReinforcementArmies(int l_numOfArmies) {
-        return l_numOfArmies < d_numberOfReinforcementsArmies;
+        return l_numOfArmies <= d_numberOfReinforcementsArmies;
     }
 
 }
