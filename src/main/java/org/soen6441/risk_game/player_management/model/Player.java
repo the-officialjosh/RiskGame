@@ -6,6 +6,7 @@ import org.soen6441.risk_game.orders.model.Deploy;
 import org.soen6441.risk_game.orders.model.Order;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 /**
@@ -106,14 +107,14 @@ public class Player {
      */
     public void issue_order() {
         Scanner l_scanner = new Scanner(System.in);
-        if(d_numberOfReinforcementsArmies <= 0 ){
-            d_displayToUser.instructionMessage(this.d_name+ "has no reinforcement left.");
+        if (d_numberOfReinforcementsArmies <= 0) {
+            d_displayToUser.instructionMessage(this.d_name + "has no reinforcement left.");
         }
-        while (true){
-            d_displayToUser.instructionMessage(this.getName()+" enter the deploy army command \"deploy <countryID> <numberOfArmies>\"");
+        while (true) {
+            d_displayToUser.instructionMessage(this.getName() + " enter the deploy army command \"deploy <countryID> <numberOfArmies>\"");
             String l_command = l_scanner.nextLine().trim();
             String[] l_command_parts = l_command.split(" ");
-            if(l_command_parts.length != 3 || !l_command_parts[0].equalsIgnoreCase("deploy")){
+            if (l_command_parts.length != 3 || !l_command_parts[0].equalsIgnoreCase("deploy")) {
                 d_displayToUser.instructionMessage("Invalid Command, try this command: \"deploy <countryID> <numberOfArmies>\"");
                 continue;
             }
@@ -122,18 +123,22 @@ public class Player {
             try {
                 l_countryID = Integer.parseInt(l_command_parts[1]);
                 l_numOfArmies = Integer.parseInt(l_command_parts[2]);
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 d_displayToUser.instructionMessage("Invalid number of armies or countryID. please enter valid values");
                 continue;
             }
 
-            if(l_numOfArmies > d_numberOfReinforcementsArmies){
-                d_displayToUser.instructionMessage("You can not deploy more the your reinforcement armies. You have "+d_numberOfReinforcementsArmies+" of armies. try again");
+            if (!validNumberOfReinforcementArmies(l_numOfArmies)) {
+                d_displayToUser.instructionMessage("You can not deploy more the your reinforcement armies. You have " + d_numberOfReinforcementsArmies + " of armies. try again");
                 continue;
             }
-            d_numberOfReinforcementsArmies -= l_numOfArmies;
-            Deploy deployOrder = new Deploy(this,l_numOfArmies,l_countryID);
+            if (findCountryById(this.d_countries_owned, l_countryID) == null) {
+                d_displayToUser.instructionMessage(this.getName() + " you can only deploy armies on countries which you owned. Try again\n");
+                continue;
+            }
+            Deploy deployOrder = new Deploy(this, l_numOfArmies, l_countryID);
             this.setOrders(deployOrder);
+            d_numberOfReinforcementsArmies -= l_numOfArmies;
             break;
         }
 
@@ -175,7 +180,40 @@ public class Player {
         return d_numberOfReinforcementsArmies > 0;
     }
 
+
+    /**
+     * Is reinforcement phase complete boolean.
+     *
+     * @return the boolean
+     */
     public boolean isReinforcementPhaseComplete(){
         return d_numberOfReinforcementsArmies == 0;
     }
+
+    /**
+     * Find country by id country.
+     *
+     * @param countries the countries
+     * @param countryID the country id
+     * @return the country
+     */
+    public static Country findCountryById(List<Country> countries, int countryID) {
+        for (Country country : countries) {
+            if (country.getCountryId() == countryID) {
+                return country;
+            }
+        }
+        return null; // If not found
+    }
+
+    /**
+     * Valid number of reinforcement armies boolean.
+     *
+     * @param l_numOfArmies the l num of armies
+     * @return the boolean
+     */
+    public boolean validNumberOfReinforcementArmies(int l_numOfArmies) {
+        return l_numOfArmies < d_numberOfReinforcementsArmies;
+    }
+
 }
