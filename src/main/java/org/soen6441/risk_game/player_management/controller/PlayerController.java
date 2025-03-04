@@ -1,6 +1,7 @@
 package org.soen6441.risk_game.player_management.controller;
 
 import org.soen6441.risk_game.game_engine.model.GameSession;
+import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.orders.model.Order;
 import org.soen6441.risk_game.player_management.model.Player;
@@ -15,6 +16,7 @@ import java.util.Scanner;
 public class PlayerController {
 
     private DisplayToUser d_displayToUser = new DisplayToUser();
+    private GameMapController d_gameMapController = new GameMapController();
 
     /**
      * This method handles the players loading step.
@@ -74,6 +76,11 @@ public class PlayerController {
         do {
             allArmiesDeployed = true;
             for (Player player : p_gameSession.getPlayers()) {
+                d_gameMapController.showMap(p_gameSession.getMap());
+                d_displayToUser.instructionMessage("\nReinforcement Armies");
+                d_displayToUser.instructionMessage("=====================");
+                d_displayToUser.instructionMessage(player.getName()+ "you have ("+player.getNumberOfReinforcementsArmies()+") reinforcement armies");
+
                 if (player.hasReinforcementsArmies()) {
                     player.issue_order();
                 }
