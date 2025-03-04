@@ -1,6 +1,7 @@
 package org.soen6441.risk_game.orders.model;
 
 import org.soen6441.risk_game.game_engine.model.GameSession;
+import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.player_management.model.Player;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +60,7 @@ public class Deploy implements Order {
      * @param p_gameSession The game session.
      */
     public void execute(GameSession p_gameSession) {
-        for (int i = 0; i <p_gameSession.getPlayers().size(); i++) {
+        /*for (int i = 0; i <p_gameSession.getPlayers().size(); i++) {
             List orders = p_gameSession.getPlayers().get(i).getOrders();
             for (int j = 0; j < orders.size(); j++) {
                 Deploy order = (Deploy) orders.get(j);
@@ -72,6 +73,15 @@ public class Deploy implements Order {
                     }
                 }
             }
+        }*/
+        Country country = d_issuer.findCountryById(d_issuer.getD_countries_owned(), d_countryId);
+        Map<Player, Integer> map = new HashMap<>();
+        map.put(d_issuer,d_numberOfDeployedArmies);
+        for (int i = 0; i < p_gameSession.getMap().getCountries().size(); i++) {
+             if(p_gameSession.getMap().getCountries().get(i).getCountryId()==country.getCountryId()){
+                 p_gameSession.getMap().getCountries().get(i).setExistingArmies(map);
+                 break;
+             }
         }
     }
 }
