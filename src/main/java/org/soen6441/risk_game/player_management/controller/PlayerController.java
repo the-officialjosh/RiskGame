@@ -93,7 +93,7 @@ public class PlayerController {
                 d_gameMapController.showMap(p_gameSession.getMap());
                 d_displayToUser.instructionMessage("\n⚔ Reinforcement Phase");
                 d_displayToUser.instructionMessage("==========================");
-                d_displayToUser.instructionMessage("Use \"deploy <country_id> <number_of_armies>*\" to deploy");
+                d_displayToUser.instructionMessage("Use \"deploy <country_id> <number_of_armies>*\" to deploy\n");
                 d_displayToUser.instructionMessage(player.getName() + " you have (" + player.getNumberOfReinforcementsArmies() + ") reinforcement armies.");
 
                 if (player.hasReinforcementsArmies()) {

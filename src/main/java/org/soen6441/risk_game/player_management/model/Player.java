@@ -125,7 +125,7 @@ public class Player {
                 }
 
                 if (findCountryById(this.d_countries_owned, l_countryID) == null) {
-                    d_displayToUser.instructionMessage(this.getName() + " can only deploy armies to owned countries. Try again.");
+                    d_displayToUser.instructionMessage("You can only deploy armies to countries you own. Try again.");
                     continue;
                 }
 
