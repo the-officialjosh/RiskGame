@@ -9,7 +9,7 @@ public class DisplayToUser {
      * Displays a welcome message to the user.
      */
     public void welcomeMessage() {
-        displayMessage("\n---- Welcome to the CODING_HOLICS SOEN6441 Risk Game ----\n");
+        instructionMessage("\n---- Welcome to the CODING_HOLICS SOEN6441 Risk Game ----\n");
 
     }
 
@@ -17,7 +17,7 @@ public class DisplayToUser {
      * Displays the startup phase beginning message.
      */
     public void startupPhaseBeginningMessage() {
-        displayMessage("----------------- STARTUP PHASE BEGINS -----------------\n");
+        instructionMessage("----------------- STARTUP PHASE BEGINS -----------------\n");
 
     }
 
@@ -25,7 +25,7 @@ public class DisplayToUser {
      * Displays the startup phase end message.
      */
     public void startupPhaseEndMessage() {
-        displayMessage("----------------- STARTUP PHASE ENDED -----------------\n");
+        instructionMessage("----------------- STARTUP PHASE ENDED -----------------\n");
 
     }
 
@@ -37,15 +37,8 @@ public class DisplayToUser {
      * @param message The message to be displayed.
      */
     public void instructionMessage(String message) {
-        displayMessage(message);
-    }
-
-    /**
-     * A general method for displaying messages.
-     *
-     * @param message The message to be printed.
-     */
-    private void displayMessage(String message) {
         System.out.println(message);
     }
+
+
 }
