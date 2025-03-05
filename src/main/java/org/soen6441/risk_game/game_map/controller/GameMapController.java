@@ -477,18 +477,15 @@ public class GameMapController {
         Scanner l_scanner = new Scanner(System.in);
         String l_command;
 
-        d_displayToUser.instructionMessage("\nMAP MANAGEMENT STEP");
-        d_displayToUser.instructionMessage("----------------------------------------");
+        d_displayToUser.instructionMessage("=====================================");
+        d_displayToUser.instructionMessage("       MAP MANAGEMENT STEP          ");
+        d_displayToUser.instructionMessage("=====================================");
+
         d_displayToUser.instructionMessage("Use the following commands to manage the game map:");
-        d_displayToUser.instructionMessage("- loadmap");
-        d_displayToUser.instructionMessage("- editmap");
-        d_displayToUser.instructionMessage("- savemap");
-        d_displayToUser.instructionMessage("- showmap");
-        d_displayToUser.instructionMessage("- validatemap");
-        d_displayToUser.instructionMessage("- editcontinent");
-        d_displayToUser.instructionMessage("- editcountry");
-        d_displayToUser.instructionMessage("- editneighbor");
+        d_displayToUser.instructionMessage(String.format("%-15s %-15s %-15s %-15s", "[>] loadmap", "[+] editmap", "savemap", "showmap"));
+        d_displayToUser.instructionMessage(String.format("%-15s %-15s %-15s %-15s", "validatemap", "editcontinent", "editcountry", "editneighbor"));
         d_displayToUser.instructionMessage("----------------------------------------\n");
+
 
         boolean l_isUserStillInTheStep = true;
         do {
@@ -505,7 +502,8 @@ public class GameMapController {
             }
         } while (l_isUserStillInTheStep);
 
-        d_displayToUser.instructionMessage("\nMAP MANAGEMENT STEP COMPLETE");
-        d_displayToUser.instructionMessage("----------------------------------------\n");
+        d_displayToUser.instructionMessage("=====================================");
+        d_displayToUser.instructionMessage("    MAP MANAGEMENT STEP COMPLETED    ");
+        d_displayToUser.instructionMessage("=====================================");
     }
 }
