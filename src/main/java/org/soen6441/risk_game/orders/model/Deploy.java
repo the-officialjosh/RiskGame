@@ -57,29 +57,15 @@ public class Deploy implements Order {
     /**
      * This class executes the "deploy" order by updating
      * accordingly the provided gameSession.
-     * @param p_gameSession The game session.
      */
-    public void execute(GameSession p_gameSession) {
-        /*for (int i = 0; i <p_gameSession.getPlayers().size(); i++) {
-            List orders = p_gameSession.getPlayers().get(i).getOrders();
-            for (int j = 0; j < orders.size(); j++) {
-                Deploy order = (Deploy) orders.get(j);
-                for (int k = 0; k < p_gameSession.getMap().getCountries().size(); k++) {
-                    if(p_gameSession.getMap().getCountries().get(k).getCountryId()==order.d_countryId){
-                        Map<Player, Integer> map = new HashMap<>();
-                        map.put(p_gameSession.getPlayers().get(i),order.d_numberOfDeployedArmies);
-                        p_gameSession.getMap().getCountries().get(k).setExistingArmies(map);
-                        break;
-                    }
-                }
-            }
-        }*/
+    public void execute() {
+        GameSession l_gameSession = GameSession.getInstance();
         Country country = d_issuer.findCountryById(d_issuer.getD_countries_owned(), d_countryId);
         Map<Player, Integer> map = new HashMap<>();
         map.put(d_issuer,d_numberOfDeployedArmies);
-        for (int i = 0; i < p_gameSession.getMap().getCountries().size(); i++) {
-             if(p_gameSession.getMap().getCountries().get(i).getCountryId()==country.getCountryId()){
-                 p_gameSession.getMap().getCountries().get(i).setExistingArmies(map);
+        for (int i = 0; i < l_gameSession.getMap().getCountries().size(); i++) {
+             if(l_gameSession.getMap().getCountries().get(i).getCountryId()==country.getCountryId()){
+                 l_gameSession.getMap().getCountries().get(i).setExistingArmies(map);
                  break;
              }
         }

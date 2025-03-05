@@ -10,7 +10,6 @@ public interface Order {
     /**
      * This class executes the order by updating
      * accordingly the provided gameSession.
-     * @param p_gameSession The game session
      */
-    void execute(GameSession p_gameSession);
+    void execute();
 }

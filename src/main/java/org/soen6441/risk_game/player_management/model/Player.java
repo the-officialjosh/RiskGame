@@ -150,7 +150,7 @@ public class Player {
      */
     public void next_order() {
         for (int i = 0; i < this.getOrders().size(); i++) {
-            //this.getOrders().get(i).execute(gamesession);
+            this.getOrders().get(i).execute();
         }
     }
 
