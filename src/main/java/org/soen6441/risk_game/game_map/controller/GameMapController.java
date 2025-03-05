@@ -476,29 +476,36 @@ public class GameMapController {
     public void handleMapManagementStep(GameSession p_gameSession) {
         Scanner l_scanner = new Scanner(System.in);
         String l_command;
-        d_displayToUser.instructionMessage("=====================================");
-        d_displayToUser.instructionMessage("       MAP MANAGEMENT STEP          ");
-        d_displayToUser.instructionMessage("=====================================");
-        d_displayToUser.instructionMessage("You can use these instructions to manage the game map:");
-        d_displayToUser.instructionMessage("loadmap, editmap, savemap, showmap, validatemap, editcontinent, editcountry, editneighbor");
-        System.out.println("---------------------------------------");
+
+        d_displayToUser.instructionMessage("\nMAP MANAGEMENT STEP");
+        d_displayToUser.instructionMessage("----------------------------------------");
+        d_displayToUser.instructionMessage("Use the following commands to manage the game map:");
+        d_displayToUser.instructionMessage("- loadmap");
+        d_displayToUser.instructionMessage("- editmap");
+        d_displayToUser.instructionMessage("- savemap");
+        d_displayToUser.instructionMessage("- showmap");
+        d_displayToUser.instructionMessage("- validatemap");
+        d_displayToUser.instructionMessage("- editcontinent");
+        d_displayToUser.instructionMessage("- editcountry");
+        d_displayToUser.instructionMessage("- editneighbor");
+        d_displayToUser.instructionMessage("----------------------------------------\n");
 
         boolean l_isUserStillInTheStep = true;
         do {
             l_command = l_scanner.nextLine();
             handleCommand(l_command, p_gameSession);
-            // Handle "mapeditordone" step
+
             if (l_command.split(" ")[0].equals("mapeditordone")) {
                 if (validateMap(p_gameSession.getMap())) {
-                    d_displayToUser.instructionMessage("✔ The Map \"" + p_gameSession.getMap().getD_name() + "\" is valid and will be considered for the game.");
+                    d_displayToUser.instructionMessage("✔ The Map \"" + p_gameSession.getMap().getD_name() + "\" is valid and will be considered for the game.\n");
                     l_isUserStillInTheStep = false;
                 } else {
-                    d_displayToUser.instructionMessage("⚠ The Map \"" + p_gameSession.getMap().getD_name() + "\" is invalid. Please fix your Map accordingly before proceeding.");
+                    d_displayToUser.instructionMessage("⚠ The Map \"" + p_gameSession.getMap().getD_name() + "\" is invalid. Please fix your Map accordingly before proceeding.\n");
                 }
             }
         } while (l_isUserStillInTheStep);
-        d_displayToUser.instructionMessage("=====================================");
-        d_displayToUser.instructionMessage("      MAP MANAGEMENT STEP DONE      ");
-        d_displayToUser.instructionMessage("=====================================");
+
+        d_displayToUser.instructionMessage("\nMAP MANAGEMENT STEP COMPLETE");
+        d_displayToUser.instructionMessage("----------------------------------------\n");
     }
 }

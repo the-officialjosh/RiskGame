@@ -1,33 +1,51 @@
 package org.soen6441.risk_game.game_map.view;
 
+/**
+ * Handles user display messages for the game.
+ */
 public class DisplayToUser {
+
     /**
-     * Display the welcome message to the user.
+     * Displays a welcome message to the user.
      */
     public void welcomeMessage() {
-        System.out.println("Welcome to the 'SOEN6441 Risk Game'!");
+        displayMessage("\n---- Welcome to the CODING_HOLICS SOEN6441 Risk Game ----\n");
+
     }
 
     /**
-     * Display the startup phase beginning message to the user.
+     * Displays the startup phase beginning message.
      */
     public void startupPhaseBeginningMessage() {
-        System.out.println("*********************** Startup Phase ***********************\n");
+        displayMessage("----------------- STARTUP PHASE BEGINS -----------------\n");
+
     }
 
     /**
-     * Display the startup phase end message to the user.
+     * Displays the startup phase end message.
      */
     public void startupPhaseEndMessage() {
-        System.out.println("*********************** Startup Phase Successfully Ended ***********************\n");
+        displayMessage("----------------- STARTUP PHASE ENDED -----------------\n");
+
+    }
+
+
+
+    /**
+     * Displays an instruction message.
+     *
+     * @param message The message to be displayed.
+     */
+    public void instructionMessage(String message) {
+        displayMessage(message);
     }
 
     /**
-     * Instruction message.
+     * A general method for displaying messages.
      *
-     * @param message the message
+     * @param message The message to be printed.
      */
-    public void instructionMessage(String message){
+    private void displayMessage(String message) {
         System.out.println(message);
     }
 }
