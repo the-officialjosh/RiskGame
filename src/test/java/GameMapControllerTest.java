@@ -86,4 +86,23 @@ public class GameMapControllerTest {
         assertEquals(4, gameSession.getPlayers().get(0).getNumberOfReinforcementsArmies());
         assertEquals(4, gameSession.getPlayers().get(1).getNumberOfReinforcementsArmies());
     }
+
+    @Test
+    public void testReinforcementFor5Players() {
+        gameMapController.loadMap(gameSession, "europe.map");
+        List<Player> players = new ArrayList<>();
+        players.add(new Player("Player1", 0, new ArrayList<>()));
+        players.add(new Player("Player2", 0, new ArrayList<>()));
+        players.add(new Player("Player3", 0, new ArrayList<>()));
+        players.add(new Player("Player4", 0, new ArrayList<>()));
+        players.add(new Player("Player5", 0, new ArrayList<>()));
+        gameSession.setPlayers(players);
+        gameMapController.assignCountries(gameSession);
+        gameMapController.assignReinforcements(gameSession);
+        assertEquals(3, gameSession.getPlayers().get(0).getNumberOfReinforcementsArmies());
+        assertEquals(3, gameSession.getPlayers().get(1).getNumberOfReinforcementsArmies());
+        assertEquals(3, gameSession.getPlayers().get(2).getNumberOfReinforcementsArmies());
+        assertEquals(3, gameSession.getPlayers().get(3).getNumberOfReinforcementsArmies());
+        assertEquals(3, gameSession.getPlayers().get(4).getNumberOfReinforcementsArmies());
+    }
 }
