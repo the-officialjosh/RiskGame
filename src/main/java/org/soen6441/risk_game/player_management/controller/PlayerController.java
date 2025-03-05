@@ -33,11 +33,12 @@ public class PlayerController {
             l_addPlayerCommand = l_scanner.nextLine();
             String[] l_addPlayerCommandArray = l_addPlayerCommand.split(" ");
             l_command = l_addPlayerCommandArray[0];
-            if (l_command.equals("assigncountries")) {
+            if (!playerList.isEmpty() && l_command.equals("assigncountries")) {
                 break;
             }
+
             if (!l_command.equals("gameplayer")) {
-                d_displayToUser.instructionMessage("Invalid Command (To add player use this command \"gameplayer -add nameofplayer\"");
+                d_displayToUser.instructionMessage("Invalid Command (To add player use this command \"gameplayer -add nameofplayer\")");
                 continue;
             }
             String l_action = l_addPlayerCommandArray[1];
