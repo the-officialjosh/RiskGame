@@ -158,7 +158,9 @@ public class GameMapController {
             }
         }
 
-        System.out.println("Countries has been assigned to all players.");
+        System.out.println("=== Territory Assignment Complete ===");
+        System.out.println("Countries have been strategically assigned to all players.");
+        System.out.println("---------------------------------------");
     }
 
     /**
@@ -283,28 +285,36 @@ public class GameMapController {
      * @param p_gameMap The game map.
      */
     public void showMap(GameMap p_gameMap) {
-        if (p_gameMap == null)
-            d_displayToUser.instructionMessage("Can not run showmap since not map was loaded.");
-        else {
-            System.out.println(".................................... Map ....................................");
-            for (Continent l_continent : p_gameMap.getContinents()) {
-                System.out.println("                              Continent: " + l_continent.getName());
-                for (Country l_country : l_continent.getCountries()) {
-                    System.out.println("Country: " + l_country.getName() + " with id: " + l_country.getCountryId());
-                    System.out.println(">>>>> Owned by: " + (l_country.getD_ownedBy() == null ? "N/A" : l_country.getD_ownedBy().getName()));
-                    System.out.println(">>>>> Armies: ");
-                    for (Player l_player : l_country.getExistingArmies().keySet()) {
-                        System.out.println("- " + l_country.getExistingArmies().get(l_player) + " armies of: " + l_player.getName() + ".");
-                    }
-                    System.out.print(">>>>> Neighbors: ");
-                    for (Country neighbor : l_country.getAdjacentCountries()) {
-                        System.out.print(neighbor.getName() + " ");
-                    }
-                    System.out.println();
-                }
-            }
-            System.out.println(".................................... Map End ....................................");
+        if (p_gameMap == null) {
+            d_displayToUser.instructionMessage("Can not run \"showMap\" since not map was loaded.");
+            return;
         }
+        System.out.println("=====================================");
+        System.out.println("          GAME MAP OVERVIEW          ");
+        System.out.println("=====================================");
+        for (Continent l_continent : p_gameMap.getContinents()) {
+            System.out.println(">>> Continent: " + l_continent.getName());
+            System.out.println("---------------------------------------");
+            for (Country l_country : l_continent.getCountries()) {
+                System.out.println("Country: " + l_country.getName() + " (ID: " + l_country.getCountryId() + ")");
+                System.out.println(">>>> Owned by: " + (l_country.getD_ownedBy() == null ? "Unclaimed Territory" : l_country.getD_ownedBy().getName()));
+
+                System.out.println(">>>> Armies:");
+                for (Player l_player : l_country.getExistingArmies().keySet()) {
+                    System.out.println(" - " + l_country.getExistingArmies().get(l_player) + " units under the command of " + l_player.getName());
+                }
+
+                System.out.print(">>>> Neighbors: ");
+                for (Country neighbor : l_country.getAdjacentCountries()) {
+                    System.out.print(neighbor.getName() + " ");
+                }
+                System.out.println("\n---------------------------------------");
+                System.out.println();
+            }
+        }
+        System.out.println("=====================================");
+        System.out.println("         END OF MAP OVERVIEW         ");
+        System.out.println("=====================================");
     }
 
     /**
@@ -466,9 +476,13 @@ public class GameMapController {
     public void handleMapManagementStep(GameSession p_gameSession) {
         Scanner l_scanner = new Scanner(System.in);
         String l_command;
-        d_displayToUser.instructionMessage("----------------------- Map Management Step -----------------------");
-        d_displayToUser.instructionMessage("You can use these instructions to manage the map of the game:");
-        d_displayToUser.instructionMessage("loadmap, editmap, savemap, showmap, validatemap, editcontinent, editcounty, editneighbour\n");
+        d_displayToUser.instructionMessage("=====================================");
+        d_displayToUser.instructionMessage("       MAP MANAGEMENT STEP          ");
+        d_displayToUser.instructionMessage("=====================================");
+        d_displayToUser.instructionMessage("You can use these instructions to manage the game map:");
+        d_displayToUser.instructionMessage("loadmap, editmap, savemap, showmap, validatemap, editcontinent, editcountry, editneighbor");
+        System.out.println("---------------------------------------");
+
         boolean l_isUserStillInTheStep = true;
         do {
             l_command = l_scanner.nextLine();
@@ -476,12 +490,15 @@ public class GameMapController {
             // Handle "mapeditordone" step
             if (l_command.split(" ")[0].equals("mapeditordone")) {
                 if (validateMap(p_gameSession.getMap())) {
-                    d_displayToUser.instructionMessage("The Map \"" + p_gameSession.getMap().getD_name() + "\" is valid and it will be considered for the game.\n");
+                    d_displayToUser.instructionMessage("✔ The Map \"" + p_gameSession.getMap().getD_name() + "\" is valid and will be considered for the game.");
                     l_isUserStillInTheStep = false;
-                } else
-                    d_displayToUser.instructionMessage("The Map \"" + p_gameSession.getMap().getD_name() + "\" is invalid. Please fix your Map accordingly before moving to the next step.\n");
+                } else {
+                    d_displayToUser.instructionMessage("⚠ The Map \"" + p_gameSession.getMap().getD_name() + "\" is invalid. Please fix your Map accordingly before proceeding.");
+                }
             }
         } while (l_isUserStillInTheStep);
-        d_displayToUser.instructionMessage("----------------------- Map Management Step Done -----------------------\n");
+        d_displayToUser.instructionMessage("=====================================");
+        d_displayToUser.instructionMessage("      MAP MANAGEMENT STEP DONE      ");
+        d_displayToUser.instructionMessage("=====================================");
     }
 }
