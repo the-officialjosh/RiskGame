@@ -1,3 +1,5 @@
+package org.soen6441.risk_game.game_map.controller;
+
 import java.util.ArrayList; // map tests
 import java.util.List;
 
@@ -6,9 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.soen6441.risk_game.game_engine.model.GameSession;
-import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.model.GameMap;
-import org.soen6441.risk_game.orders.model.Order;
 import org.soen6441.risk_game.player_management.model.Player;
 
 public class GameMapControllerTest {
