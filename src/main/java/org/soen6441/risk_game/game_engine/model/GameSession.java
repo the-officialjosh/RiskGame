@@ -15,7 +15,6 @@ public class GameSession {
     private static final GameSession instance = new GameSession();
     private List<Player> d_players;
     private GameMap d_map;
-    //private Map<Country, Player> d_countriesControllers;
 
     private GameSession() {}
 
@@ -55,19 +54,4 @@ public class GameSession {
         this.d_map = p_map;
     }
 
-    /**
-     * Returns the countries controllers.
-     * @return The countries controllers.
-     */
-    /*public Map<Country, Player> getCountriesControllers() {
-        return d_countriesControllers;
-    }*/
-
-    /**
-     * Sets the countries controllers.
-     * @param p_territoriesControllers The countries controllers.
-     */
-    /*public void setCountriesControllers(Map<Country, Player> p_territoriesControllers) {
-        this.d_countriesControllers = p_territoriesControllers;
-    }*/
 }

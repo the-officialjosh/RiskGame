@@ -9,7 +9,7 @@ import org.soen6441.risk_game.player_management.model.Player;
 
 import java.io.*;
 import java.util.*;
-import java.util.function.Consumer;
+
 
 /**
  * GameMap controller class which is responsible for handling all
@@ -17,7 +17,7 @@ import java.util.function.Consumer;
  */
 public class GameMapController {
     private DisplayToUser d_displayToUser = new DisplayToUser();
-    private String d_mapFolderPath = "maps/";
+    private final String d_mapFolderPath = "maps/";
 
     /**
      * Handles the load map step
@@ -38,29 +38,31 @@ public class GameMapController {
             while ((d_line = d_br.readLine()) != null) {
                 d_line = d_line.trim();
                 if (d_line.isEmpty() || d_line.startsWith(";")) {
-                    // If we are in the last step and we are reading the last empty
+                    // If we are in the last step, and we are reading the last empty
                     // line, then we can finish the reading process
                     if (d_readingBorders)
                         break;
                     continue;
                 }
-                if (d_line.equals("[continents]")) {
-                    d_readingContinents = true;
-                    d_readingCountries = false;
-                    d_readingBorders = false;
-                    continue;
-                }
-                if (d_line.equals("[countries]")) {
-                    d_readingContinents = false;
-                    d_readingCountries = true;
-                    d_readingBorders = false;
-                    continue;
-                }
-                if (d_line.equals("[borders]")) {
-                    d_readingContinents = false;
-                    d_readingCountries = false;
-                    d_readingBorders = true;
-                    continue;
+                switch (d_line) {
+                    case "[continents]" -> {
+                        d_readingContinents = true;
+                        d_readingCountries = false;
+                        d_readingBorders = false;
+                        continue;
+                    }
+                    case "[countries]" -> {
+                        d_readingContinents = false;
+                        d_readingCountries = true;
+                        d_readingBorders = false;
+                        continue;
+                    }
+                    case "[borders]" -> {
+                        d_readingContinents = false;
+                        d_readingCountries = false;
+                        d_readingBorders = true;
+                        continue;
+                    }
                 }
                 if (d_readingContinents) {
                     String[] d_parts = d_line.split(" ");
@@ -73,7 +75,7 @@ public class GameMapController {
                     String[] d_parts = d_line.split(" ");
                     int d_countryId = Integer.parseInt(d_parts[0]);
                     String d_countryName = d_parts[1];
-                    int d_continentId = Integer.valueOf(d_parts[2]);
+                    int d_continentId = Integer.parseInt(d_parts[2]);
                     Country d_country = new Country(d_countryId, d_countryName, new ArrayList<>(), new HashMap<Player, Integer>());
                     for (Continent d_continent : d_gameMap.getContinents()) {
                         if (d_continent.getD_continentId() == d_continentId) {
@@ -87,14 +89,14 @@ public class GameMapController {
                     d_gameMap.getContinents().forEach(p_continent ->
                             p_continent.getCountries().forEach(p_country ->
                                     {
-                                        if (p_country.getCountryId() == Integer.valueOf(d_parts[0])) {
+                                        if (p_country.getCountryId() == Integer.parseInt(d_parts[0])) {
                                             List<Country> d_adjacentCountries = new ArrayList<Country>();
                                             // Check for the adjacent countries by using the retrieved ids
                                             d_gameMap.getContinents().forEach(d_oneOfTheContinents ->
                                                     d_oneOfTheContinents.getCountries().forEach(oneOfTheCountries ->
                                                     {
                                                         for (int i = 1; i < d_parts.length; i++) {
-                                                            if (Integer.valueOf(d_parts[i]) == oneOfTheCountries.getCountryId())
+                                                            if (Integer.parseInt(d_parts[i]) == oneOfTheCountries.getCountryId())
                                                                 d_adjacentCountries.add(oneOfTheCountries);
                                                         }
                                                     })
@@ -106,8 +108,10 @@ public class GameMapController {
                 }
             }
             p_gameSession.setMap(d_gameMap);
-            if (validateMap(d_gameMap))
-                d_displayToUser.instructionMessage("The Map \"" + p_mapFileName + "\" is valid and has been loaded into the game.\n");
+            if (validateMap(d_gameMap)){
+                d_displayToUser.instructionMessage("\nThe Map \"" + p_mapFileName + "\" is valid and has been loaded into the game.");
+                d_displayToUser.instructionMessage("Run \"mapeditordone\" to continue\n");
+            }
             else
                 d_displayToUser.instructionMessage("The Map \"" + p_mapFileName + "\" has been loaded into the game.\n" +
                         "However, the Map is not valid and should be modified accordingly before saving or moving to the next step in the game.");
@@ -127,13 +131,17 @@ public class GameMapController {
         List<Country> l_countries = p_gameSession.getMap().getCountries();
 
         if (l_countries.size() < l_players.size()) {
-            System.out.println("In here");
+            System.out.println("=== Player Adjustment Required ===");
+            System.out.println("The number of players exceeds the available countries. Adjusting accordingly...");
+            System.out.println("---------------------------------------");
+
             for (int i = l_players.size(); i > l_countries.size(); i--) {
-                String l_message = "Player " + l_players.get(i - 1).getName() + " has been removed from the players list.";
+                String l_message = "--- Player " + l_players.get(i - 1).getName() + " has been removed due to an imbalance in player-country allocation.";
                 System.out.println(l_message);
                 l_players.remove(i - 1);
             }
-            System.out.println("Number of players is more than countries, see you in next games.");
+            System.out.println("✔ Adjustment complete. Some players have been removed to ensure a fair game.");
+            System.out.println("---------------------------------------");
         }
 
         for (int i = 0, j = 0; i < l_countries.size(); i++, j++) {
@@ -152,7 +160,9 @@ public class GameMapController {
             }
         }
 
-        System.out.println("Countries has been assigned to all players.");
+        System.out.println("=== Territory Assignment Complete ===");
+        System.out.println("Countries have been strategically assigned to all players.");
+        System.out.println("---------------------------------------");
     }
 
     /**
@@ -277,28 +287,36 @@ public class GameMapController {
      * @param p_gameMap The game map.
      */
     public void showMap(GameMap p_gameMap) {
-        if (p_gameMap == null)
-            d_displayToUser.instructionMessage("Can not run showmap since not map was loaded.");
-        else {
-            System.out.println(".................................... Map ....................................");
-            for (Continent l_continent : p_gameMap.getContinents()) {
-                System.out.println("                              Continent: " + l_continent.getName());
-                for (Country l_country : l_continent.getCountries()) {
-                    System.out.println("Country: " + l_country.getName() + " with id: " + l_country.getCountryId());
-                    System.out.println(">>>>> Owned by: " + (l_country.getD_ownedBy() == null ? "N/A" : l_country.getD_ownedBy().getName()));
-                    System.out.println(">>>>> Armies: ");
-                    for (Player l_player : l_country.getExistingArmies().keySet()) {
-                        System.out.println("- " + l_country.getExistingArmies().get(l_player) + " armies of: " + l_player.getName() + ".");
-                    }
-                    System.out.print(">>>>> Neighbors: ");
-                    for (Country neighbor : l_country.getAdjacentCountries()) {
-                        System.out.print(neighbor.getName() + " ");
-                    }
-                    System.out.println();
-                }
-            }
-            System.out.println(".................................... Map End ....................................");
+        if (p_gameMap == null) {
+            d_displayToUser.instructionMessage("Can not run \"showMap\" since not map was loaded.");
+            return;
         }
+        System.out.println("=====================================");
+        System.out.println("          GAME MAP OVERVIEW          ");
+        System.out.println("=====================================");
+        for (Continent l_continent : p_gameMap.getContinents()) {
+            System.out.println(">>> Continent: " + l_continent.getName());
+            System.out.println("---------------------------------------");
+            for (Country l_country : l_continent.getCountries()) {
+                System.out.println("Country: " + l_country.getName() + " (ID: " + l_country.getCountryId() + ")");
+                System.out.println(">>>> Owned by: " + (l_country.getD_ownedBy() == null ? "Unclaimed Territory" : l_country.getD_ownedBy().getName()));
+
+                System.out.println(">>>> Armies:");
+                for (Player l_player : l_country.getExistingArmies().keySet()) {
+                    System.out.print(" - " + l_country.getExistingArmies().get(l_player) + " units under the command of " + l_player.getName());
+                }
+
+                System.out.print(">>>> Neighbors: ");
+                for (Country neighbor : l_country.getAdjacentCountries()) {
+                    System.out.print(neighbor.getName() + " ");
+                }
+                System.out.println("\n---------------------------------------");
+                System.out.println();
+            }
+        }
+        System.out.println("=====================================");
+        System.out.println("         END OF MAP OVERVIEW         ");
+        System.out.println("=====================================");
     }
 
     /**
@@ -361,7 +379,7 @@ public class GameMapController {
     /**
      * Validates the map. A map is valid if it has at least 3 continents,
      * 5 countries and 5 borders.
-     * Also a map is valid if their countries are connected.
+     * Also, a map is valid if their countries are connected.
      *
      * @param p_gameMap The game map.
      */
@@ -460,22 +478,33 @@ public class GameMapController {
     public void handleMapManagementStep(GameSession p_gameSession) {
         Scanner l_scanner = new Scanner(System.in);
         String l_command;
-        d_displayToUser.instructionMessage("----------------------- Map Management Step -----------------------");
-        d_displayToUser.instructionMessage("You can use these instructions to manage the map of the game:");
-        d_displayToUser.instructionMessage("loadmap, editmap, savemap, showmap, validatemap, editcontinent, editcounty, editneighbour\n");
+
+        d_displayToUser.instructionMessage("=====================================");
+        d_displayToUser.instructionMessage("       MAP MANAGEMENT STEP          ");
+        d_displayToUser.instructionMessage("=====================================");
+
+        d_displayToUser.instructionMessage("Use the following commands to manage the game map:");
+        d_displayToUser.instructionMessage(String.format("%-20s %-20s %-20s %-20s", "⛁ loadmap", "✎ editmap", "⎙ savemap", "⚲ showmap"));
+        d_displayToUser.instructionMessage(String.format("%-20s %-20s %-20s %-20s", "✔ validatemap", "✎ editcontinent", "✎ editcountry", "✎ editneighbor"));
+        d_displayToUser.instructionMessage("----------------------------------------\n");
+
         boolean l_isUserStillInTheStep = true;
         do {
             l_command = l_scanner.nextLine();
             handleCommand(l_command, p_gameSession);
-            // Handle "mapeditordone" step
+
             if (l_command.split(" ")[0].equals("mapeditordone")) {
                 if (validateMap(p_gameSession.getMap())) {
-                    d_displayToUser.instructionMessage("The Map \"" + p_gameSession.getMap().getD_name() + "\" is valid and it will be considered for the game.\n");
+                    d_displayToUser.instructionMessage("✔ The Map \"" + p_gameSession.getMap().getD_name() + "\" is valid and will be considered for the game.\n");
                     l_isUserStillInTheStep = false;
-                } else
-                    d_displayToUser.instructionMessage("The Map \"" + p_gameSession.getMap().getD_name() + "\" is invalid. Please fix your Map accordingly before moving to the next step.\n");
+                } else {
+                    d_displayToUser.instructionMessage("⚠ The Map \"" + p_gameSession.getMap().getD_name() + "\" is invalid. Please fix your Map accordingly before proceeding.\n");
+                }
             }
         } while (l_isUserStillInTheStep);
-        d_displayToUser.instructionMessage("----------------------- Map Management Step Done -----------------------\n");
+
+        d_displayToUser.instructionMessage("=====================================");
+        d_displayToUser.instructionMessage("    MAP MANAGEMENT STEP COMPLETED    ");
+        d_displayToUser.instructionMessage("=====================================");
     }
 }

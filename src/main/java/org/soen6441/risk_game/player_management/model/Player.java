@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 /**
- * This class represents the player entity.
+ * Represents a player in the game.
  */
 public class Player {
     private String d_name;
@@ -20,11 +20,11 @@ public class Player {
     private final DisplayToUser d_displayToUser;
 
     /**
-     * Constructor for class.
+     * Constructs a player with a given name, reinforcement armies, and order list.
      *
-     * @param p_name                         the p name
-     * @param p_numberOfReinforcementsArmies the p number of reinforcements armies
-     * @param p_orders                       the p orders
+     * @param p_name                         Player's name.
+     * @param p_numberOfReinforcementsArmies Initial reinforcement armies.
+     * @param p_orders                       List of orders.
      */
     public Player(String p_name, int p_numberOfReinforcementsArmies, List<Order> p_orders) {
         this.d_name = p_name;
@@ -35,186 +35,173 @@ public class Player {
     }
 
     /**
-     * Getter for field.
+     * Gets the player's name.
      *
-     * @return the name
+     * @return Player name.
      */
     public String getName() {
         return d_name;
     }
 
     /**
-     * Setter for field.
+     * Sets the player's name.
      *
-     * @param p_name the p name
+     * @param p_name New player name.
      */
     public void setName(String p_name) {
         this.d_name = p_name;
     }
 
     /**
-     * Getter for field.
+     * Gets the number of reinforcement armies.
      *
-     * @return the number of reinforcements armies
+     * @return Number of reinforcement armies.
      */
     public int getNumberOfReinforcementsArmies() {
         return d_numberOfReinforcementsArmies;
     }
 
     /**
-     * Sets number of reinforcements armies.
+     * Sets the number of reinforcement armies.
      *
-     * @param p_numberOfReinforcementsArmies the p number of reinforcements armies
+     * @param p_numberOfReinforcementsArmies New reinforcement army count.
      */
     public void setNumberOfReinforcementsArmies(int p_numberOfReinforcementsArmies) {
         this.d_numberOfReinforcementsArmies = p_numberOfReinforcementsArmies;
     }
 
     /**
-     * Function to calculate correct number of reinforcement.
+     * Calculates and sets the correct number of reinforcement armies.
      *
-     * @param p_minimumNumberOfReinforcementsArmies the p minimum number of reinforcements armies per round.
+     * @param p_minimumNumberOfReinforcementsArmies Minimum reinforcement armies per round.
      */
     public void reinforcement(int p_minimumNumberOfReinforcementsArmies) {
-        int l_totalNewArmies;
-        int l_countriesCount = this.d_countries_owned.size();
-        l_totalNewArmies = l_countriesCount / 3;
-        l_totalNewArmies = Math.max(l_totalNewArmies, p_minimumNumberOfReinforcementsArmies);
+        int l_totalNewArmies = Math.max(d_countries_owned.size() / 3, p_minimumNumberOfReinforcementsArmies);
         setNumberOfReinforcementsArmies(l_totalNewArmies);
     }
 
     /**
-     * Getter for field.
+     * Gets the player's list of orders.
      *
-     * @return the orders
+     * @return List of orders.
      */
     public List<Order> getOrders() {
         return d_orders;
     }
 
     /**
-     * Setter for field.
+     * Adds an order to the player's order list.
      *
-     * @param p_order the p orders
+     * @param p_order Order to add.
      */
     public void setOrders(Order p_order) {
         this.d_orders.add(p_order);
     }
 
     /**
-     * This method handles the step of the player specifying
-     * the orders he wants to execute.
+     * Prompts the player to issue an order.
      */
     public void issue_order() {
         Scanner l_scanner = new Scanner(System.in);
         if (d_numberOfReinforcementsArmies <= 0) {
-            d_displayToUser.instructionMessage(this.d_name + "has no reinforcement left.");
+            d_displayToUser.instructionMessage(this.d_name + " has no reinforcement left.");
         }
         while (true) {
-          //  d_displayToUser.instructionMessage(this.getName() + " enter the deploy army command \"deploy <countryID> <numberOfArmies>\"");
             String l_command = l_scanner.nextLine().trim();
             String[] l_command_parts = l_command.split(" ");
+
             if (l_command_parts.length != 3 || !l_command_parts[0].equalsIgnoreCase("deploy")) {
-                d_displayToUser.instructionMessage("Invalid Command, try this command: \"deploy <countryID> <numberOfArmies>\"");
+                d_displayToUser.instructionMessage("Invalid command. Use: deploy <countryID> <numberOfArmies>");
                 continue;
             }
-            int l_countryID;
-            int l_numOfArmies;
+
             try {
-                l_countryID = Integer.parseInt(l_command_parts[1]);
-                l_numOfArmies = Integer.parseInt(l_command_parts[2]);
+                int l_countryID = Integer.parseInt(l_command_parts[1]);
+                int l_numOfArmies = Integer.parseInt(l_command_parts[2]);
+
+                if (!validNumberOfReinforcementArmies(l_numOfArmies)) {
+                    d_displayToUser.instructionMessage("Cannot deploy more armies than available. You have " + d_numberOfReinforcementsArmies + " armies left.");
+                    continue;
+                }
+
+                if (findCountryById(this.d_countries_owned, l_countryID) == null) {
+                    d_displayToUser.instructionMessage("You can only deploy armies to countries you own. Try again.");
+                    continue;
+                }
+
+                Deploy deployOrder = new Deploy(this, l_numOfArmies, l_countryID);
+                this.setOrders(deployOrder);
+                d_numberOfReinforcementsArmies -= l_numOfArmies;
+                break;
             } catch (NumberFormatException e) {
-                d_displayToUser.instructionMessage("Invalid number of armies or countryID. please enter valid values");
-                continue;
+                d_displayToUser.instructionMessage("Invalid number format. Please enter valid numeric values for country ID and number of armies.");
             }
-
-            if (!validNumberOfReinforcementArmies(l_numOfArmies)) {
-                d_displayToUser.instructionMessage("You can not deploy more the your reinforcement armies. You have " + d_numberOfReinforcementsArmies + " of armies. try again");
-                continue;
-            }
-            if (findCountryById(this.d_countries_owned, l_countryID) == null) {
-                d_displayToUser.instructionMessage(this.getName() + " you can only deploy armies on countries which you owned. Try again\n");
-                continue;
-            }
-            Deploy deployOrder = new Deploy(this, l_numOfArmies, l_countryID);
-            this.setOrders(deployOrder);
-            d_numberOfReinforcementsArmies -= l_numOfArmies;
-            break;
         }
-
     }
 
     /**
-     * This method will execute the next order.
-     *
+     * Executes the next order in the player's order list.
      */
     public void next_order() {
-        for (int i = 0; i < this.getOrders().size(); i++) {
-            this.getOrders().get(i).execute();
+        for (Order order : this.getOrders()) {
+            order.execute();
         }
     }
 
     /**
-     * Gets d owned countries.
+     * Gets the list of countries owned by the player.
      *
-     * @return the d owned countries
+     * @return List of owned countries.
      */
     public List<Country> getD_countries_owned() {
         return d_countries_owned;
     }
 
     /**
-     * Sets d owned countries.
+     * Adds a country to the player's owned list.
      *
-     * @param d_country_owned the d owned country
+     * @param d_country_owned Country to add.
      */
     public void setD_countries_owned(Country d_country_owned) {
         this.d_countries_owned.add(d_country_owned);
     }
 
     /**
-     * Has reinforcements armies boolean.
+     * Checks if the player has reinforcement armies.
      *
-     * @return the boolean
+     * @return True if reinforcement armies exist, false otherwise.
      */
-    public boolean hasReinforcementsArmies(){
+    public boolean hasReinforcementsArmies() {
         return d_numberOfReinforcementsArmies > 0;
     }
 
-
     /**
-     * Is reinforcement phase complete boolean.
+     * Checks if the reinforcement phase is complete.
      *
-     * @return the boolean
+     * @return True if no reinforcement armies are left.
      */
-    public boolean isReinforcementPhaseComplete(){
+    public boolean isReinforcementPhaseComplete() {
         return d_numberOfReinforcementsArmies == 0;
     }
 
     /**
-     * Find country by id country.
+     * Finds a country by its ID.
      *
-     * @param countries the countries
-     * @param countryID the country id
-     * @return the country
+     * @param countries List of countries.
+     * @param countryID Country ID to search for.
+     * @return Country object if found, null otherwise.
      */
     public Country findCountryById(List<Country> countries, int countryID) {
-        for (Country country : countries) {
-            if (country.getCountryId() == countryID) {
-                return country;
-            }
-        }
-        return null; // If not found
+        return countries.stream().filter(country -> country.getCountryId() == countryID).findFirst().orElse(null);
     }
 
     /**
-     * Valid number of reinforcement armies boolean.
+     * Validates if the given number of reinforcement armies can be deployed.
      *
-     * @param l_numOfArmies the l num of armies
-     * @return the boolean
+     * @param l_numOfArmies Number of armies.
+     * @return True if valid, false otherwise.
      */
     public boolean validNumberOfReinforcementArmies(int l_numOfArmies) {
         return l_numOfArmies <= d_numberOfReinforcementsArmies;
     }
-
 }
