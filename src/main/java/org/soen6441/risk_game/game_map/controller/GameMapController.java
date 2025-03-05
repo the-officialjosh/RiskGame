@@ -18,8 +18,10 @@ import java.util.function.Consumer;
 public class GameMapController {
     private DisplayToUser d_displayToUser = new DisplayToUser();
     private String d_mapFolderPath = "maps/";
+
     /**
      * Handles the load map step
+     *
      * @param p_gameSession The game session.
      */
     public void loadMap(GameSession p_gameSession, String p_mapFileName) {
@@ -27,7 +29,7 @@ public class GameMapController {
         // Reset Continent Id counter
         Continent.continentIdCounter = 1;
 
-         try (BufferedReader d_br = new BufferedReader(new FileReader(d_mapFolderPath + p_mapFileName))) {
+        try (BufferedReader d_br = new BufferedReader(new FileReader(d_mapFolderPath + p_mapFileName))) {
             String d_line;
             boolean d_readingContinents = false;
             boolean d_readingCountries = false;
@@ -109,14 +111,15 @@ public class GameMapController {
             else
                 d_displayToUser.instructionMessage("The Map \"" + p_mapFileName + "\" has been loaded into the game.\n" +
                         "However, the Map is not valid and should be modified accordingly before saving or moving to the next step in the game.");
-         } catch (IOException e) {
-             p_gameSession.setMap(d_gameMap);
-             d_displayToUser.instructionMessage("The Map \"" + p_mapFileName + "\" was not found in the maps folder. A new empty map will be loaded instead.\n");
-         }
+        } catch (IOException e) {
+            p_gameSession.setMap(d_gameMap);
+            d_displayToUser.instructionMessage("The Map \"" + p_mapFileName + "\" was not found in the maps folder. A new empty map will be loaded instead.\n");
+        }
     }
 
     /**
      * Handles the assign countries step.
+     *
      * @param p_gameSession The game session.
      */
     public void assignCountries(GameSession p_gameSession) {
@@ -154,6 +157,7 @@ public class GameMapController {
 
     /**
      * Handles the assignReinforcements step.
+     *
      * @param p_gameSession The game session.
      */
     public void assignReinforcements(GameSession p_gameSession) {
@@ -164,8 +168,9 @@ public class GameMapController {
 
     /**
      * Adds a continent to the map.
-     * @param p_gameMap The game map.
-     * @param p_continentName The name of the continent.
+     *
+     * @param p_gameMap        The game map.
+     * @param p_continentName  The name of the continent.
      * @param p_continentValue The value of the continent.
      */
     public void addContinent(GameMap p_gameMap, String p_continentName, int p_continentValue) {
@@ -176,7 +181,8 @@ public class GameMapController {
 
     /**
      * Removes a continent from the map.
-     * @param p_gameMap The game map.
+     *
+     * @param p_gameMap       The game map.
      * @param p_continentName The name of the continent.
      */
     public void removeContinent(GameMap p_gameMap, String p_continentName) {
@@ -187,8 +193,9 @@ public class GameMapController {
 
     /**
      * Adds a country to the map.
-     * @param p_gameMap The game map.
-     * @param p_countryName The name of the country.
+     *
+     * @param p_gameMap       The game map.
+     * @param p_countryName   The name of the country.
      * @param p_continentName The name of the continent.
      */
     public void addCountry(GameMap p_gameMap, String p_countryName, String p_continentName) {
@@ -204,7 +211,8 @@ public class GameMapController {
 
     /**
      * Removes a country from the map.
-     * @param p_gameMap The game map.
+     *
+     * @param p_gameMap     The game map.
      * @param p_countryName The name of the country.
      */
     public void removeCountry(GameMap p_gameMap, String p_countryName) {
@@ -216,8 +224,9 @@ public class GameMapController {
 
     /**
      * Adds a neighbor to a country.
-     * @param p_gameMap The game map.
-     * @param p_countryName The name of the country.
+     *
+     * @param p_gameMap      The game map.
+     * @param p_countryName  The name of the country.
      * @param p_neighborName The name of the neighbor country.
      */
     public void addNeighbor(GameMap p_gameMap, String p_countryName, String p_neighborName) {
@@ -242,8 +251,9 @@ public class GameMapController {
 
     /**
      * Removes a neighbor from a country.
-     * @param p_gameMap The game map.
-     * @param p_countryName The name of the country.
+     *
+     * @param p_gameMap      The game map.
+     * @param p_countryName  The name of the country.
      * @param p_neighborName The name of the neighbor country.
      */
     public void removeNeighbor(GameMap p_gameMap, String p_countryName, String p_neighborName) {
@@ -263,6 +273,7 @@ public class GameMapController {
 
     /**
      * Displays the map as text.
+     *
      * @param p_gameMap The game map.
      */
     public void showMap(GameMap p_gameMap) {
@@ -275,9 +286,9 @@ public class GameMapController {
                 for (Country l_country : l_continent.getCountries()) {
                     System.out.println("Country: " + l_country.getName() + " with id: " + l_country.getCountryId());
                     System.out.println(">>>>> Owned by: " + (l_country.getD_ownedBy() == null ? "N/A" : l_country.getD_ownedBy().getName()));
-                    System.out.println(">>>>> Armies: ");
+                    System.out.print(">>>>> Armies: ");
                     for (Player l_player : l_country.getExistingArmies().keySet()) {
-                        System.out.println("-------------" + l_country.getExistingArmies().get(l_player) + " armies of: " + l_player.getName() + ".");
+                        System.out.println("-----" + l_country.getExistingArmies().get(l_player) + " armies of: " + l_player.getName() + ".");
                     }
                     System.out.print(">>>>> Neighbors: ");
                     for (Country neighbor : l_country.getAdjacentCountries()) {
@@ -288,11 +299,12 @@ public class GameMapController {
             }
             System.out.println(".................................... Map End ....................................");
         }
-        }
+    }
 
     /**
      * Saves the map to a file.
-     * @param p_gameMap The game map.
+     *
+     * @param p_gameMap     The game map.
      * @param p_mapFileName The name of the file.
      */
     public void saveMap(GameMap p_gameMap, String p_mapFileName) {
@@ -338,6 +350,7 @@ public class GameMapController {
 
     /**
      * Method to handle validate Map command.
+     *
      * @param p_gameMap
      */
     public void handleValidateMapCommand(GameMap p_gameMap) {
@@ -349,6 +362,7 @@ public class GameMapController {
      * Validates the map. A map is valid if it has at least 3 continents,
      * 5 countries and 5 borders.
      * Also a map is
+     *
      * @param p_gameMap The game map.
      */
     public boolean validateMap(GameMap p_gameMap) {
@@ -379,6 +393,7 @@ public class GameMapController {
 
     /**
      * Internal method to verify countries connection.
+     *
      * @param country the country used as a starting point.
      */
     private void connectionVerification(Country country, Set<Country> connectedCountries) {
@@ -392,7 +407,8 @@ public class GameMapController {
 
     /**
      * Handles the map editor commands.
-     * @param p_command The command to be executed.
+     *
+     * @param p_command     The command to be executed.
      * @param p_gameSession The game session.
      */
     public void handleCommand(String p_command, GameSession p_gameSession) {
@@ -401,7 +417,7 @@ public class GameMapController {
         String l_cmd = l_parts[0];
 
         switch (l_cmd) {
-            case "loadmap","editmap":
+            case "loadmap", "editmap":
                 loadMap(p_gameSession, l_parts[1]);
                 break;
             case "editcontinent":
@@ -456,11 +472,10 @@ public class GameMapController {
                 if (validateMap(p_gameSession.getMap())) {
                     d_displayToUser.instructionMessage("The Map \"" + p_gameSession.getMap().getD_name() + "\" is valid and it will be considered for the game.\n");
                     l_isUserStillInTheStep = false;
-                }
-                else
+                } else
                     d_displayToUser.instructionMessage("The Map \"" + p_gameSession.getMap().getD_name() + "\" is invalid. Please fix your Map accordingly before moving to the next step.\n");
             }
-        } while(l_isUserStillInTheStep);
+        } while (l_isUserStillInTheStep);
         d_displayToUser.instructionMessage("----------------------- Map Management Step Done -----------------------\n");
     }
 }

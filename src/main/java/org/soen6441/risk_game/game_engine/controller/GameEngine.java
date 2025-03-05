@@ -13,6 +13,7 @@ import org.soen6441.risk_game.player_management.model.Player;
 public class GameEngine {
     /**
      * Main method which is the entry point method of the game.
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -37,14 +38,14 @@ public class GameEngine {
         l_displayToUser.startupPhaseEndMessage();
 
         // Game loop
-        while(true) {
+        while (true) {
             // Assign reinforcements step
             l_gameMapController.assignReinforcements(l_gameSession);
 
-            // Issue order phase TODO...
+            // Issue order phase
             l_playerController.issueOrderPhase(l_gameSession);
-            // Execute order phase TODO...
-
+            // Execute order phase
+            l_playerController.executeOrder(l_gameSession);
         }
     }
 

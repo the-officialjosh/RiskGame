@@ -145,12 +145,13 @@ public class Player {
     }
 
     /**
-     * This method return the next order to execute.
+     * This method will execute the next order.
      *
-     * @return the order
      */
-    public Order next_order() {
-        return null;
+    public void next_order() {
+        for (int i = 0; i < this.getOrders().size(); i++) {
+            this.getOrders().get(i).execute();
+        }
     }
 
     /**

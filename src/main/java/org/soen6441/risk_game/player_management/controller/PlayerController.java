@@ -79,7 +79,7 @@ public class PlayerController {
                 d_gameMapController.showMap(p_gameSession.getMap());
                 d_displayToUser.instructionMessage("\nReinforcement Armies");
                 d_displayToUser.instructionMessage("=====================");
-                d_displayToUser.instructionMessage(player.getName()+ " you have ("+player.getNumberOfReinforcementsArmies()+") reinforcement armies");
+                d_displayToUser.instructionMessage(player.getName() + " you have (" + player.getNumberOfReinforcementsArmies() + ") reinforcement armies");
 
                 if (player.hasReinforcementsArmies()) {
                     player.issue_order();
@@ -90,5 +90,11 @@ public class PlayerController {
             }
         } while (!allArmiesDeployed);
         d_displayToUser.instructionMessage("All armies has been deployed");
+    }
+
+    public void executeOrder(GameSession p_gameSession) {
+        for (int i = 0; i < p_gameSession.getPlayers().size(); i++) {
+            p_gameSession.getPlayers().get(i).next_order();
+        }
     }
 }
