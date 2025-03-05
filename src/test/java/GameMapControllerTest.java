@@ -1,11 +1,15 @@
 import java.util.ArrayList; // map tests
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.model.GameMap;
+import org.soen6441.risk_game.orders.model.Order;
+import org.soen6441.risk_game.player_management.model.Player;
 
 public class GameMapControllerTest {
 
@@ -19,6 +23,7 @@ public class GameMapControllerTest {
         gameSession = GameSession.getInstance();
         gameMap = new GameMap("my_map", new ArrayList<>());
         gameSession.setMap(gameMap);
+
     }
 
     @Test
@@ -67,5 +72,37 @@ public class GameMapControllerTest {
     public void testUnconnectedContinentIsInvalid() {
         gameMapController.loadMap(gameSession, "tests/bigeurope-continent-subgraph-unconnected.map");
         assertEquals(gameMapController.validateMap(gameSession.getMap()), false);
+    }
+
+    @Test
+    public void testReinforcementFor2Players() {
+        gameMapController.loadMap(gameSession, "europe.map");
+        List<Player> players = new ArrayList<>();
+        players.add(new Player("Player1", 0, new ArrayList<>()));
+        players.add(new Player("Player2", 0, new ArrayList<>()));
+        gameSession.setPlayers(players);
+        gameMapController.assignCountries(gameSession);
+        gameMapController.assignReinforcements(gameSession);
+        assertEquals(4, gameSession.getPlayers().get(0).getNumberOfReinforcementsArmies());
+        assertEquals(4, gameSession.getPlayers().get(1).getNumberOfReinforcementsArmies());
+    }
+
+    @Test
+    public void testReinforcementFor5Players() {
+        gameMapController.loadMap(gameSession, "europe.map");
+        List<Player> players = new ArrayList<>();
+        players.add(new Player("Player1", 0, new ArrayList<>()));
+        players.add(new Player("Player2", 0, new ArrayList<>()));
+        players.add(new Player("Player3", 0, new ArrayList<>()));
+        players.add(new Player("Player4", 0, new ArrayList<>()));
+        players.add(new Player("Player5", 0, new ArrayList<>()));
+        gameSession.setPlayers(players);
+        gameMapController.assignCountries(gameSession);
+        gameMapController.assignReinforcements(gameSession);
+        assertEquals(3, gameSession.getPlayers().get(0).getNumberOfReinforcementsArmies());
+        assertEquals(3, gameSession.getPlayers().get(1).getNumberOfReinforcementsArmies());
+        assertEquals(3, gameSession.getPlayers().get(2).getNumberOfReinforcementsArmies());
+        assertEquals(3, gameSession.getPlayers().get(3).getNumberOfReinforcementsArmies());
+        assertEquals(3, gameSession.getPlayers().get(4).getNumberOfReinforcementsArmies());
     }
 }
