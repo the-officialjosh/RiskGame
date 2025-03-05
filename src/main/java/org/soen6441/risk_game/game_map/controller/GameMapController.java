@@ -94,7 +94,7 @@ public class GameMapController {
                                                     d_oneOfTheContinents.getCountries().forEach(oneOfTheCountries ->
                                                     {
                                                         for (int i = 1; i < d_parts.length; i++) {
-                                                            if (Integer.valueOf(d_parts[i]) == oneOfTheCountries.getCountryId())
+                                                            if (Integer.parseInt(d_parts[i]) == oneOfTheCountries.getCountryId())
                                                                 d_adjacentCountries.add(oneOfTheCountries);
                                                         }
                                                     })
