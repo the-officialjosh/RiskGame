@@ -286,9 +286,9 @@ public class GameMapController {
                 for (Country l_country : l_continent.getCountries()) {
                     System.out.println("Country: " + l_country.getName() + " with id: " + l_country.getCountryId());
                     System.out.println(">>>>> Owned by: " + (l_country.getD_ownedBy() == null ? "N/A" : l_country.getD_ownedBy().getName()));
-                    System.out.print(">>>>> Armies: ");
+                    System.out.println(">>>>> Armies: ");
                     for (Player l_player : l_country.getExistingArmies().keySet()) {
-                        System.out.println("-----" + l_country.getExistingArmies().get(l_player) + " armies of: " + l_player.getName() + ".");
+                        System.out.println("- " + l_country.getExistingArmies().get(l_player) + " armies of: " + l_player.getName() + ".");
                     }
                     System.out.print(">>>>> Neighbors: ");
                     for (Country neighbor : l_country.getAdjacentCountries()) {
@@ -361,7 +361,7 @@ public class GameMapController {
     /**
      * Validates the map. A map is valid if it has at least 3 continents,
      * 5 countries and 5 borders.
-     * Also a map is
+     * Also a map is valid if their countries are connected.
      *
      * @param p_gameMap The game map.
      */
