@@ -303,7 +303,7 @@ public class GameMapController {
 
                 System.out.println(">>>> Armies:");
                 for (Player l_player : l_country.getExistingArmies().keySet()) {
-                    System.out.print(" - " + l_country.getExistingArmies().get(l_player) + " units under the command of " + l_player.getName());
+                    System.out.println(" - " + l_country.getExistingArmies().get(l_player) + " units under the command of " + l_player.getName());
                 }
 
                 System.out.print(">>>> Neighbors: ");
