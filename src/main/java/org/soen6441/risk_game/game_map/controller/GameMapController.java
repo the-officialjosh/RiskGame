@@ -108,8 +108,10 @@ public class GameMapController {
                 }
             }
             p_gameSession.setMap(d_gameMap);
-            if (validateMap(d_gameMap))
-                d_displayToUser.instructionMessage("The Map \"" + p_mapFileName + "\" is valid and has been loaded into the game.\n");
+            if (validateMap(d_gameMap)){
+                d_displayToUser.instructionMessage("\nThe Map \"" + p_mapFileName + "\" is valid and has been loaded into the game.");
+                d_displayToUser.instructionMessage("Run \"mapeditordone\" to continue\n");
+            }
             else
                 d_displayToUser.instructionMessage("The Map \"" + p_mapFileName + "\" has been loaded into the game.\n" +
                         "However, the Map is not valid and should be modified accordingly before saving or moving to the next step in the game.");
