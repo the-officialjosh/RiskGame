@@ -482,10 +482,9 @@ public class GameMapController {
         d_displayToUser.instructionMessage("=====================================");
 
         d_displayToUser.instructionMessage("Use the following commands to manage the game map:");
-        d_displayToUser.instructionMessage(String.format("%-15s %-15s %-15s %-15s", "[>] loadmap", "[+] editmap", "savemap", "showmap"));
-        d_displayToUser.instructionMessage(String.format("%-15s %-15s %-15s %-15s", "validatemap", "editcontinent", "editcountry", "editneighbor"));
+        d_displayToUser.instructionMessage(String.format("%-20s %-20s %-20s %-20s", "⛁ loadmap", "✎ editmap", "⎙ savemap", "⚲ showmap"));
+        d_displayToUser.instructionMessage(String.format("%-20s %-20s %-20s %-20s", "✔ validatemap", "✎ editcontinent", "✎ editcountry", "✎ editneighbor"));
         d_displayToUser.instructionMessage("----------------------------------------\n");
-
 
         boolean l_isUserStillInTheStep = true;
         do {
