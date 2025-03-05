@@ -3,6 +3,7 @@ package org.soen6441.risk_game.orders.model;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.player_management.model.Player;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,10 @@ public class Deploy implements Order {
     private Player d_issuer;
     private int d_numberOfDeployedArmies;
     private int d_countryId;
+
     /**
      * Constructor for class.
+     *
      * @param p_issuer
      * @param p_numberOfDeployedArmies
      */
@@ -60,14 +63,14 @@ public class Deploy implements Order {
      */
     public void execute() {
         GameSession l_gameSession = GameSession.getInstance();
-        Country country = d_issuer.findCountryById(d_issuer.getD_countries_owned(), d_countryId);
-        Map<Player, Integer> map = new HashMap<>();
-        map.put(d_issuer,d_numberOfDeployedArmies);
+        Country l_country = d_issuer.findCountryById(d_issuer.getD_countries_owned(), d_countryId);
+        Map<Player, Integer> l_map = new HashMap<>();
+        l_map.put(d_issuer, d_numberOfDeployedArmies);
         for (int i = 0; i < l_gameSession.getMap().getCountries().size(); i++) {
-             if(l_gameSession.getMap().getCountries().get(i).getCountryId()==country.getCountryId()){
-                 l_gameSession.getMap().getCountries().get(i).setExistingArmies(map);
-                 break;
-             }
+            if (l_gameSession.getMap().getCountries().get(i).getCountryId() == l_country.getCountryId()) {
+                l_gameSession.getMap().getCountries().get(i).setExistingArmies(l_map);
+                break;
+            }
         }
     }
 }

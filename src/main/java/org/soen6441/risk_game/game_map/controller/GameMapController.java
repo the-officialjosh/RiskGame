@@ -123,32 +123,32 @@ public class GameMapController {
      * @param p_gameSession The game session.
      */
     public void assignCountries(GameSession p_gameSession) {
-        List<Player> d_players = p_gameSession.getPlayers();
-        List<Country> d_countries = p_gameSession.getMap().getCountries();
+        List<Player> l_players = p_gameSession.getPlayers();
+        List<Country> l_countries = p_gameSession.getMap().getCountries();
 
-        if (d_countries.size() < d_players.size()) {
+        if (l_countries.size() < l_players.size()) {
             System.out.println("In here");
-            for (int i = d_players.size(); i > d_countries.size(); i--) {
-                String l_message = "Player " + d_players.get(i - 1).getName() + " has been removed from the players list.";
+            for (int i = l_players.size(); i > l_countries.size(); i--) {
+                String l_message = "Player " + l_players.get(i - 1).getName() + " has been removed from the players list.";
                 System.out.println(l_message);
-                d_players.remove(i - 1);
+                l_players.remove(i - 1);
             }
             System.out.println("Number of players is more than countries, see you in next games.");
         }
 
-        for (int i = 0, j = 0; i < d_countries.size(); i++, j++) {
-            if (j == d_players.size())
+        for (int i = 0, j = 0; i < l_countries.size(); i++, j++) {
+            if (j == l_players.size())
                 j = 0;
             Random rn = new Random();
-            int random = rn.nextInt(d_countries.size());
+            int l_random = rn.nextInt(l_countries.size());
 
             while (true) {
-                if (d_countries.get(random).getD_ownedBy() == null) {
-                    d_countries.get(random).setD_ownedBy(d_players.get(j));
-                    d_players.get(j).setD_countries_owned(d_countries.get(random));
+                if (l_countries.get(l_random).getD_ownedBy() == null) {
+                    l_countries.get(l_random).setD_ownedBy(l_players.get(j));
+                    l_players.get(j).setD_countries_owned(l_countries.get(l_random));
                     break;
                 }
-                random = rn.nextInt(d_countries.size());
+                l_random = rn.nextInt(l_countries.size());
             }
         }
 
