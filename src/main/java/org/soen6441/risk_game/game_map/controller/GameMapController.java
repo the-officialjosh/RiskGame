@@ -129,13 +129,17 @@ public class GameMapController {
         List<Country> l_countries = p_gameSession.getMap().getCountries();
 
         if (l_countries.size() < l_players.size()) {
-            System.out.println("In here");
+            System.out.println("=== Player Adjustment Required ===");
+            System.out.println("The number of players exceeds the available countries. Adjusting accordingly...");
+            System.out.println("---------------------------------------");
+
             for (int i = l_players.size(); i > l_countries.size(); i--) {
-                String l_message = "Player " + l_players.get(i - 1).getName() + " has been removed from the players list.";
+                String l_message = "--- Player " + l_players.get(i - 1).getName() + " has been removed due to an imbalance in player-country allocation.";
                 System.out.println(l_message);
                 l_players.remove(i - 1);
             }
-            System.out.println("Number of players is more than countries, see you in next games.");
+            System.out.println("✔ Adjustment complete. Some players have been removed to ensure a fair game.");
+            System.out.println("---------------------------------------");
         }
 
         for (int i = 0, j = 0; i < l_countries.size(); i++, j++) {
