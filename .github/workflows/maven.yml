@@ -8,6 +8,9 @@
 
 
 
+# This workflow builds a Java project with Maven, runs tests, generates Javadoc, and makes it downloadable
+# For more information, see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
 name: Java CI with Maven
 
 on:
@@ -43,9 +46,16 @@ jobs:
       run: mvn test  # Ensures all unit tests pass before allowing push
 
     - name: Generate Javadoc
-      run: mvn javadoc:javadoc  # Generates Javadoc to ensure documentation builds correctly
+      run: mvn javadoc:javadoc  # Generates Javadoc
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
+    - name: Upload Javadoc as an artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: javadoc
+        path: target/site/apidocs  # This is the default output folder for Javadoc
+        retention-days: 7  # Javadoc will be stored for 7 days
 
   
