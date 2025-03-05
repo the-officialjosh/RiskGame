@@ -9,7 +9,7 @@ import org.soen6441.risk_game.player_management.model.Player;
 
 import java.io.*;
 import java.util.*;
-import java.util.function.Consumer;
+
 
 /**
  * GameMap controller class which is responsible for handling all
@@ -17,7 +17,7 @@ import java.util.function.Consumer;
  */
 public class GameMapController {
     private DisplayToUser d_displayToUser = new DisplayToUser();
-    private String d_mapFolderPath = "maps/";
+    private final String d_mapFolderPath = "maps/";
 
     /**
      * Handles the load map step
@@ -44,23 +44,25 @@ public class GameMapController {
                         break;
                     continue;
                 }
-                if (d_line.equals("[continents]")) {
-                    d_readingContinents = true;
-                    d_readingCountries = false;
-                    d_readingBorders = false;
-                    continue;
-                }
-                if (d_line.equals("[countries]")) {
-                    d_readingContinents = false;
-                    d_readingCountries = true;
-                    d_readingBorders = false;
-                    continue;
-                }
-                if (d_line.equals("[borders]")) {
-                    d_readingContinents = false;
-                    d_readingCountries = false;
-                    d_readingBorders = true;
-                    continue;
+                switch (d_line) {
+                    case "[continents]" -> {
+                        d_readingContinents = true;
+                        d_readingCountries = false;
+                        d_readingBorders = false;
+                        continue;
+                    }
+                    case "[countries]" -> {
+                        d_readingContinents = false;
+                        d_readingCountries = true;
+                        d_readingBorders = false;
+                        continue;
+                    }
+                    case "[borders]" -> {
+                        d_readingContinents = false;
+                        d_readingCountries = false;
+                        d_readingBorders = true;
+                        continue;
+                    }
                 }
                 if (d_readingContinents) {
                     String[] d_parts = d_line.split(" ");
@@ -73,7 +75,7 @@ public class GameMapController {
                     String[] d_parts = d_line.split(" ");
                     int d_countryId = Integer.parseInt(d_parts[0]);
                     String d_countryName = d_parts[1];
-                    int d_continentId = Integer.valueOf(d_parts[2]);
+                    int d_continentId = Integer.parseInt(d_parts[2]);
                     Country d_country = new Country(d_countryId, d_countryName, new ArrayList<>(), new HashMap<Player, Integer>());
                     for (Continent d_continent : d_gameMap.getContinents()) {
                         if (d_continent.getD_continentId() == d_continentId) {
@@ -87,7 +89,7 @@ public class GameMapController {
                     d_gameMap.getContinents().forEach(p_continent ->
                             p_continent.getCountries().forEach(p_country ->
                                     {
-                                        if (p_country.getCountryId() == Integer.valueOf(d_parts[0])) {
+                                        if (p_country.getCountryId() == Integer.parseInt(d_parts[0])) {
                                             List<Country> d_adjacentCountries = new ArrayList<Country>();
                                             // Check for the adjacent countries by using the retrieved ids
                                             d_gameMap.getContinents().forEach(d_oneOfTheContinents ->
