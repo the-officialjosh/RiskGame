@@ -133,7 +133,7 @@ deploy <country_id> <number_of_armies>*
 ```
 **Example:**
 ```sh
-deploy France 5
+deploy 24 5
 ```
 
 ---
