@@ -38,7 +38,7 @@ public class GameMapController {
             while ((d_line = d_br.readLine()) != null) {
                 d_line = d_line.trim();
                 if (d_line.isEmpty() || d_line.startsWith(";")) {
-                    // If we are in the last step and we are reading the last empty
+                    // If we are in the last step, and we are reading the last empty
                     // line, then we can finish the reading process
                     if (d_readingBorders)
                         break;
@@ -363,7 +363,7 @@ public class GameMapController {
     /**
      * Validates the map. A map is valid if it has at least 3 continents,
      * 5 countries and 5 borders.
-     * Also a map is valid if their countries are connected.
+     * Also, a map is valid if their countries are connected.
      *
      * @param p_gameMap The game map.
      */
