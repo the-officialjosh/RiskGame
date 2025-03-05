@@ -87,10 +87,10 @@ public class PlayerController {
 
     public void issueOrderPhase(GameSession p_gameSession) {
         boolean allArmiesDeployed;
+        d_gameMapController.showMap(p_gameSession.getMap());
         do {
             allArmiesDeployed = true;
             for (Player player : p_gameSession.getPlayers()) {
-                d_gameMapController.showMap(p_gameSession.getMap());
                 d_displayToUser.instructionMessage("\n⚔ Reinforcement Phase");
                 d_displayToUser.instructionMessage("==========================");
                 d_displayToUser.instructionMessage("Use \"deploy <country_id> <number_of_armies>*\" to deploy\n");
