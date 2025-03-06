@@ -110,7 +110,7 @@ public class GameMapController {
             p_gameSession.setMap(d_gameMap);
             if (validateMap(d_gameMap)){
                 d_displayToUser.instructionMessage("\nThe Map \"" + p_mapFileName + "\" is valid and has been loaded into the game.");
-                d_displayToUser.instructionMessage("Run \"mapeditordone\" to continue\n");
+                d_displayToUser.instructionMessage("You can run other map instructions or \"mapeditordone\" to finish the Map Management step.\n");
             }
             else
                 d_displayToUser.instructionMessage("The Map \"" + p_mapFileName + "\" has been loaded into the game.\n" +
@@ -291,12 +291,12 @@ public class GameMapController {
             d_displayToUser.instructionMessage("Can not run \"showMap\" since not map was loaded.");
             return;
         }
-        System.out.println("=====================================");
-        System.out.println("          GAME MAP OVERVIEW          ");
-        System.out.println("=====================================");
+        System.out.println("==============================================================================");
+        System.out.println("                                  GAME MAP OVERVIEW                           ");
+        System.out.println("==============================================================================");
         for (Continent l_continent : p_gameMap.getContinents()) {
-            System.out.println(">>> Continent: " + l_continent.getName());
-            System.out.println("---------------------------------------");
+            System.out.println("                               Continent: " + l_continent.getName());
+            System.out.println("------------------------------------------------------------------------------");
             for (Country l_country : l_continent.getCountries()) {
                 System.out.println("Country: " + l_country.getName() + " (ID: " + l_country.getCountryId() + ")");
                 System.out.println(">>>> Owned by: " + (l_country.getD_ownedBy() == null ? "Unclaimed Territory" : l_country.getD_ownedBy().getName()));
@@ -310,13 +310,12 @@ public class GameMapController {
                 for (Country neighbor : l_country.getAdjacentCountries()) {
                     System.out.print(neighbor.getName() + " ");
                 }
-                System.out.println("\n---------------------------------------");
-                System.out.println();
+                System.out.println("\n------------------------------------------------------------------------------");
             }
         }
-        System.out.println("=====================================");
-        System.out.println("         END OF MAP OVERVIEW         ");
-        System.out.println("=====================================");
+        System.out.println("==============================================================================");
+        System.out.println("                                  END OF MAP OVERVIEW                         ");
+        System.out.println("==============================================================================");
     }
 
     /**
