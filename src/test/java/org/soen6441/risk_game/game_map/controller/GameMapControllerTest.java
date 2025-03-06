@@ -11,6 +11,9 @@ import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.GameMap;
 import org.soen6441.risk_game.player_management.model.Player;
 
+/**
+ * Test suite for Map functionalities.
+ */
 public class GameMapControllerTest {
 
     private GameMapController gameMapController;
