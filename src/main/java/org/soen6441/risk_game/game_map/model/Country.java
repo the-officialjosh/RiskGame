@@ -1,16 +1,20 @@
 package org.soen6441.risk_game.game_map.model;
 
 import org.soen6441.risk_game.player_management.model.Player;
-import org.soen6441.risk_game.player_management.model.Player;
 
 
 import java.util.List;
 import java.util.Map;
 
-import org.soen6441.risk_game.player_management.model.Player;
 
 /**
  * This class represents the country entity.
+ *
+ * @author Ahmed Fakhir
+ * @author Kawshik Kumar Ghosh
+ * @author Safin Mahesania
+ *
+ * @version 1.0
  */
 public class Country {
     private int d_countryId;
@@ -21,10 +25,10 @@ public class Country {
 
     /**
      * Constructor for the class.
-     * @param p_countryId
-     * @param p_name
-     * @param p_adjacentCountries
-     * @param p_existingArmies
+     * @param p_countryId The id of the country.
+     * @param p_name The name of the country.
+     * @param p_adjacentCountries The list of adjacent countries.
+     * @param p_existingArmies The existing armies in the country.
      */
     public Country(int p_countryId, String p_name, List<Country> p_adjacentCountries, Map<Player, Integer> p_existingArmies) {
         this.d_countryId = p_countryId;

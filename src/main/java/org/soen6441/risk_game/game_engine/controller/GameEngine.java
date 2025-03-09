@@ -4,17 +4,22 @@ import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.player_management.controller.PlayerController;
-import org.soen6441.risk_game.player_management.model.Player;
 
 /**
  * GameEngine class which is serving as the game entry point as well as handling
  * the global game logic.
+ *
+ * @author Ahmed Fakhir
+ * @author Safin Mahesania
+ * @author Irfan Maknojia
+ * @version 1.0
+ *
  */
 public class GameEngine {
     /**
      * Main method which is the entry point method of the game.
      *
-     * @param args
+     * @param args The command line arguments.
      */
     public static void main(String[] args) {
         // Game Session

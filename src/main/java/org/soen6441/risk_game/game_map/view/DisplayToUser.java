@@ -2,6 +2,12 @@ package org.soen6441.risk_game.game_map.view;
 
 /**
  * Handles user display messages for the game.
+ *
+ * @author Ahmed Fakhir
+ * @author Joshua Onyema
+ * @author Kawshik Kumar Ghosh
+ *
+ * @version 1.0
  */
 public class DisplayToUser {
 

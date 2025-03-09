@@ -4,6 +4,11 @@ import java.util.List;
 
 /**
  * Entity representing the continents of the game.
+ * It contains the countries that are part of the continent.
+ *
+ * @author Ahmed Fakhir
+ * @author Kawshik Kumar Ghosh
+ * @version 1.0
  */
 public class Continent {
     private int d_continentId;
@@ -102,6 +107,6 @@ public class Continent {
      * @param p_continentId the continent id to set.
      */
     public void setD_continentId(int p_continentId) {
-        this.d_continentId = d_continentId;
+        this.d_continentId = p_continentId;
     }
 }

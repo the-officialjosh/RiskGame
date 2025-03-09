@@ -14,6 +14,12 @@ import java.util.*;
 /**
  * GameMap controller class which is responsible for handling all
  * the map related logics.
+ *
+ * @author Ahmed Fakhir
+ * @author Irfan Maknojia
+ * @author Joshua Onyema
+ * @author Kawshik Kumar Ghosh
+ * @version 1.0
  */
 public class GameMapController {
     private DisplayToUser d_displayToUser = new DisplayToUser();
@@ -76,7 +82,7 @@ public class GameMapController {
                     int d_countryId = Integer.parseInt(d_parts[0]);
                     String d_countryName = d_parts[1];
                     int d_continentId = Integer.parseInt(d_parts[2]);
-                    Country d_country = new Country(d_countryId, d_countryName, new ArrayList<>(), new HashMap<Player, Integer>());
+                    Country d_country = new Country(d_countryId, d_countryName, new ArrayList<>(), new HashMap<>());
                     for (Continent d_continent : d_gameMap.getContinents()) {
                         if (d_continent.getD_continentId() == d_continentId) {
                             d_continent.getCountries().add(d_country);
@@ -90,7 +96,7 @@ public class GameMapController {
                             p_continent.getCountries().forEach(p_country ->
                                     {
                                         if (p_country.getCountryId() == Integer.parseInt(d_parts[0])) {
-                                            List<Country> d_adjacentCountries = new ArrayList<Country>();
+                                            List<Country> d_adjacentCountries = new ArrayList<>();
                                             // Check for the adjacent countries by using the retrieved ids
                                             d_gameMap.getContinents().forEach(d_oneOfTheContinents ->
                                                     d_oneOfTheContinents.getCountries().forEach(oneOfTheCountries ->
@@ -211,7 +217,7 @@ public class GameMapController {
     public void addCountry(GameMap p_gameMap, String p_countryName, String p_continentName) {
         for (Continent l_continent : p_gameMap.getContinents()) {
             if (l_continent.getName().equals(p_continentName)) {
-                Country l_country = new Country(p_gameMap.getCountries().size() + 1, p_countryName, new ArrayList<Country>(), new HashMap<Player, Integer>());
+                Country l_country = new Country(p_gameMap.getCountries().size() + 1, p_countryName, new ArrayList<>(), new HashMap<>());
                 l_continent.getCountries().add(l_country);
                 d_displayToUser.instructionMessage("Country " + p_countryName + " added to continent " + p_continentName + ".");
                 break;
@@ -368,7 +374,7 @@ public class GameMapController {
     /**
      * Method to handle validate Map command.
      *
-     * @param p_gameMap
+     * @param p_gameMap The game map.
      */
     public void handleValidateMapCommand(GameMap p_gameMap) {
         if (validateMap(p_gameMap))
@@ -394,7 +400,7 @@ public class GameMapController {
         }
         l_bordersNumber /= 2;
         // Then verify if all countries are connected
-        HashSet<Country> l_connectedCountries = new HashSet<Country>();
+        HashSet<Country> l_connectedCountries = new HashSet<>();
         connectionVerification(p_gameMap.getContinents().getFirst().getCountries().getFirst(), l_connectedCountries);
         boolean l_countriesAreConnected = l_countriesNumber == l_connectedCountries.size();
         if (l_continentsNumber < 3)
