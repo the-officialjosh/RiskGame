@@ -91,6 +91,11 @@ public class PlayerController {
         p_gameSession.setPlayers(playerList);
     }
 
+    /**
+     * This method handles the reinforcement phase.
+     *
+     * @param p_gameSession The game session.
+     */
     public void issueOrderPhase(GameSession p_gameSession) {
         boolean allArmiesDeployed;
         d_gameMapController.showMap(p_gameSession.getMap());
@@ -112,7 +117,11 @@ public class PlayerController {
         } while (!allArmiesDeployed);
         d_displayToUser.instructionMessage("✔ All armies have been deployed.");
     }
-
+    /**
+     * This method handles the order execution phase.
+     *
+     * @param p_gameSession The game session.
+     */
     public void executeOrder(GameSession p_gameSession) {
         for (Player player : p_gameSession.getPlayers()) {
             player.next_order();

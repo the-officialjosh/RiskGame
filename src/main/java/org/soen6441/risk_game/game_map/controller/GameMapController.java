@@ -387,6 +387,7 @@ public class GameMapController {
      * Also, a map is valid if their countries are connected.
      *
      * @param p_gameMap The game map.
+     * @return True if the map is valid, false otherwise.
      */
     public boolean validateMap(GameMap p_gameMap) {
         // Implement logic to validate the map
@@ -480,6 +481,11 @@ public class GameMapController {
         }
     }
 
+    /**
+     * Handles the map management step.
+     *
+     * @param p_gameSession The game session.
+     */
     public void handleMapManagementStep(GameSession p_gameSession) {
         Scanner l_scanner = new Scanner(System.in);
         String l_command;

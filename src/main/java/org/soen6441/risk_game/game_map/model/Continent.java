@@ -16,6 +16,9 @@ public class Continent {
     private List<Country> d_countries;
     private int d_controlValue;
 
+    /**
+     * Counter for the continent id.
+     */
     public static int continentIdCounter = 1;
     /**
      * Contructor for the class.

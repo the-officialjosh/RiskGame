@@ -20,6 +20,10 @@ public class GameSession {
 
     private GameSession() {}
 
+    /**
+     * Returns the instance of the GameSession.
+     * @return instance The instance of the GameSession.
+     */
     public static GameSession getInstance() {
         return instance;
     }

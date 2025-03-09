@@ -39,6 +39,7 @@ public class Country {
 
     /**
      * Getter for the field.
+     * @return The country id.
      */
     public int getCountryId() {
         return d_countryId;
@@ -46,6 +47,7 @@ public class Country {
 
     /**
      * Setter for the field.
+     * @param p_countryId The country id.
      */
     public void setCountryId(int p_countryId) {
         this.d_countryId = p_countryId;
@@ -53,6 +55,7 @@ public class Country {
 
     /**
      * Getter for the field.
+     * @return The country name.
      */
     public String getName() {
         return d_name;
@@ -60,6 +63,7 @@ public class Country {
 
     /**
      * Setter for the field.
+     * @param p_name The country name.
      */
     public void setName(String p_name) {
         this.d_name = p_name;
