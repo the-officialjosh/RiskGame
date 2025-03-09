@@ -5,11 +5,15 @@ import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.player_management.model.Player;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * This class represents the Deploy order.
+ *
+ * @author Ahmed Fakhir
+ * @author Irfan Maknojia
+ * @author Safin Mahesania
+ * @version 1.0
  */
 public class Deploy implements Order {
 
@@ -20,8 +24,8 @@ public class Deploy implements Order {
     /**
      * Constructor for class.
      *
-     * @param p_issuer
-     * @param p_numberOfDeployedArmies
+     * @param p_issuer               The player who issued the order.
+     * @param p_numberOfDeployedArmies The number of armies to deploy.
      */
     public Deploy(Player p_issuer, int p_numberOfDeployedArmies, int d_countryId) {
         this.d_issuer = p_issuer;

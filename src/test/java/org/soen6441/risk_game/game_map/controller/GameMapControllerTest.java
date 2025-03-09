@@ -65,6 +65,7 @@ public class GameMapControllerTest {
         assertEquals(gameMapController.validateMap(gameSession.getMap()), true);
     }
 
+    // Test for unconnected map
     @Test
     public void testUnconnectedMapIsInvalid() {
         gameMapController.loadMap(gameSession, "tests/bigeurope-unconnected.map");

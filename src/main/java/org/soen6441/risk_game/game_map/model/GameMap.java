@@ -5,6 +5,12 @@ import java.util.List;
 
 /**
  * This class represents the global map for the game.
+ *
+ * @author Joshua Onyema
+ * @author Kawshik Kumar Ghosh
+ * @author Ahmed Fakhir
+ *
+ * @version 1.0
  */
 public class GameMap {
     private String d_name;
@@ -12,8 +18,12 @@ public class GameMap {
 
     /**
      * Constructor for class.
-     * @param p_name
-     * @param p_continents
+     * @param p_name The name of the map.
+     * @param p_continents The continents in the map.
+     *
+     * @author Ahmed Fakhir
+     * @author Joshua Onyema
+     * @author
      */
     public GameMap(String p_name, List<Continent> p_continents) {
         this.d_name = p_name;

@@ -6,11 +6,15 @@ import org.soen6441.risk_game.orders.model.Deploy;
 import org.soen6441.risk_game.orders.model.Order;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 /**
  * Represents a player in the game.
+ * @author Irfan Maknojia
+ * @author Joshua Onyema
+ * @author Safin Mahesania
+ * @author Ahmed Fakhir
+ * @version 1.0
  */
 public class Player {
     private String d_name;

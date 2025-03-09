@@ -1,15 +1,17 @@
 package org.soen6441.risk_game.game_engine.model;
 
 import org.soen6441.risk_game.game_map.model.GameMap;
-import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.player_management.model.Player;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * GameSession class which represents the actual game state and holds
  * all the information about the game.
+ *
+ * @author Ahmed Fakhir
+ * @author Irfan Maknojia
+ * @version 1.0
  */
 public class GameSession {
     private static final GameSession instance = new GameSession();
@@ -18,13 +20,17 @@ public class GameSession {
 
     private GameSession() {}
 
+    /**
+     * Returns the instance of the GameSession.
+     * @return instance The instance of the GameSession.
+     */
     public static GameSession getInstance() {
         return instance;
     }
 
     /**
      * Returns the list of players.
-     * @return
+     * @return d_players The list of players.
      */
     public List<Player> getPlayers() {
         return d_players;
@@ -32,7 +38,7 @@ public class GameSession {
 
     /**
      * Sets the list of players
-     * @param p_players
+     * @param p_players The list of players.
      */
     public void setPlayers(List<Player> p_players) {
         this.d_players = p_players;

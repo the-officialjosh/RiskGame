@@ -1,10 +1,14 @@
 package org.soen6441.risk_game.orders.model;
 
-import org.soen6441.risk_game.game_engine.model.GameSession;
 
 /**
  * This interface represents the generic Order that players
  * can instruct.
+ *
+ * @author Ahmed Fakhir
+ * @author Safin Mahesania
+ * @version 1.0
+ *
  */
 public interface Order {
     /**

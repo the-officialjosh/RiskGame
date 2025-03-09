@@ -12,6 +12,12 @@ import java.util.Scanner;
 
 /**
  * This class holds all the logic for players management.
+ *
+ * @author Irfan Maknojia
+ * @author Joshua Onyema
+ * @author Safin Mahesania
+ * @author Ahmed Fakhir
+ * @version 1.0
  */
 public class PlayerController {
 
@@ -58,7 +64,7 @@ public class PlayerController {
             String l_playerName = l_commandArray[2];
 
             if (l_action.equals("-add")) {
-                Player playerToAdd = new Player(l_playerName, 0, new ArrayList<Order>());
+                Player playerToAdd = new Player(l_playerName, 0, new ArrayList<>());
                 boolean exists = playerList.stream().anyMatch(player -> player.getName().equalsIgnoreCase(playerToAdd.getName()));
                 if (exists) {
                     d_displayToUser.instructionMessage("⚠ Player already exists. Try a different name.");
@@ -85,6 +91,11 @@ public class PlayerController {
         p_gameSession.setPlayers(playerList);
     }
 
+    /**
+     * This method handles the reinforcement phase.
+     *
+     * @param p_gameSession The game session.
+     */
     public void issueOrderPhase(GameSession p_gameSession) {
         boolean allArmiesDeployed;
         d_gameMapController.showMap(p_gameSession.getMap());
@@ -106,7 +117,11 @@ public class PlayerController {
         } while (!allArmiesDeployed);
         d_displayToUser.instructionMessage("✔ All armies have been deployed.");
     }
-
+    /**
+     * This method handles the order execution phase.
+     *
+     * @param p_gameSession The game session.
+     */
     public void executeOrder(GameSession p_gameSession) {
         for (Player player : p_gameSession.getPlayers()) {
             player.next_order();
