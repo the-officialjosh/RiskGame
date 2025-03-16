@@ -1,9 +1,18 @@
 package org.soen6441.risk_game.game_engine.controller;
 
+import org.soen6441.risk_game.game_engine.controller.state.ExecuteOrderPhase;
+import org.soen6441.risk_game.game_engine.controller.state.IssueOrderPhase;
+import org.soen6441.risk_game.game_engine.controller.state.Phase;
+import org.soen6441.risk_game.game_engine.controller.state.StartupPhase;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
+import org.soen6441.risk_game.monitoring.LogEntryBuffer;
+import org.soen6441.risk_game.monitoring.LogEntryBufferObserver;
 import org.soen6441.risk_game.player_management.controller.PlayerController;
+
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * GameEngine class which is serving as the game entry point as well as handling
@@ -16,6 +25,8 @@ import org.soen6441.risk_game.player_management.controller.PlayerController;
  *
  */
 public class GameEngine {
+    private static String outputFolder = "out/";
+
     /**
      * Main method which is the entry point method of the game.
      *
@@ -24,35 +35,30 @@ public class GameEngine {
     public static void main(String[] args) {
         // Game Session
         GameSession l_gameSession = GameSession.getInstance();
+        // Game Phase
+        Phase phase;
 
-        // Controllers
-        GameMapController l_gameMapController = new GameMapController();
-        PlayerController l_playerController = new PlayerController();
-
-        // View
+        // View object
         DisplayToUser l_displayToUser = new DisplayToUser();
 
+        // Configure Observer pattern for monitoring
+        LogEntryBuffer.getInstance().addObserver(new LogEntryBufferObserver(outputFolder + "observed_actions.txt"));
+
         l_displayToUser.welcomeMessage();
-        l_displayToUser.startupPhaseBeginningMessage();
-        // Map management step
-        l_gameMapController.handleMapManagementStep(l_gameSession);
-        // Load players step
-        l_playerController.loadPlayers(l_gameSession);
-        // Assign countries step
-        l_gameMapController.assignCountries(l_gameSession);
-        l_displayToUser.startupPhaseEndMessage();
+
+        // Startup Phase
+        phase = new StartupPhase();
+        phase.handlePhase(l_gameSession);
 
         // Game loop
         while (true) {
-            // Assign reinforcements step
-            l_gameMapController.assignReinforcements(l_gameSession);
+            // Issue Order Phase
+            phase = new IssueOrderPhase();
+            phase.handlePhase(l_gameSession);
 
-            // Issue order phase
-            l_playerController.issueOrderPhase(l_gameSession);
             // Execute order phase
-            l_playerController.executeOrder(l_gameSession);
+            phase = new ExecuteOrderPhase();
+            phase.handlePhase(l_gameSession);
         }
     }
-
-
 }
