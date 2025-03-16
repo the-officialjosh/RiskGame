@@ -2,6 +2,7 @@ package org.soen6441.risk_game.player_management.model;
 
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
+import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.Deploy;
 import org.soen6441.risk_game.orders.model.Order;
 import java.util.ArrayList;
@@ -112,6 +113,10 @@ public class Player {
         }
         while (true) {
             String l_command = l_scanner.nextLine().trim();
+
+            // Catch user action for monitoring observer
+            LogEntryBuffer.getInstance().setValue(l_command);
+
             String[] l_command_parts = l_command.split(" ");
 
             if (l_command_parts.length != 3 || !l_command_parts[0].equalsIgnoreCase("deploy")) {
