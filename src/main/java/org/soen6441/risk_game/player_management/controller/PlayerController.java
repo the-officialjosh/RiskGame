@@ -3,6 +3,7 @@ package org.soen6441.risk_game.player_management.controller;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
+import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.Order;
 import org.soen6441.risk_game.player_management.model.Player;
 
@@ -30,8 +31,9 @@ public class PlayerController {
      * @param p_gameSession The game session.
      */
     public void loadPlayers(GameSession p_gameSession) {
-        d_displayToUser.instructionMessage("\n⚔ PLAYER MANAGEMENT STEP");
-        d_displayToUser.instructionMessage("----------------------------------------");
+        d_displayToUser.instructionMessage("=====================================");
+        d_displayToUser.instructionMessage("       PLAYER MANAGEMENT STEP        ");
+        d_displayToUser.instructionMessage("=====================================");
         d_displayToUser.instructionMessage("Use the following commands to manage players:");
         d_displayToUser.instructionMessage("- ⚒ gameplayer -add <playername>  (Add a new player)");
         d_displayToUser.instructionMessage("- ⚒ gameplayer -remove <playername>  (Remove a player)");
@@ -44,6 +46,10 @@ public class PlayerController {
 
         do {
             l_command = l_scanner.nextLine();
+
+            // Catch user action for monitoring observer
+            LogEntryBuffer.getInstance().setValue(l_command);
+
             String[] l_commandArray = l_command.split(" ");
 
             if (!playerList.isEmpty() && l_command.equals("assigncountries")) {
