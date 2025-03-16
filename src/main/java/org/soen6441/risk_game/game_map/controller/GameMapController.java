@@ -5,6 +5,7 @@ import org.soen6441.risk_game.game_map.model.Continent;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.game_map.model.GameMap;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
+import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.player_management.model.Player;
 
 import java.io.*;
@@ -169,6 +170,9 @@ public class GameMapController {
         System.out.println("=== Territory Assignment Complete ===");
         System.out.println("Countries have been strategically assigned to all players.");
         System.out.println("---------------------------------------");
+
+        // Catch user action for monitoring observer
+        LogEntryBuffer.getInstance().setValue("Countries are successfully assigned to the players.");
     }
 
     /**
@@ -180,6 +184,9 @@ public class GameMapController {
         for (int i = 0; i < p_gameSession.getPlayers().size(); i++) {
             p_gameSession.getPlayers().get(i).reinforcement(3);
         }
+
+        // Catch user action for monitoring observer
+        LogEntryBuffer.getInstance().setValue("Reinforcements are successfully assigned to the players.");
     }
 
     /**
@@ -502,6 +509,10 @@ public class GameMapController {
         boolean l_isUserStillInTheStep = true;
         do {
             l_command = l_scanner.nextLine();
+
+            // Catch user action for monitoring observer
+            LogEntryBuffer.getInstance().setValue(l_command);
+
             handleCommand(l_command, p_gameSession);
 
             if (l_command.split(" ")[0].equals("mapeditordone")) {
