@@ -2,6 +2,7 @@ package org.soen6441.risk_game.orders.model;
 
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
+import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.player_management.model.Player;
 
 import java.util.HashMap;
@@ -76,5 +77,9 @@ public class Deploy implements Order {
                 break;
             }
         }
+
+        // Catch user action for monitoring observer
+        LogEntryBuffer.getInstance().setValue(d_numberOfDeployedArmies + " armies of player: " + d_issuer.getName()
+                + " has been deployed to the country: " + l_country.getName()  + ".");
     }
 }
