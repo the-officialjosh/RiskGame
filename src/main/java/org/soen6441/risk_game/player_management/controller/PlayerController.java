@@ -103,25 +103,15 @@ public class PlayerController {
      * @param p_gameSession The game session.
      */
     public void issueOrderPhase(GameSession p_gameSession) {
-        boolean allArmiesDeployed;
         d_gameMapController.showMap(p_gameSession.getMap());
-        do {
-            allArmiesDeployed = true;
             for (Player player : p_gameSession.getPlayers()) {
-                d_displayToUser.instructionMessage("\n⚔ Reinforcement Phase");
+                d_displayToUser.instructionMessage("\n⚔ Order creation Phase");
                 d_displayToUser.instructionMessage("==========================");
                 d_displayToUser.instructionMessage("Use \"deploy <country_id> <number_of_armies>\" to deploy\n");
-                d_displayToUser.instructionMessage(player.getName() + " you have (" + player.getNumberOfReinforcementsArmies() + ") reinforcement armies.");
-
-                if (player.hasReinforcementsArmies()) {
-                    player.issue_order();
-                }
-                if (!player.isReinforcementPhaseComplete()) {
-                    allArmiesDeployed = false;
-                }
+                d_displayToUser.instructionMessage("Use \"Advance <fromCountry_id> <toCountry_id> <number_of_armies>\" to Advance\n");
+                d_displayToUser.instructionMessage("Use \"Commit to complete orders\n");
+                player.issue_order();
             }
-        } while (!allArmiesDeployed);
-        d_displayToUser.instructionMessage("✔ All armies have been deployed.");
     }
     /**
      * This method handles the order execution phase.
