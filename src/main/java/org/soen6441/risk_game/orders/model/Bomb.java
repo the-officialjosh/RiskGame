@@ -11,24 +11,24 @@ import java.util.HashMap;
 public class Bomb implements Order {
 
     /**
-     * The D player.
+     * The player.
      */
-    Player d_player;
+    private Player d_player;
     /**
-     * The D source country.
+     * The source country.
      */
-    Country d_sourceCountry;
+    private Country d_sourceCountry;
     /**
-     * The D target country.
+     * The target country.
      */
-    Country d_targetCountry;
+    private Country d_targetCountry;
 
     /**
      * Instantiates a new Bomb.
      *
-     * @param p_sourceCountry the p source country
-     * @param p_player        the p player
-     * @param p_targetCountry the p target country
+     * @param p_sourceCountry the source country
+     * @param p_player        the player
+     * @param p_targetCountry the target country
      */
     public Bomb(Country p_sourceCountry, Player p_player, Country p_targetCountry) {
         this.d_sourceCountry = p_sourceCountry;

@@ -45,6 +45,21 @@ public class GameSession {
     }
 
     /**
+     * Gets player by name.
+     *
+     * @param p_playerName the player name
+     * @return the player by name
+     */
+    public Player getPlayerByName(String p_playerName) {
+        for (Player player : d_players) {
+            if (player.getName().equals(p_playerName)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Returns the game global map.
      * @return d_map The game map.
      */
