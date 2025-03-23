@@ -22,6 +22,7 @@ public class Country {
     private Player d_ownedBy;
     private List<Country> d_adjacentCountries;
     private Map<Player, Integer> d_existingArmies;
+    private boolean d_isTerritoryNeutral;
 
     /**
      * Constructor for the class.
@@ -35,6 +36,7 @@ public class Country {
         this.d_name = p_name;
         this.d_adjacentCountries = p_adjacentCountries;
         this.d_existingArmies = p_existingArmies;
+        this.d_isTerritoryNeutral = false;
     }
 
     /**
@@ -129,5 +131,23 @@ public class Country {
      */
     public void removeNeighbor(String neighborName) {
         d_adjacentCountries.removeIf(neighbor -> neighbor.getName().equals(neighborName));
+    }
+
+    /**
+     * Is d is territory neutral boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isD_isTerritoryNeutral() {
+        return d_isTerritoryNeutral;
+    }
+
+    /**
+     * Sets d is territory neutral.
+     *
+     * @param d_isTerritoryNeutral the d is territory neutral
+     */
+    public void setD_isTerritoryNeutral(boolean d_isTerritoryNeutral) {
+        this.d_isTerritoryNeutral = d_isTerritoryNeutral;
     }
 }

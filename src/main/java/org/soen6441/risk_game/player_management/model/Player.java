@@ -7,6 +7,7 @@ import org.soen6441.risk_game.orders.model.Deploy;
 import org.soen6441.risk_game.orders.model.Order;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -22,6 +23,7 @@ public class Player {
     private int d_numberOfReinforcementsArmies;
     private List<Order> d_orders;
     private List<Country> d_countries_owned;
+    private int[] d_cards_owned;
     private final DisplayToUser d_displayToUser;
 
     /**
@@ -36,6 +38,7 @@ public class Player {
         this.d_numberOfReinforcementsArmies = p_numberOfReinforcementsArmies;
         this.d_orders = p_orders;
         this.d_countries_owned = new ArrayList<>();
+        this.d_cards_owned = new int[]{0, 0, 0, 0, 0}; //index 0 = Bomb, 1 = Reinforcement, 2 = Blockade, 3 = Airlift, 4 = Diplomacy
         this.d_displayToUser = new DisplayToUser();
     }
 
@@ -212,5 +215,23 @@ public class Player {
      */
     public boolean validNumberOfReinforcementArmies(int l_numOfArmies) {
         return l_numOfArmies <= d_numberOfReinforcementsArmies;
+    }
+
+    /**
+     * Get d cards owned int [ ].
+     *
+     * @return the int [ ]
+     */
+    public int[] getD_cards_owned() {
+        return d_cards_owned;
+    }
+
+    /**
+     * Assign card function to add a count of cards.
+     */
+    public void assignCard() {
+        Random rn = new Random();
+        int randomNumber = rn.nextInt(5);
+        this.d_cards_owned[randomNumber - 1] += 1;
     }
 }
