@@ -218,6 +218,23 @@ public class Player {
     }
 
     /**
+     * Gets specific cards count.
+     *
+     * @param p_cardType the p card type
+     * @return the specific cards count
+     */
+    public int get_specific_cards_count(String p_cardType) {
+        return switch (p_cardType.toLowerCase()) {
+            case "bomb" -> d_cards_owned[0];
+            case "reinforcement" -> d_cards_owned[1];
+            case "blockade" -> d_cards_owned[2];
+            case "airlift" -> d_cards_owned[3];
+            case "diplomacy" -> d_cards_owned[4];
+            default -> 0;
+        };
+    }
+
+    /**
      * Get d cards owned int [ ].
      *
      * @return the int [ ]
