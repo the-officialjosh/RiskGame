@@ -22,5 +22,6 @@ public class Blockade implements Order {
         HashMap<Player, Integer> map = new HashMap<>();
         map.put(l_player, (l_currentArmies * 3));
         l_gameSession.getMap().getCountriesById(l_country.getCountryId()).setExistingArmies(map);
+        l_gameSession.getMap().getCountriesById(l_country.getCountryId()).setD_isTerritoryNeutral(true);
     }
 }
