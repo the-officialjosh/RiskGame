@@ -2,33 +2,30 @@ package org.soen6441.risk_game.orders.model;
 
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
+import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.player_management.model.Player;
 import java.util.HashMap;
 
 /**
- * The type Bomb.
+ * The Bomb order class.
+ * Destroys half of the armies in an opponent’s adjacent territory, consuming one bomb card.
+ *
+ * @author Joshua Onyema
+ * @author Safin Mahesania
+ * @version 1.0
  */
 public class Bomb implements Order {
 
-    /**
-     * The player.
-     */
     private Player d_player;
-    /**
-     * The source country.
-     */
     private Country d_sourceCountry;
-    /**
-     * The target country.
-     */
     private Country d_targetCountry;
 
     /**
-     * Instantiates a new Bomb.
+     * Instantiates a new Bomb order.
      *
-     * @param p_sourceCountry the source country
-     * @param p_player        the player
-     * @param p_targetCountry the target country
+     * @param p_sourceCountry the source country (must be owned by the player)
+     * @param p_player the player issuing the order
+     * @param p_targetCountry the enemy country to bomb
      */
     public Bomb(Country p_sourceCountry, Player p_player, Country p_targetCountry) {
         this.d_sourceCountry = p_sourceCountry;
@@ -36,13 +33,62 @@ public class Bomb implements Order {
         this.d_targetCountry = p_targetCountry;
     }
 
+    /**
+     * Executes the Bomb order, validating preconditions and applying effects.
+     */
     @Override
     public void execute() {
         GameSession l_gameSession = GameSession.getInstance();
-        Player targetCountryOwnedBy = l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).getD_ownedBy();
-        int l_armies = (l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).getExistingArmies().get(targetCountryOwnedBy)) / 2;
-        HashMap<Player, Integer> map = new HashMap<>();
-        map.put(targetCountryOwnedBy, l_armies);
-        l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).setExistingArmies(map);
+        Country l_target = l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId());
+
+        if (l_target == null) {
+            System.out.println("❌ Target country does not exist.");
+            return;
+        }
+
+        Player l_targetOwner = l_target.getD_ownedBy();
+
+        // Validation: player must own the source country
+        if (!d_player.equals(d_sourceCountry.getD_ownedBy())) {
+            System.out.println("❌ Invalid order: you do not own the source country.");
+            return;
+        }
+
+        // Validation: can't bomb your own country
+        if (d_player.equals(l_targetOwner)) {
+            System.out.println("❌ Invalid order: you cannot bomb your own country.");
+            return;
+        }
+
+        // Validation: countries must be adjacent
+        if (!d_sourceCountry.getAdjacentCountries().contains(l_target)) {
+            System.out.println("❌ Invalid order: target country is not adjacent to source country.");
+            return;
+        }
+
+        // Placeholder check – adjust this if getBombCards() is not defined
+        if (!d_player.hasBombCard()) {
+            System.out.println("❌ Invalid order: no bomb cards available.");
+            return;
+        }
+
+        // Proceed with bombing
+        int l_currentArmies = l_target.getExistingArmies().getOrDefault(l_targetOwner, 0);
+        int l_reducedArmies = l_currentArmies / 2;
+
+        HashMap<Player, Integer> updatedArmies = new HashMap<>();
+        updatedArmies.put(l_targetOwner, l_reducedArmies);
+        l_target.setExistingArmies(updatedArmies);
+
+        // Consume one bomb card
+        d_player.useBombCard();
+
+        System.out.println("💣 Bomb executed on " + l_target.getName() + ". Armies reduced from " +
+                l_currentArmies + " to " + l_reducedArmies + ". Bomb card used.");
+
+        LogEntryBuffer.getInstance().setValue(
+            "💣 " + d_player.getName() + " bombed " + l_target.getName() +
+            ", reducing armies from " + l_currentArmies + " to " + l_reducedArmies + "."
+        );
     }
 }
