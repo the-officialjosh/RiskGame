@@ -113,10 +113,10 @@ public class PlayerController {
                 d_displayToUser.instructionMessage("Use \"deploy <country_id> <number_of_armies>\" to deploy\n");
                 d_displayToUser.instructionMessage(player.getName() + " you have (" + player.getNumberOfReinforcementsArmies() + ") reinforcement armies.");
 
-                if (player.hasReinforcementsArmies()) {
-                    player.issue_order(true);
-                }
-                if (player.getNumberOfReinforcementsArmies() > 0) {
+                    if (player.hasReinforcementsArmies()) {
+                        player.issue_order();
+                    }
+                if (!player.isReinforcementPhaseComplete()) {
                     allArmiesDeployed = false;
                 }
             }
@@ -134,4 +134,3 @@ public class PlayerController {
         }
     }
 }
-

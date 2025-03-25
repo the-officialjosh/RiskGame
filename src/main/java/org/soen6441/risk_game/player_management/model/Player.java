@@ -109,7 +109,7 @@ public class Player {
     /**
      * Prompts the player to issue an order.
      */
-    public void issue_order() {
+    public void issue_order(boolean b) {
         Scanner l_scanner = new Scanner(System.in);
         if (d_numberOfReinforcementsArmies <= 0) {
             d_displayToUser.instructionMessage(this.d_name + " has no reinforcement left.");
@@ -267,6 +267,24 @@ public class Player {
     public void useBombCard() {
         if (hasBombCard()) {
             d_cards_owned[0] -= 1;
+        }
+    }
+
+    /**
+     * Checks if the player has at least one diplomacy card.
+     *
+     * @return true if diplomacy card is available, false otherwise.
+     */
+    public boolean hasDiplomacyCard() {
+        return d_cards_owned != null && d_cards_owned.length > 4 && d_cards_owned[4] > 0;
+    }
+
+    /**
+     * Uses one diplomacy card if available.
+     */
+    public void useDiplomacyCard() {
+        if (hasDiplomacyCard()) {
+            d_cards_owned[4] -= 1;
         }
     }
 }
