@@ -251,4 +251,22 @@ public class Player {
         int randomNumber = rn.nextInt(5);
         this.d_cards_owned[randomNumber - 1] += 1;
     }
+
+    /**
+     * Checks if the player has at least one bomb card.
+     *
+     * @return true if bomb card is available, false otherwise.
+     */
+    public boolean hasBombCard() {
+        return d_cards_owned != null && d_cards_owned.length > 0 && d_cards_owned[0] > 0;
+    }
+
+    /**
+     * Uses one bomb card if available.
+     */
+    public void useBombCard() {
+        if (hasBombCard()) {
+            d_cards_owned[0] -= 1;
+        }
+    }
 }

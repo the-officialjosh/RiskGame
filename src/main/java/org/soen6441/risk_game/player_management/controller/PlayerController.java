@@ -114,9 +114,9 @@ public class PlayerController {
                 d_displayToUser.instructionMessage(player.getName() + " you have (" + player.getNumberOfReinforcementsArmies() + ") reinforcement armies.");
 
                 if (player.hasReinforcementsArmies()) {
-                    player.issue_order();
+                    player.issue_order(true);
                 }
-                if (!player.isReinforcementPhaseComplete()) {
+                if (player.getNumberOfReinforcementsArmies() > 0) {
                     allArmiesDeployed = false;
                 }
             }
@@ -134,3 +134,4 @@ public class PlayerController {
         }
     }
 }
+
