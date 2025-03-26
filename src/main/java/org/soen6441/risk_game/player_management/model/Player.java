@@ -111,7 +111,7 @@ public class Player {
     /**
      * Prompts the player to issue an order.
      */
-    public void issue_order(boolean b) {
+    public void issue_order() {
         Scanner l_scanner = new Scanner(System.in);
         if (d_numberOfReinforcementsArmies <= 0) {
             d_displayToUser.instructionMessage(this.d_name + " has no reinforcement left.");
