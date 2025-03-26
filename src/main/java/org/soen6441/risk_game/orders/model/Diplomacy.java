@@ -30,6 +30,22 @@ public class Diplomacy implements Order {
     @Override
     public void execute() {
         GameSession l_gameSession = GameSession.getInstance();
+
+        if (d_issuer == null || d_target == null) {
+            System.out.println("❌ Diplomacy failed: one of the players is null.");
+            return;
+        }
+
+        if (d_issuer.equals(d_target)) {
+            System.out.println("❌ Diplomacy failed: a player cannot establish diplomacy with themselves.");
+            return;
+        }
+
+        if (l_gameSession.areInDiplomacy(d_issuer, d_target)) {
+            System.out.println("ℹ️ Diplomacy already exists between " + d_issuer.getName() + " and " + d_target.getName() + ".");
+            return;
+        }
+
         l_gameSession.addDiplomacyPair(d_issuer, d_target);
 
         System.out.println("🕊️ " + d_issuer.getName() + " and " + d_target.getName() + " are now in diplomacy.");
