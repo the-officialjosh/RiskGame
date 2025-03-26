@@ -158,6 +158,11 @@ public class Player {
                             continue;
                         }
                         processAdvanceCommand(l_command_parts);
+                    } else if(l_command_parts[0].equalsIgnoreCase("Airlift")){
+                        if(l_command_parts.length != 4){
+                            d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
+                            continue;
+                        }
                     }
                 }
             } catch (NumberFormatException e) {
@@ -183,6 +188,19 @@ public class Player {
         Advance advanceOrder = new Advance(this, l_fromCountryID, l_toCountryID, l_numOfArmies);
         this.setOrders(advanceOrder);
 
+    }
+
+    private void processAirliftCommand(String[] l_command_parts) {
+        int l_fromCountryID = Integer.parseInt(l_command_parts[1]);
+        int l_toCountryID = Integer.parseInt(l_command_parts[2]);
+        int l_numOfArmies = Integer.parseInt(l_command_parts[3]);
+
+        if (findCountryById(this.d_countries_owned, l_fromCountryID) == null) {
+            d_displayToUser.instructionMessage("You can only advance armies from countries you own. Try again.");
+            return;
+        }
+        Advance advanceOrder = new Advance(this, l_fromCountryID, l_toCountryID, l_numOfArmies);
+        this.setOrders(advanceOrder);
     }
 
     /**

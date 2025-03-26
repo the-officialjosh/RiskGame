@@ -105,7 +105,7 @@ public class PlayerController {
     public void issueOrderPhase(GameSession p_gameSession) {
         d_gameMapController.showMap(p_gameSession.getMap());
             for (Player player : p_gameSession.getPlayers()) {
-                d_displayToUser.instructionMessage("\n⚔ Order creation Phase");
+                d_displayToUser.instructionMessage("\n⚔ Issue Order Phase");
                 d_displayToUser.instructionMessage("==========================");
                 d_displayToUser.instructionMessage("Use \"deploy <country_id> <number_of_armies>\" to deploy\n");
                 d_displayToUser.instructionMessage("Use \"Advance <fromCountry_id> <toCountry_id> <number_of_armies>\" to Advance\n");
