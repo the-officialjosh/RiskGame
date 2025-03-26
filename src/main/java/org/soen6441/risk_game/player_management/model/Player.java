@@ -9,6 +9,7 @@ import org.soen6441.risk_game.orders.model.Deploy;
 import org.soen6441.risk_game.orders.model.Order;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -24,6 +25,7 @@ public class Player {
     private int d_numberOfReinforcementsArmies;
     private List<Order> d_orders;
     private List<Country> d_countries_owned;
+    private int[] d_cards_owned;
     private final DisplayToUser d_displayToUser;
 
     /**
@@ -38,6 +40,7 @@ public class Player {
         this.d_numberOfReinforcementsArmies = p_numberOfReinforcementsArmies;
         this.d_orders = p_orders;
         this.d_countries_owned = new ArrayList<>();
+        this.d_cards_owned = new int[]{0, 0, 0, 0, 0}; //index 0 = Bomb, 1 = Reinforcement, 2 = Blockade, 3 = Airlift, 4 = Diplomacy
         this.d_displayToUser = new DisplayToUser();
     }
 
@@ -108,7 +111,7 @@ public class Player {
     /**
      * Prompts the player to issue an order.
      */
-    public void issue_order() {
+    public void issue_order(boolean b) {
         Scanner l_scanner = new Scanner(System.in);
         if (d_numberOfReinforcementsArmies <= 0) {
             d_displayToUser.instructionMessage(this.d_name + " has no reinforcement left.");
@@ -267,5 +270,76 @@ public class Player {
      */
     public boolean validNumberOfReinforcementArmies(int l_numOfArmies) {
         return l_numOfArmies <= d_numberOfReinforcementsArmies;
+    }
+
+    /**
+     * Gets specific cards count.
+     *
+     * @param p_cardType the p card type
+     * @return the specific cards count
+     */
+    public int get_specific_cards_count(String p_cardType) {
+        return switch (p_cardType.toLowerCase()) {
+            case "bomb" -> d_cards_owned[0];
+            case "reinforcement" -> d_cards_owned[1];
+            case "blockade" -> d_cards_owned[2];
+            case "airlift" -> d_cards_owned[3];
+            case "diplomacy" -> d_cards_owned[4];
+            default -> 0;
+        };
+    }
+
+    /**
+     * Get d cards owned int [ ].
+     *
+     * @return the int [ ]
+     */
+    public int[] getD_cards_owned() {
+        return d_cards_owned;
+    }
+
+    /**
+     * Assign card function to add a count of cards.
+     */
+    public void assignCard() {
+        Random rn = new Random();
+        int randomNumber = rn.nextInt(5);
+        this.d_cards_owned[randomNumber - 1] += 1;
+    }
+
+    /**
+     * Checks if the player has at least one bomb card.
+     *
+     * @return true if bomb card is available, false otherwise.
+     */
+    public boolean hasBombCard() {
+        return d_cards_owned != null && d_cards_owned.length > 0 && d_cards_owned[0] > 0;
+    }
+
+    /**
+     * Uses one bomb card if available.
+     */
+    public void useBombCard() {
+        if (hasBombCard()) {
+            d_cards_owned[0] -= 1;
+        }
+    }
+
+    /**
+     * Checks if the player has at least one diplomacy card.
+     *
+     * @return true if diplomacy card is available, false otherwise.
+     */
+    public boolean hasDiplomacyCard() {
+        return d_cards_owned != null && d_cards_owned.length > 4 && d_cards_owned[4] > 0;
+    }
+
+    /**
+     * Uses one diplomacy card if available.
+     */
+    public void useDiplomacyCard() {
+        if (hasDiplomacyCard()) {
+            d_cards_owned[4] -= 1;
+        }
     }
 }

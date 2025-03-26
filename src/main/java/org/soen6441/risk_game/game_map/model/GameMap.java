@@ -72,6 +72,21 @@ public class GameMap {
     }
 
     /**
+     * Gets countries by id.
+     *
+     * @param p_countryId the p country id
+     * @return the countries by id
+     */
+    public Country getCountriesById(int p_countryId) {
+        for (int i = 0; i < getCountries().size(); i++) {
+            if (getCountries().get(i).getCountryId() == p_countryId) {
+                return getCountries().get(i);
+            }
+        }
+        return null;
+    }
+
+    /**
      * Getter for field.
      * @return The field.
      */
