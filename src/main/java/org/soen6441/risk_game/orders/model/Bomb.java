@@ -40,16 +40,16 @@ public class Bomb implements Order {
     public void execute() {
         GameSession l_gameSession = GameSession.getInstance();
         Country l_target = l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId());
-
-        if (l_target == null) {
+        Player l_targetOwner = l_target.getD_ownedBy();
+        /*if (l_target == null) {
             System.out.println("❌ Target country does not exist.");
             return;
-        }
+        }*/
 
-        Player l_targetOwner = l_target.getD_ownedBy();
+
 
         // Validation: player must own the source country
-        if (!d_player.equals(d_sourceCountry.getD_ownedBy())) {
+        /*if (!d_player.equals(d_sourceCountry.getD_ownedBy())) {
             System.out.println("❌ Invalid order: you do not own the source country.");
             return;
         }
@@ -76,7 +76,7 @@ public class Bomb implements Order {
         if (!d_player.hasBombCard()) {
             System.out.println("❌ Invalid order: no bomb cards available.");
             return;
-        }
+        }*/
 
         // Proceed with bombing
         int l_currentArmies = l_target.getExistingArmies().getOrDefault(l_targetOwner, 0);
@@ -84,7 +84,8 @@ public class Bomb implements Order {
 
         HashMap<Player, Integer> updatedArmies = new HashMap<>();
         updatedArmies.put(l_targetOwner, l_reducedArmies);
-        l_target.setExistingArmies(updatedArmies);
+        //l_target.setExistingArmies(updatedArmies);
+        l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).setExistingArmies(updatedArmies);
 
         // Consume one bomb card
         d_player.useBombCard();
