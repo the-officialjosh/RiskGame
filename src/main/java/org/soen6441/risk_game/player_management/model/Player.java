@@ -188,7 +188,10 @@ public class Player {
             return;
         }
 
-        Advance advanceOrder = new Advance(this, l_fromCountryID, l_toCountryID, l_numOfArmies);
+        Country fromCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_fromCountryID);
+        Country toCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_toCountryID);
+
+        Advance advanceOrder = new Advance(this, fromCountry, toCountry, l_numOfArmies);
         this.setOrders(advanceOrder);
 
     }
@@ -202,8 +205,7 @@ public class Player {
             d_displayToUser.instructionMessage("You can only advance armies from countries you own. Try again.");
             return;
         }
-        Advance advanceOrder = new Advance(this, l_fromCountryID, l_toCountryID, l_numOfArmies);
-        this.setOrders(advanceOrder);
+
     }
 
     /**
