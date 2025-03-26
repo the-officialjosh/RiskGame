@@ -5,6 +5,7 @@ import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.Advance;
+import org.soen6441.risk_game.orders.model.Bomb;
 import org.soen6441.risk_game.orders.model.Deploy;
 import org.soen6441.risk_game.orders.model.Order;
 import java.util.ArrayList;
@@ -166,12 +167,69 @@ public class Player {
                             d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
                             continue;
                         }
+                    } else if(l_command_parts[0].equalsIgnoreCase("Bomb")){
+                        if(l_command_parts.length != 3){
+                            d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
+                            continue;
+                        }
+
+                    } else if(l_command_parts[0].equalsIgnoreCase("Reinforcement")){
+                        if(l_command_parts.length != 4){
+                            d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
+                            continue;
+                        }
+                    } else if(l_command_parts[0].equalsIgnoreCase("Blockade")){
+                        if(l_command_parts.length != 4){
+                            d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
+                            continue;
+                        }
                     }
                 }
             } catch (NumberFormatException e) {
                 d_displayToUser.instructionMessage("Invalid number format. Please enter valid numeric values for country ID and number of armies.");
             }
         }
+    }
+
+    private void processBombCommand(String p_sourceCountryID, String p_targetCountryID){
+        GameSession l_gameSession = GameSession.getInstance();
+
+        Country l_sourceCountry = l_gameSession.getMap().getCountriesById(Integer.parseInt(p_sourceCountryID));
+        Country l_targetCountry = l_gameSession.getMap().getCountriesById(Integer.parseInt(p_targetCountryID));
+        Player l_targetOwner = l_targetCountry.getD_ownedBy();
+
+        // Validation: player must own the source country
+        if (!this.equals(l_sourceCountry.getD_ownedBy())) {
+            System.out.println("❌ Invalid order: you do not own the source country.");
+            return;
+        }
+
+        // Validation: can't bomb your own country
+        if (this.equals(l_targetOwner)) {
+            System.out.println("❌ Invalid order: you cannot bomb your own country.");
+            return;
+        }
+
+        // Validation: cannot bomb if in diplomacy
+        if (l_targetOwner != null && GameSession.getInstance().areInDiplomacy(this, l_targetOwner)) {
+            System.out.println("❌ Invalid order: you cannot bomb a player you're in diplomacy with.");
+            return;
+        }
+
+        // Validation: countries must be adjacent
+        if (!l_sourceCountry.getAdjacentCountries().contains(l_targetCountry)) {
+            System.out.println("❌ Invalid order: target country is not adjacent to source country.");
+            return;
+        }
+
+        // Placeholder check – adjust this if getBombCards() is not defined
+        if (!this.hasBombCard()) {
+            System.out.println("❌ Invalid order: no bomb cards available.");
+            return;
+        }
+
+        Bomb bombOrder = new Bomb(l_sourceCountry,this,l_targetCountry);
+        this.setOrders(bombOrder);
     }
 
     private void processAdvanceCommand(String[] l_command_parts) {
