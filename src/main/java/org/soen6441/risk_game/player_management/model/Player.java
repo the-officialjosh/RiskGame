@@ -1,11 +1,12 @@
 package org.soen6441.risk_game.player_management.model;
 
+import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
+import org.soen6441.risk_game.orders.model.Advance;
 import org.soen6441.risk_game.orders.model.Deploy;
 import org.soen6441.risk_game.orders.model.Order;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -110,46 +111,101 @@ public class Player {
     /**
      * Prompts the player to issue an order.
      */
-    public void issue_order(boolean b) {
+    public void issue_order() {
         Scanner l_scanner = new Scanner(System.in);
         if (d_numberOfReinforcementsArmies <= 0) {
             d_displayToUser.instructionMessage(this.d_name + " has no reinforcement left.");
         }
+        d_displayToUser.instructionMessage(this.getName() + " you have (" + this.getNumberOfReinforcementsArmies() + ") reinforcement armies.");
         while (true) {
             String l_command = l_scanner.nextLine().trim();
 
             // Catch user action for monitoring observer
             LogEntryBuffer.getInstance().setValue(l_command);
+            if(l_command.equalsIgnoreCase("commit")) break;
 
             String[] l_command_parts = l_command.split(" ");
-
-            if (l_command_parts.length != 3 || !l_command_parts[0].equalsIgnoreCase("deploy")) {
-                d_displayToUser.instructionMessage("Invalid command. Use: deploy <countryID> <numberOfArmies>");
-                continue;
-            }
-
             try {
-                int l_countryID = Integer.parseInt(l_command_parts[1]);
-                int l_numOfArmies = Integer.parseInt(l_command_parts[2]);
+                if(this.hasReinforcementsArmies()){
+                    if (l_command_parts.length != 3 || !l_command_parts[0].equalsIgnoreCase("deploy")) {
+                        d_displayToUser.instructionMessage("Invalid command. Use: deploy <countryID> <numberOfArmies>");
+                        continue;
+                    }
+                    int l_countryID = Integer.parseInt(l_command_parts[1]);
+                    int l_numOfArmies = Integer.parseInt(l_command_parts[2]);
 
-                if (!validNumberOfReinforcementArmies(l_numOfArmies)) {
-                    d_displayToUser.instructionMessage("Cannot deploy more armies than available. You have " + d_numberOfReinforcementsArmies + " armies left.");
-                    continue;
+                    if (!validNumberOfReinforcementArmies(l_numOfArmies)) {
+                        d_displayToUser.instructionMessage("Cannot deploy more armies than available. You have " + d_numberOfReinforcementsArmies + " armies left.");
+                        continue;
+                    }
+
+                    if (findCountryById(this.d_countries_owned, l_countryID) == null) {
+                        d_displayToUser.instructionMessage("You can only deploy armies to countries you own. Try again.");
+                        continue;
+                    }
+
+                    Deploy deployOrder = new Deploy(this, l_numOfArmies, l_countryID);
+                    this.setOrders(deployOrder);
+                    d_numberOfReinforcementsArmies -= l_numOfArmies;
+                    if(this.isReinforcementPhaseComplete()){
+                        d_displayToUser.instructionMessage("✔ All armies have been deployed.");
+                        d_displayToUser.instructionMessage("\nYou can use Advance order command to move or attack countries");
+                    }else{
+                        d_displayToUser.instructionMessage(this.getName() + " you have (" + this.getNumberOfReinforcementsArmies() + ") reinforcement armies.");
+                    }
                 }
-
-                if (findCountryById(this.d_countries_owned, l_countryID) == null) {
-                    d_displayToUser.instructionMessage("You can only deploy armies to countries you own. Try again.");
-                    continue;
+                if(this.isReinforcementPhaseComplete()){
+                    if(l_command_parts[0].equalsIgnoreCase("Advance")){
+                        if(l_command_parts.length != 4){
+                            d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
+                            continue;
+                        }
+                        processAdvanceCommand(l_command_parts);
+                    } else if(l_command_parts[0].equalsIgnoreCase("Airlift")){
+                        if(l_command_parts.length != 4){
+                            d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
+                            continue;
+                        }
+                    }
                 }
-
-                Deploy deployOrder = new Deploy(this, l_numOfArmies, l_countryID);
-                this.setOrders(deployOrder);
-                d_numberOfReinforcementsArmies -= l_numOfArmies;
-                break;
             } catch (NumberFormatException e) {
                 d_displayToUser.instructionMessage("Invalid number format. Please enter valid numeric values for country ID and number of armies.");
             }
         }
+    }
+
+    private void processAdvanceCommand(String[] l_command_parts) {
+        int l_fromCountryID = Integer.parseInt(l_command_parts[1]);
+        int l_toCountryID = Integer.parseInt(l_command_parts[2]);
+        int l_numOfArmies = Integer.parseInt(l_command_parts[3]);
+
+        if (findCountryById(this.d_countries_owned, l_fromCountryID) == null) {
+            d_displayToUser.instructionMessage("You can only advance armies from countries you own. Try again.");
+            return;
+        }
+        if (!findCountryById(GameSession.getInstance().getMap().getCountries(), l_fromCountryID).getAdjacentCountries().contains(findCountryById(GameSession.getInstance().getMap().getCountries(), l_toCountryID))) {
+            d_displayToUser.instructionMessage("You can only Advance armies to adjacent countries, Try again.");
+            return;
+        }
+
+        Country fromCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_fromCountryID);
+        Country toCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_toCountryID);
+
+        Advance advanceOrder = new Advance(this, fromCountry, toCountry, l_numOfArmies);
+        this.setOrders(advanceOrder);
+
+    }
+
+    private void processAirliftCommand(String[] l_command_parts) {
+        int l_fromCountryID = Integer.parseInt(l_command_parts[1]);
+        int l_toCountryID = Integer.parseInt(l_command_parts[2]);
+        int l_numOfArmies = Integer.parseInt(l_command_parts[3]);
+
+        if (findCountryById(this.d_countries_owned, l_fromCountryID) == null) {
+            d_displayToUser.instructionMessage("You can only advance armies from countries you own. Try again.");
+            return;
+        }
+
     }
 
     /**
