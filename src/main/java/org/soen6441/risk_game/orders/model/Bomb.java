@@ -60,6 +60,12 @@ public class Bomb implements Order {
             return;
         }
 
+        // Validation: cannot bomb if in diplomacy
+        if (l_targetOwner != null && GameSession.getInstance().areInDiplomacy(d_player, l_targetOwner)) {
+            System.out.println("❌ Invalid order: you cannot bomb a player you're in diplomacy with.");
+            return;
+        }
+
         // Validation: countries must be adjacent
         if (!d_sourceCountry.getAdjacentCountries().contains(l_target)) {
             System.out.println("❌ Invalid order: target country is not adjacent to source country.");

@@ -45,14 +45,18 @@ public class PlayerController {
         List<Player> playerList = new ArrayList<>();
 
         do {
-            l_command = l_scanner.nextLine();
+            l_command = l_scanner.nextLine().trim();
 
             // Catch user action for monitoring observer
             LogEntryBuffer.getInstance().setValue(l_command);
 
             String[] l_commandArray = l_command.split(" ");
 
-            if (!playerList.isEmpty() && l_command.equals("assigncountries")) {
+            if (l_command.equals("assigncountries")) {
+                if (playerList.isEmpty()) {
+                    d_displayToUser.instructionMessage("⚠ Add at least one player before assigning countries.");
+                    continue;
+                }
                 break;
             }
 
@@ -105,6 +109,9 @@ public class PlayerController {
     public void issueOrderPhase(GameSession p_gameSession) {
         boolean allArmiesDeployed;
         d_gameMapController.showMap(p_gameSession.getMap());
+        for (Player player : p_gameSession.getPlayers()) {
+            player.reinforcement(3); // Assign reinforcements once before deployment begins
+        }
         do {
             allArmiesDeployed = true;
             for (Player player : p_gameSession.getPlayers()) {
@@ -113,9 +120,11 @@ public class PlayerController {
                 d_displayToUser.instructionMessage("Use \"deploy <country_id> <number_of_armies>\" to deploy\n");
                 d_displayToUser.instructionMessage(player.getName() + " you have (" + player.getNumberOfReinforcementsArmies() + ") reinforcement armies.");
 
-                    if (player.hasReinforcementsArmies()) {
-                        player.issue_order(true);
-                    }
+                if (player.hasReinforcementsArmies()) {
+                    player.issue_order(true);
+                } else {
+                    d_displayToUser.instructionMessage(player.getName() + " has no armies left to deploy.");
+                }
                 if (!player.isReinforcementPhaseComplete()) {
                     allArmiesDeployed = false;
                 }
@@ -123,14 +132,30 @@ public class PlayerController {
         } while (!allArmiesDeployed);
         d_displayToUser.instructionMessage("✔ All armies have been deployed.");
     }
+
+    /**
+     * This method handles the general order phase after reinforcements.
+     *
+     * @param p_gameSession The game session.
+     */
+    public void issueGeneralOrders(GameSession p_gameSession) {
+        d_displayToUser.instructionMessage("\n🧠 Order Issue Phase");
+        for (Player player : p_gameSession.getPlayers()) {
+            d_displayToUser.instructionMessage("🎯 " + player.getName() + ", it's your turn to issue an order.");
+            player.issue_order(false);
+        }
+    }
+
     /**
      * This method handles the order execution phase.
      *
      * @param p_gameSession The game session.
      */
     public void executeOrder(GameSession p_gameSession) {
+        d_displayToUser.instructionMessage("\n🚀 Executing Orders...\n");
         for (Player player : p_gameSession.getPlayers()) {
             player.next_order();
+            LogEntryBuffer.getInstance().setValue("Executed orders for: " + player.getName());
         }
     }
 }
