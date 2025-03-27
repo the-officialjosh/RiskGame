@@ -278,7 +278,7 @@ public class Player {
         this.useCard("blockade");
     }
 
-    private void processBombCommand(String p_sourceCountryID, String p_targetCountryID) {
+    public void processBombCommand(String p_sourceCountryID, String p_targetCountryID) {
         GameSession l_gameSession = GameSession.getInstance();
 
         Country l_sourceCountry = l_gameSession.getMap().getCountriesById(Integer.parseInt(p_sourceCountryID));
