@@ -161,8 +161,8 @@ public class Player {
                             continue;
                         }
                         processAdvanceCommand(l_command_parts);
-                    } else if(l_command_parts[0].equalsIgnoreCase("Airlift")){
-                        if(l_command_parts.length != 4){
+                    } else if (l_command_parts[0].equalsIgnoreCase("Airlift")) {
+                        if (l_command_parts.length != 4) {
                             d_displayToUser.instructionMessage("Invalid command. Use: Airlift <fromCountryID> <toCountryID> <numberOfArmies>");
                             continue;
                         }
@@ -332,7 +332,7 @@ public class Player {
         Country fromCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_fromCountryID);
         Country toCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_toCountryID);
 
-        Airlift airliftOrder = new Airlift(fromCountry,toCountry,l_numOfArmies);
+        Airlift airliftOrder = new Airlift(fromCountry, toCountry, l_numOfArmies);
         this.setOrders(airliftOrder);
         this.useCard("airlift");
 
@@ -342,6 +342,9 @@ public class Player {
      * Executes the next order in the player's order list.
      */
     public void next_order() {
+        if (this.getOrders().isEmpty())
+            return;
+
         this.getOrders().getFirst().execute();
         this.getOrders().removeFirst();
 

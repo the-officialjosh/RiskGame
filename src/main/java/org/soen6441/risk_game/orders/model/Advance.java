@@ -84,7 +84,7 @@ public class Advance implements Order{
                     "💣 " + attacker.getName() + " attacks " + defendingCountry.getName() + " from " + attackingCountry.getName());
             Random random = new Random();
 
-            while (d_numberOfDeployedArmies > 0 && defendingArmies > 0) {
+            while (attackingArmies > 0 && defendingArmies > 0) {
                 // Attackers' chance to kill defenders (60% per army unit)
                 for (int i = 0; i < attackingArmies; i++) {
                     if (random.nextDouble() < 0.6) { // 60% chance
