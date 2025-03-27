@@ -434,55 +434,93 @@ public class GameMapController {
         });
     }
 
+
     /**
-     * Handles the map editor commands.
+     * Handles various map-related commands for the game session.
      *
      * @param p_command     The command to be executed.
-     * @param p_gameSession The game session.
+     * @param p_gameSession The current game session.
      */
+
     public void handleCommand(String p_command, GameSession p_gameSession) {
         GameMap l_gameMap = p_gameSession.getMap();
         String[] l_parts = p_command.split(" ");
         String l_cmd = l_parts[0];
 
-        switch (l_cmd) {
-            case "loadmap", "editmap":
-                loadMap(p_gameSession, l_parts[1]);
-                break;
-            case "editcontinent":
-                if (l_parts[1].equals("-add")) {
-                    addContinent(l_gameMap, l_parts[2], Integer.parseInt(l_parts[3]));
-                } else if (l_parts[1].equals("-remove")) {
-                    removeContinent(l_gameMap, l_parts[2]);
-                }
-                break;
-            case "editcountry":
-                if (l_parts[1].equals("-add")) {
-                    addCountry(l_gameMap, l_parts[2], l_parts[3]);
-                } else if (l_parts[1].equals("-remove")) {
-                    removeCountry(l_gameMap, l_parts[2]);
-                }
-                break;
-            case "editneighbor":
-                if (l_parts[1].equals("-add")) {
-                    addNeighbor(l_gameMap, l_parts[2], l_parts[3]);
-                } else if (l_parts[1].equals("-remove")) {
-                    removeNeighbor(l_gameMap, l_parts[2], l_parts[3]);
-                }
-                break;
-            case "showmap":
-                showMap(l_gameMap);
-                break;
-            case "savemap":
-                saveMap(l_gameMap, l_parts[1]);
-                break;
-            case "validatemap":
-                handleValidateMapCommand(l_gameMap);
-                break;
-            case "mapeditordone":
-                break;
-            default:
-                d_displayToUser.instructionMessage("Invalid command");
+        try {
+            switch (l_cmd) {
+                case "loadmap", "editmap":
+                    if (l_parts.length < 2) {
+                        d_displayToUser.instructionMessage("Error: Missing map name for " + l_cmd + " command.");
+                    } else {
+                        loadMap(p_gameSession, l_parts[1]);
+                    }
+                    break;
+                case "editcontinent":
+                    if (l_parts.length < 3) {
+                        d_displayToUser.instructionMessage("Error: Missing options for editcontinent command.");
+                    } else {
+                        for (int i = 1; i < l_parts.length; i += 3) {
+                            if (l_parts[i].equals("-add")) {
+                                addContinent(l_gameMap, l_parts[i + 1], Integer.parseInt(l_parts[i + 2]));
+                            } else if (l_parts[i].equals("-remove")) {
+                                removeContinent(l_gameMap, l_parts[i + 1]);
+                            } else {
+                                d_displayToUser.instructionMessage("Error: Invalid option " + l_parts[i] + " for editcontinent command.");
+                            }
+                        }
+                    }
+                    break;
+                case "editcountry":
+                    if (l_parts.length < 3) {
+                        d_displayToUser.instructionMessage("Error: Missing options for editcountry command.");
+                    } else {
+                        for (int i = 1; i < l_parts.length; i += 3) {
+                            if (l_parts[i].equals("-add")) {
+                                addCountry(l_gameMap, l_parts[i + 1], l_parts[i + 2]);
+                            } else if (l_parts[i].equals("-remove")) {
+                                removeCountry(l_gameMap, l_parts[i + 1]);
+                            } else {
+                                d_displayToUser.instructionMessage("Error: Invalid option " + l_parts[i] + " for editcountry command.");
+                            }
+                        }
+                    }
+                    break;
+                case "editneighbor":
+                    if (l_parts.length < 3) {
+                        d_displayToUser.instructionMessage("Error: Missing options for editneighbor command.");
+                    } else {
+                        for (int i = 1; i < l_parts.length; i += 3) {
+                            if (l_parts[i].equals("-add")) {
+                                addNeighbor(l_gameMap, l_parts[i + 1], l_parts[i + 2]);
+                            } else if (l_parts[i].equals("-remove")) {
+                                removeNeighbor(l_gameMap, l_parts[i + 1], l_parts[i + 2]);
+                            } else {
+                                d_displayToUser.instructionMessage("Error: Invalid option " + l_parts[i] + " for editneighbor command.");
+                            }
+                        }
+                    }
+                    break;
+                case "showmap":
+                    showMap(l_gameMap);
+                    break;
+                case "savemap":
+                    if (l_parts.length < 2) {
+                        d_displayToUser.instructionMessage("Error: Missing map name for savemap command.");
+                    } else {
+                        saveMap(l_gameMap, l_parts[1]);
+                    }
+                    break;
+                case "validatemap":
+                    handleValidateMapCommand(l_gameMap);
+                    break;
+                case "mapeditordone":
+                    break;
+                default:
+                    d_displayToUser.instructionMessage("Error: Invalid command " + l_cmd + ".");
+            }
+        } catch (Exception e) {
+            d_displayToUser.instructionMessage("Error: " + e.getMessage());
         }
     }
 
