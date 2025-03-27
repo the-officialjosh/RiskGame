@@ -185,17 +185,51 @@ public class Player {
                             continue;
                         }
                         processBlockadeCommand(l_command_parts[1]);
-                    } /*else if (l_command_parts[0].equalsIgnoreCase("Diplomacy")) {
-                        if (l_command_parts.length != 4) {
-                            d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
+                    } else if (l_command_parts[0].equalsIgnoreCase("Diplomacy")) {
+                        if (l_command_parts.length != 2) {
+                            d_displayToUser.instructionMessage("Invalid command. Use: Diplomacy <targetPlayerName>");
                             continue;
                         }
-                    }*/
+                        processDiplomacyCommand(l_command_parts[1]);
+                    }
                 }
             } catch (NumberFormatException e) {
                 d_displayToUser.instructionMessage("Invalid number format. Please enter valid numeric values for country ID and number of armies.");
             }
         }
+    }
+
+    private void processDiplomacyCommand(String p_targetPlayerName) {
+        GameSession l_gameSession = GameSession.getInstance();
+        Player l_targetPlayer = l_gameSession.getPlayerByName(p_targetPlayerName);
+
+        if (l_targetPlayer == null) {
+            System.out.println("❌ Target player does not exist.");
+            return;
+        }
+
+        // Validation: player must own the target country
+        if (this.equals(l_targetPlayer)) {
+            System.out.println("❌ Diplomacy failed: a player cannot establish diplomacy with themselves.");
+            return;
+        }
+
+        if (l_gameSession.areInDiplomacy(this, l_targetPlayer)) {
+            System.out.println("ℹ️ Diplomacy already exists between " + this.getName() + " and " + l_targetPlayer.getName() + ".");
+            return;
+
+        }
+
+        if (!this.hasCard("diplomacy")) {
+            System.out.println("❌ Invalid order: no diplomacy cards available.");
+            return;
+        }
+
+        Diplomacy l_diplomacyOrder = new Diplomacy(this, l_targetPlayer);
+        this.setOrders(l_diplomacyOrder);
+
+        // Consume one diplomacy card
+        this.useCard("diplomacy");
     }
 
     private void processReinforcementCommand() {
