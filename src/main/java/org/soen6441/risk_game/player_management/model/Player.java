@@ -131,22 +131,7 @@ public class Player {
                         d_displayToUser.instructionMessage("Invalid command. Use: deploy <countryID> <numberOfArmies>");
                         continue;
                     }
-                    int l_countryID = Integer.parseInt(l_command_parts[1]);
-                    int l_numOfArmies = Integer.parseInt(l_command_parts[2]);
-
-                    if (!validNumberOfReinforcementArmies(l_numOfArmies)) {
-                        d_displayToUser.instructionMessage("Cannot deploy more armies than available. You have " + d_numberOfReinforcementsArmies + " armies left.");
-                        continue;
-                    }
-
-                    if (findCountryById(this.d_countries_owned, l_countryID) == null) {
-                        d_displayToUser.instructionMessage("You can only deploy armies to countries you own. Try again.");
-                        continue;
-                    }
-
-                    Deploy deployOrder = new Deploy(this, l_numOfArmies, l_countryID);
-                    this.setOrders(deployOrder);
-                    d_numberOfReinforcementsArmies -= l_numOfArmies;
+                    processDeployCommand(l_command_parts);
                     if (this.isReinforcementPhaseComplete()) {
                         d_displayToUser.instructionMessage("✔ All armies have been deployed.");
                         d_displayToUser.instructionMessage("\nYou can use Advance order command to move or attack countries");
@@ -185,12 +170,13 @@ public class Player {
                             continue;
                         }
                         processBlockadeCommand(l_command_parts[1]);
-                    } /*else if (l_command_parts[0].equalsIgnoreCase("Diplomacy")) {
-                        if (l_command_parts.length != 4) {
-                            d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
+                    } else if (l_command_parts[0].equalsIgnoreCase("Diplomacy")) {
+                        if (l_command_parts.length != 2) {
+                            d_displayToUser.instructionMessage("Invalid command. Use: Diplomacy <targetPlayerName>");
                             continue;
                         }
-                    }*/
+                        processDiplomacyCommand(l_command_parts[1]);
+                    }
                 }
             } catch (NumberFormatException e) {
                 d_displayToUser.instructionMessage("Invalid number format. Please enter valid numeric values for country ID and number of armies.");
@@ -198,7 +184,59 @@ public class Player {
         }
     }
 
-    private void processReinforcementCommand() {
+    public void processDeployCommand(String[] l_command_parts) {
+        int l_countryID = Integer.parseInt(l_command_parts[1]);
+        int l_numOfArmies = Integer.parseInt(l_command_parts[2]);
+
+        if (!validNumberOfReinforcementArmies(l_numOfArmies)) {
+            d_displayToUser.instructionMessage("Cannot deploy more armies than available. You have " + d_numberOfReinforcementsArmies + " armies left.");
+            return;
+        }
+
+        if (findCountryById(this.d_countries_owned, l_countryID) == null) {
+            d_displayToUser.instructionMessage("You can only deploy armies to countries you own. Try again.");
+            return;
+        }
+
+        Deploy deployOrder = new Deploy(this, l_numOfArmies, l_countryID);
+        this.setOrders(deployOrder);
+        d_numberOfReinforcementsArmies -= l_numOfArmies;
+    }
+
+    private void processDiplomacyCommand(String p_targetPlayerName) {
+        GameSession l_gameSession = GameSession.getInstance();
+        Player l_targetPlayer = l_gameSession.getPlayerByName(p_targetPlayerName);
+
+        if (l_targetPlayer == null) {
+            System.out.println("❌ Target player does not exist.");
+            return;
+        }
+
+        // Validation: player must own the target country
+        if (this.equals(l_targetPlayer)) {
+            System.out.println("❌ Diplomacy failed: a player cannot establish diplomacy with themselves.");
+            return;
+        }
+
+        if (l_gameSession.areInDiplomacy(this, l_targetPlayer)) {
+            System.out.println("ℹ️ Diplomacy already exists between " + this.getName() + " and " + l_targetPlayer.getName() + ".");
+            return;
+
+        }
+
+        if (!this.hasCard("diplomacy")) {
+            System.out.println("❌ Invalid order: no diplomacy cards available.");
+            return;
+        }
+
+        Diplomacy l_diplomacyOrder = new Diplomacy(this, l_targetPlayer);
+        this.setOrders(l_diplomacyOrder);
+
+        // Consume one diplomacy card
+        this.useCard("diplomacy");
+    }
+
+    public void processReinforcementCommand() {
         if (!this.hasCard("reinforcement")) {
             System.out.println("❌ Invalid order: no reinforcement cards available.");
             return;
@@ -244,7 +282,7 @@ public class Player {
         this.useCard("blockade");
     }
 
-    private void processBombCommand(String p_sourceCountryID, String p_targetCountryID) {
+    public void processBombCommand(String p_sourceCountryID, String p_targetCountryID) {
         GameSession l_gameSession = GameSession.getInstance();
 
         Country l_sourceCountry = l_gameSession.getMap().getCountriesById(Integer.parseInt(p_sourceCountryID));
