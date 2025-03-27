@@ -7,6 +7,9 @@ import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 /**
  * The Diplomacy order establishes a temporary truce between two players for the current turn.
  * Neither player can attack the other after this order is executed.
+ *
+ * @author Joshua Onyema
+ * @version 1.0
  */
 public class Diplomacy implements Order {
 
