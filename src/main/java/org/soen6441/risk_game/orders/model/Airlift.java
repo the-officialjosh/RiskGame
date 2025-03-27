@@ -2,9 +2,6 @@ package org.soen6441.risk_game.orders.model;
 
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
-import org.soen6441.risk_game.player_management.model.Player;
-
-import java.util.HashMap;
 
 /**
  * The type Airlift.
@@ -30,11 +27,15 @@ public class Airlift implements Order {
     @Override
     public void execute() {
         GameSession l_gameSession = GameSession.getInstance();
+        if (d_sourceCountry.getExistingArmies() < d_numberOfArmies) {
+            l_gameSession.getMap().getCountriesById(d_sourceCountry.getCountryId()).getD_ownedBy().setD_cards_owned(3);
+            return;
+        }
 
         int l_sourceCountryExistingArmies = d_sourceCountry.getExistingArmies();
         int l_targetCountryExistingArmies = d_targetCountry.getExistingArmies();
 
-        l_gameSession.getMap().getCountriesById(d_sourceCountry.getCountryId()).setExistingArmies( l_sourceCountryExistingArmies - d_numberOfArmies);
+        l_gameSession.getMap().getCountriesById(d_sourceCountry.getCountryId()).setExistingArmies(l_sourceCountryExistingArmies - d_numberOfArmies);
         l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).setExistingArmies(l_targetCountryExistingArmies + d_numberOfArmies);
     }
 }

@@ -25,6 +25,7 @@ public class Player {
     private int d_numberOfReinforcementsArmies;
     private List<Order> d_orders;
     private List<Country> d_countries_owned;
+
     private int[] d_cards_owned;
     private final DisplayToUser d_displayToUser;
 
@@ -386,6 +387,10 @@ public class Player {
      */
     public boolean validNumberOfReinforcementArmies(int l_numOfArmies) {
         return l_numOfArmies <= d_numberOfReinforcementsArmies;
+    }
+
+    public void setD_cards_owned(int card) {
+        this.d_cards_owned[card] += 1;
     }
 
     /**
