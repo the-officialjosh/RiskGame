@@ -26,9 +26,17 @@ public class PlayerController {
     private GameMapController d_gameMapController = new GameMapController();
 
     /**
-     * This method handles the players loading step.
+     * Manages the loading of players into the game session.
+     * This method allows adding and removing players, and assigns countries to players.
      *
-     * @param p_gameSession The game session.
+     * Detailed validation checks:
+     * - Ensures the command starts with "gameplayer".
+     * - Validates the syntax of the command.
+     * - Checks if the player already exists when adding.
+     * - Ensures there are players to remove when removing.
+     * - Validates the action type (-add or -remove).
+     *
+     * @param p_gameSession The current game session.
      */
     public void loadPlayers(GameSession p_gameSession) {
         d_displayToUser.instructionMessage("=====================================");
