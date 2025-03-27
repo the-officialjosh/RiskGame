@@ -83,7 +83,7 @@ public class GameMapController {
                     int d_countryId = Integer.parseInt(d_parts[0]);
                     String d_countryName = d_parts[1];
                     int d_continentId = Integer.parseInt(d_parts[2]);
-                    Country d_country = new Country(d_countryId, d_countryName, new ArrayList<>(), new HashMap<>());
+                    Country d_country = new Country(d_countryId, d_countryName, new ArrayList<>(), 0);
                     for (Continent d_continent : d_gameMap.getContinents()) {
                         if (d_continent.getD_continentId() == d_continentId) {
                             d_continent.getCountries().add(d_country);
@@ -224,7 +224,7 @@ public class GameMapController {
     public void addCountry(GameMap p_gameMap, String p_countryName, String p_continentName) {
         for (Continent l_continent : p_gameMap.getContinents()) {
             if (l_continent.getName().equals(p_continentName)) {
-                Country l_country = new Country(p_gameMap.getCountries().size() + 1, p_countryName, new ArrayList<>(), new HashMap<>());
+                Country l_country = new Country(p_gameMap.getCountries().size() + 1, p_countryName, new ArrayList<>(), 0);
                 l_continent.getCountries().add(l_country);
                 d_displayToUser.instructionMessage("Country " + p_countryName + " added to continent " + p_continentName + ".");
                 break;
@@ -315,9 +315,7 @@ public class GameMapController {
                 System.out.println(">>>> Owned by: " + (l_country.getD_ownedBy() == null ? "Unclaimed Territory" : l_country.getD_ownedBy().getName()));
 
                 System.out.println(">>>> Armies:");
-                for (Player l_player : l_country.getExistingArmies().keySet()) {
-                    System.out.println(" - " + l_country.getExistingArmies().get(l_player) + " units under the command of " + l_player.getName());
-                }
+                System.out.println(" - " + l_country.getExistingArmies() + " units under the command of " + l_country.getD_ownedBy().getName());
 
                 System.out.print(">>>> Neighbors: ");
                 for (Country neighbor : l_country.getAdjacentCountries()) {

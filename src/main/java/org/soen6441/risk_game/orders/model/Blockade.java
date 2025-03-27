@@ -24,14 +24,11 @@ public class Blockade implements Order {
             return; // Invalid state, do nothing
         }
 
-        Integer currentArmies = targetCountry.getExistingArmies().get(l_player);
-        if (currentArmies == null || currentArmies <= 0) {
+        int currentArmies = targetCountry.getExistingArmies();
+        if (currentArmies <= 0) {
             return; // No armies to blockade
         }
-
-        HashMap<Player, Integer> newArmyMap = new HashMap<>();
-        newArmyMap.put(l_player, currentArmies * 3);
-        targetCountry.setExistingArmies(newArmyMap);
+        targetCountry.setExistingArmies( currentArmies * 3);
         targetCountry.setD_isTerritoryNeutral(true);
         targetCountry.setD_ownedBy(null);
 

@@ -21,7 +21,7 @@ public class Country {
     private String d_name;
     private Player d_ownedBy;
     private List<Country> d_adjacentCountries;
-    private Map<Player, Integer> d_existingArmies;
+    private int d_existingArmies;
     private boolean d_isTerritoryNeutral;
 
     /**
@@ -31,7 +31,7 @@ public class Country {
      * @param p_adjacentCountries The list of adjacent countries.
      * @param p_existingArmies The existing armies in the country.
      */
-    public Country(int p_countryId, String p_name, List<Country> p_adjacentCountries, Map<Player, Integer> p_existingArmies) {
+    public Country(int p_countryId, String p_name, List<Country> p_adjacentCountries, int p_existingArmies) {
         this.d_countryId = p_countryId;
         this.d_name = p_name;
         this.d_adjacentCountries = p_adjacentCountries;
@@ -88,14 +88,14 @@ public class Country {
     /**
      * Getter for the field.
      */
-    public Map<Player, Integer> getExistingArmies() {
+    public int getExistingArmies() {
         return d_existingArmies;
     }
 
     /**
      * Setter for the field.
      */
-    public void setExistingArmies(Map<Player, Integer> p_existingArmies) {
+    public void setExistingArmies(int p_existingArmies) {
         this.d_existingArmies = p_existingArmies;
     }
 

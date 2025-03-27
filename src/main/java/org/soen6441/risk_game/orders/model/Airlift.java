@@ -31,16 +31,10 @@ public class Airlift implements Order {
     public void execute() {
         GameSession l_gameSession = GameSession.getInstance();
 
-        int l_sourceCountryExistingArmies = d_sourceCountry.getExistingArmies().get(d_sourceCountry.getD_ownedBy());
-        int l_targetCountryExistingArmies = d_targetCountry.getExistingArmies().get(d_targetCountry.getD_ownedBy());
+        int l_sourceCountryExistingArmies = d_sourceCountry.getExistingArmies();
+        int l_targetCountryExistingArmies = d_targetCountry.getExistingArmies();
 
-        HashMap<Player, Integer> sourceMap = new HashMap<>();
-        HashMap<Player, Integer> targetMap = new HashMap<>();
-
-        sourceMap.put(d_sourceCountry.getD_ownedBy(), l_sourceCountryExistingArmies - d_numberOfArmies);
-        targetMap.put(d_targetCountry.getD_ownedBy(), l_targetCountryExistingArmies + d_numberOfArmies);
-
-        l_gameSession.getMap().getCountriesById(d_sourceCountry.getCountryId()).setExistingArmies(sourceMap);
-        l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).setExistingArmies(targetMap);
+        l_gameSession.getMap().getCountriesById(d_sourceCountry.getCountryId()).setExistingArmies( l_sourceCountryExistingArmies - d_numberOfArmies);
+        l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).setExistingArmies(l_targetCountryExistingArmies + d_numberOfArmies);
     }
 }

@@ -72,10 +72,8 @@ public class Deploy implements Order {
         for (int i = 0; i < l_gameSession.getMap().getCountries().size(); i++) {
             if (l_gameSession.getMap().getCountries().get(i).getCountryId() == l_country.getCountryId()) {
                 Country actualCountry = l_gameSession.getMap().getCountries().get(i);
-                Map<Player, Integer> existingArmies = new HashMap<>(actualCountry.getExistingArmies());
-                int currentArmies = existingArmies.getOrDefault(d_issuer, 0);
-                existingArmies.put(d_issuer, currentArmies + d_numberOfDeployedArmies);
-                actualCountry.setExistingArmies(existingArmies);
+                int currentArmies = actualCountry.getExistingArmies();
+                actualCountry.setExistingArmies(currentArmies + d_numberOfDeployedArmies);
                 break;
             }
         }

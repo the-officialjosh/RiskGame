@@ -65,7 +65,7 @@ public class Advance implements Order{
 
         }else {
             int attackingArmies = d_numberOfDeployedArmies;
-            int defendingArmies = defendingCountry.getExistingArmies().get(defender);
+            int defendingArmies = defendingCountry.getExistingArmies();
 
             System.out.println(attacker.getName() + " attacks " + defendingCountry.getName() + " from " + attackingCountry.getName());
 
@@ -80,16 +80,14 @@ public class Advance implements Order{
                 }
 
                 // Defenders' chance to kill attackers (70% per army unit)
-                for (int i = 0; i < defendingCountry.getExistingArmies().get(defender); i++) {
+                for (int i = 0; i < defendingCountry.getExistingArmies(); i++) {
                     if (random.nextDouble() < 0.7) { // 70% chance
                         attackingArmies--;
                     }
                 }
             }
-            int remainingArmies = attackingCountry.getExistingArmies().get(attacker) - d_numberOfDeployedArmies;
-            HashMap<Player, Integer>  existingArmies = new HashMap<>();
-            existingArmies.put(attacker,remainingArmies);
-            attackingCountry.setExistingArmies(existingArmies);
+            int remainingArmies = attackingCountry.getExistingArmies() - d_numberOfDeployedArmies;
+            attackingCountry.setExistingArmies(remainingArmies);
 
 //            if (defendingArmies <= 0) {
 //                // Attacker wins and captures the territory

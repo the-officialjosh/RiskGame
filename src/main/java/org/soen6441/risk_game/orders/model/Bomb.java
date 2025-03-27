@@ -79,13 +79,11 @@ public class Bomb implements Order {
         }*/
 
         // Proceed with bombing
-        int l_currentArmies = l_target.getExistingArmies().getOrDefault(l_targetOwner, 0);
+        int l_currentArmies = l_target.getExistingArmies();
         int l_reducedArmies = l_currentArmies / 2;
 
-        HashMap<Player, Integer> updatedArmies = new HashMap<>();
-        updatedArmies.put(l_targetOwner, l_reducedArmies);
         //l_target.setExistingArmies(updatedArmies);
-        l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).setExistingArmies(updatedArmies);
+        l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).setExistingArmies(l_reducedArmies);
 
         // Consume one bomb card
         d_player.useBombCard();
