@@ -177,6 +177,7 @@ public class Player {
                             d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
                             continue;
                         }
+                        processReinforcementCommand();
                     } else if (l_command_parts[0].equalsIgnoreCase("Blockade")) {
                         if (l_command_parts.length != 4) {
                             d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
@@ -195,6 +196,14 @@ public class Player {
                 d_displayToUser.instructionMessage("Invalid number format. Please enter valid numeric values for country ID and number of armies.");
             }
         }
+    }
+
+    private void processReinforcementCommand() {
+        Reinforcement l_reinforcementOrder = new Reinforcement(this);
+        this.setOrders(l_reinforcementOrder);
+
+        // Consume one blockade card
+        this.useCard("reinforcement");
     }
 
     private void processBlockadeCommand(String p_targetCountryID) {
@@ -227,7 +236,7 @@ public class Player {
         this.setOrders(l_blockadeOrder);
 
         // Consume one blockade card
-        this.useBombCard("blockade");
+        this.useCard("blockade");
     }
 
     private void processBombCommand(String p_sourceCountryID, String p_targetCountryID) {
@@ -276,7 +285,7 @@ public class Player {
         this.setOrders(bombOrder);
 
         // Consume one bomb card
-        this.useBombCard("bomb");
+        this.useCard("bomb");
     }
 
     private void processAdvanceCommand(String[] l_command_parts) {
@@ -380,32 +389,6 @@ public class Player {
     }
 
     /**
-     * Gets specific cards count.
-     *
-     * @param p_cardType the p card type
-     * @return the specific cards count
-     */
-    public int get_specific_cards_count(String p_cardType) {
-        return switch (p_cardType.toLowerCase()) {
-            case "bomb" -> d_cards_owned[0];
-            case "reinforcement" -> d_cards_owned[1];
-            case "blockade" -> d_cards_owned[2];
-            case "airlift" -> d_cards_owned[3];
-            case "diplomacy" -> d_cards_owned[4];
-            default -> 0;
-        };
-    }
-
-    /**
-     * Get d cards owned int [ ].
-     *
-     * @return the int [ ]
-     */
-    public int[] getD_cards_owned() {
-        return d_cards_owned;
-    }
-
-    /**
      * Assign card function to add a count of cards.
      */
     public void assignCard() {
@@ -436,7 +419,7 @@ public class Player {
      *
      * @param cardType the card type
      */
-    public void useBombCard(String cardType) {
+    public void useCard(String cardType) {
         switch (cardType.toLowerCase()) {
             case "bomb": {
                 if (hasCard("bomb")) {
