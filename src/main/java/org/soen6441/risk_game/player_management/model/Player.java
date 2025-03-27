@@ -131,22 +131,7 @@ public class Player {
                         d_displayToUser.instructionMessage("Invalid command. Use: deploy <countryID> <numberOfArmies>");
                         continue;
                     }
-                    int l_countryID = Integer.parseInt(l_command_parts[1]);
-                    int l_numOfArmies = Integer.parseInt(l_command_parts[2]);
-
-                    if (!validNumberOfReinforcementArmies(l_numOfArmies)) {
-                        d_displayToUser.instructionMessage("Cannot deploy more armies than available. You have " + d_numberOfReinforcementsArmies + " armies left.");
-                        continue;
-                    }
-
-                    if (findCountryById(this.d_countries_owned, l_countryID) == null) {
-                        d_displayToUser.instructionMessage("You can only deploy armies to countries you own. Try again.");
-                        continue;
-                    }
-
-                    Deploy deployOrder = new Deploy(this, l_numOfArmies, l_countryID);
-                    this.setOrders(deployOrder);
-                    d_numberOfReinforcementsArmies -= l_numOfArmies;
+                    processDeployCommand(l_command_parts);
                     if (this.isReinforcementPhaseComplete()) {
                         d_displayToUser.instructionMessage("✔ All armies have been deployed.");
                         d_displayToUser.instructionMessage("\nYou can use Advance order command to move or attack countries");
@@ -199,6 +184,25 @@ public class Player {
         }
     }
 
+    public void processDeployCommand(String[] l_command_parts) {
+        int l_countryID = Integer.parseInt(l_command_parts[1]);
+        int l_numOfArmies = Integer.parseInt(l_command_parts[2]);
+
+        if (!validNumberOfReinforcementArmies(l_numOfArmies)) {
+            d_displayToUser.instructionMessage("Cannot deploy more armies than available. You have " + d_numberOfReinforcementsArmies + " armies left.");
+            return;
+        }
+
+        if (findCountryById(this.d_countries_owned, l_countryID) == null) {
+            d_displayToUser.instructionMessage("You can only deploy armies to countries you own. Try again.");
+            return;
+        }
+
+        Deploy deployOrder = new Deploy(this, l_numOfArmies, l_countryID);
+        this.setOrders(deployOrder);
+        d_numberOfReinforcementsArmies -= l_numOfArmies;
+    }
+
     private void processDiplomacyCommand(String p_targetPlayerName) {
         GameSession l_gameSession = GameSession.getInstance();
         Player l_targetPlayer = l_gameSession.getPlayerByName(p_targetPlayerName);
@@ -232,7 +236,7 @@ public class Player {
         this.useCard("diplomacy");
     }
 
-    private void processReinforcementCommand() {
+    public void processReinforcementCommand() {
         if (!this.hasCard("reinforcement")) {
             System.out.println("❌ Invalid order: no reinforcement cards available.");
             return;
