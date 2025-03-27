@@ -171,7 +171,6 @@ public class Player {
                             d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
                             continue;
                         }
-
                         processBombCommand(l_command_parts[1], l_command_parts[2]);
                     } else if (l_command_parts[0].equalsIgnoreCase("Reinforcement")) {
                         if (l_command_parts.length != 4) {
@@ -184,8 +183,7 @@ public class Player {
                             continue;
                         }
                         processBlockadeCommand(l_command_parts[1]);
-                    }
-                    else if (l_command_parts[0].equalsIgnoreCase("Diplomacy")) {
+                    } else if (l_command_parts[0].equalsIgnoreCase("Diplomacy")) {
                         if (l_command_parts.length != 4) {
                             d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
                             continue;
@@ -225,7 +223,7 @@ public class Player {
             return;
         }
 
-        Blockade l_blockadeOrder = new Blockade(this, l_targetCountry);
+        Blockade l_blockadeOrder = new Blockade(l_targetCountry);
         this.setOrders(l_blockadeOrder);
 
         // Consume one blockade card
