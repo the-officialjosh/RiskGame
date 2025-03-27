@@ -169,29 +169,28 @@ public class Player {
                         }
                     } else if (l_command_parts[0].equalsIgnoreCase("Bomb")) {
                         if (l_command_parts.length != 3) {
-                            d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
+                            d_displayToUser.instructionMessage("Invalid command. Use: Bomb <sourceCountryID> <targetCountryID>");
                             continue;
                         }
                         processBombCommand(l_command_parts[1], l_command_parts[2]);
                     } else if (l_command_parts[0].equalsIgnoreCase("Reinforcement")) {
                         if (l_command_parts.length != 4) {
-                            d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
+                            d_displayToUser.instructionMessage("Invalid command. Use: Reinforcement");
                             continue;
                         }
                         processReinforcementCommand();
                     } else if (l_command_parts[0].equalsIgnoreCase("Blockade")) {
                         if (l_command_parts.length != 4) {
-                            d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
+                            d_displayToUser.instructionMessage("Invalid command. Use: Blockade <targetCountryID>");
                             continue;
                         }
                         processBlockadeCommand(l_command_parts[1]);
-                    } else if (l_command_parts[0].equalsIgnoreCase("Diplomacy")) {
+                    } /*else if (l_command_parts[0].equalsIgnoreCase("Diplomacy")) {
                         if (l_command_parts.length != 4) {
                             d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
                             continue;
                         }
-
-                    }
+                    }*/
                 }
             } catch (NumberFormatException e) {
                 d_displayToUser.instructionMessage("Invalid number format. Please enter valid numeric values for country ID and number of armies.");
@@ -200,10 +199,15 @@ public class Player {
     }
 
     private void processReinforcementCommand() {
+        if (!this.hasCard("reinforcement")) {
+            System.out.println("❌ Invalid order: no reinforcement cards available.");
+            return;
+        }
+
         Reinforcement l_reinforcementOrder = new Reinforcement(this);
         this.setOrders(l_reinforcementOrder);
 
-        // Consume one blockade card
+        // Consume one reinforcement card
         this.useCard("reinforcement");
     }
 
