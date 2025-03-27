@@ -7,6 +7,12 @@ import org.soen6441.risk_game.player_management.model.Player;
 
 import java.util.HashMap;
 
+/**
+ * This class represents the Blockade order.
+ * @author Joshua Onyema
+ * @author Safin Mahesania
+ * @version 1.0
+ */
 public class Blockade implements Order {
     private Country l_country;
 

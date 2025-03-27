@@ -5,6 +5,8 @@ import org.soen6441.risk_game.player_management.model.Player;
 
 /**
  * The type Reinforcement.
+ * @author Safin Mahesania
+ * @version 1.0
  */
 public class Reinforcement implements Order {
     private Player d_player;
