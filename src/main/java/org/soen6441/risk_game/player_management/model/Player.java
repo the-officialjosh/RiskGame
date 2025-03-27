@@ -161,8 +161,8 @@ public class Player {
                             continue;
                         }
                         processAdvanceCommand(l_command_parts);
-                    } else if(l_command_parts[0].equalsIgnoreCase("Airlift")){
-                        if(l_command_parts.length != 4){
+                    } else if (l_command_parts[0].equalsIgnoreCase("Airlift")) {
+                        if (l_command_parts.length != 4) {
                             d_displayToUser.instructionMessage("Invalid command. Use: Airlift <fromCountryID> <toCountryID> <numberOfArmies>");
                             continue;
                         }
@@ -174,13 +174,13 @@ public class Player {
                         }
                         processBombCommand(l_command_parts[1], l_command_parts[2]);
                     } else if (l_command_parts[0].equalsIgnoreCase("Reinforcement")) {
-                        if (l_command_parts.length != 4) {
+                        if (l_command_parts.length != 1) {
                             d_displayToUser.instructionMessage("Invalid command. Use: Reinforcement");
                             continue;
                         }
                         processReinforcementCommand();
                     } else if (l_command_parts[0].equalsIgnoreCase("Blockade")) {
-                        if (l_command_parts.length != 4) {
+                        if (l_command_parts.length != 2) {
                             d_displayToUser.instructionMessage("Invalid command. Use: Blockade <targetCountryID>");
                             continue;
                         }
@@ -332,7 +332,7 @@ public class Player {
         Country fromCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_fromCountryID);
         Country toCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_toCountryID);
 
-        Airlift airliftOrder = new Airlift(fromCountry,toCountry,l_numOfArmies);
+        Airlift airliftOrder = new Airlift(fromCountry, toCountry, l_numOfArmies);
         this.setOrders(airliftOrder);
         this.useCard("airlift");
 
@@ -342,6 +342,9 @@ public class Player {
      * Executes the next order in the player's order list.
      */
     public void next_order() {
+        if (this.getOrders().isEmpty())
+            return;
+
         this.getOrders().getFirst().execute();
         this.getOrders().removeFirst();
 
@@ -405,6 +408,10 @@ public class Player {
      */
     public boolean validNumberOfReinforcementArmies(int l_numOfArmies) {
         return l_numOfArmies <= d_numberOfReinforcementsArmies;
+    }
+
+    public int[] getD_cards_owned() {
+        return d_cards_owned;
     }
 
     public void setD_cards_owned(int card) {
