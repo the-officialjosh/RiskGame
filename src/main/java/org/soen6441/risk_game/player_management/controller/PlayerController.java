@@ -107,10 +107,23 @@ public class PlayerController {
         for (Player player : p_gameSession.getPlayers()) {
             d_displayToUser.instructionMessage("\n⚔ Issue Order Phase");
             d_displayToUser.instructionMessage("==========================");
-            d_displayToUser.instructionMessage("Use \"Deploy <country_id> <number_of_armies>\" to deploy\n");
-            d_displayToUser.instructionMessage("Use \"Advance <fromCountry_id> <toCountry_id> <number_of_armies>\" to Advance\n");
+            d_displayToUser.instructionMessage("Use \"Deploy <country_id> <number_of_armies>\" to deploy");
+            d_displayToUser.instructionMessage("Use \"Advance <fromCountry_id> <toCountry_id> <number_of_armies>\" to Advance");
+            d_displayToUser.instructionMessage("Use \"Blockade <targetCountryID>\" to use blockade card");
+            d_displayToUser.instructionMessage("Use \"Bomb <sourceCountryID> <targetCountryID>\" to use bomb card");
+            d_displayToUser.instructionMessage("Use \"Reinforcement\" to use reinforcement card");
+            //d_displayToUser.instructionMessage("Use \"Advance <fromCountry_id> <toCountry_id> <number_of_armies>\" to Advance");
 
             d_displayToUser.instructionMessage("Use \"Commit\" to complete orders\n");
+
+            int[] cards = player.getD_cards_owned();
+            d_displayToUser.instructionMessage("You have following cards:");
+            d_displayToUser.instructionMessage("1. Bomb = "+cards[0]);
+            d_displayToUser.instructionMessage("2. Reinforcement = "+cards[1]);
+            d_displayToUser.instructionMessage("3. Blockade = "+cards[2]);
+            d_displayToUser.instructionMessage("4. Airlift = "+cards[3]);
+            d_displayToUser.instructionMessage("5. Diplomacy = "+cards[4]);
+
             player.issue_order();
         }
     }
