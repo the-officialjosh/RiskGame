@@ -264,6 +264,11 @@ public class Player {
             return;
         }
 
+        if (findCountryById(this.d_countries_owned, l_toCountryID) == null) {
+            d_displayToUser.instructionMessage("You can only advance armies from countries you own. Try again.");
+            return;
+        }
+
     }
 
     /**
