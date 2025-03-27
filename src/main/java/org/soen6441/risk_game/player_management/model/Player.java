@@ -331,9 +331,12 @@ public class Player {
      * Executes the next order in the player's order list.
      */
     public void next_order() {
-        for (Order order : this.getOrders()) {
+        this.getOrders().getFirst().execute();
+        this.getOrders().removeFirst();
+
+        /*for (Order order : this.getOrders()) {
             order.execute();
-        }
+        }*/
     }
 
     /**
