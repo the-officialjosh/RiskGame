@@ -106,6 +106,7 @@ public class Advance implements Order{
                 // Attacker wins and captures the territory
                 defendingCountry.setD_ownedBy(attacker);
                 defendingCountry.setExistingArmies(attackingArmies);
+                attacker.assignCard();
                 System.out.println(attacker.getName() + " has conquered " + defendingCountry.getName() + "!");
                 LogEntryBuffer.getInstance().setValue("💣 " + attacker.getName() + " has conquered " + defendingCountry.getName() + "!");
             } else {
