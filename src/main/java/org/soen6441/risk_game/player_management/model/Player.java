@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 /**
  * Represents a player in the game.
+ *
  * @author Irfan Maknojia
  * @author Joshua Onyema
  * @author Safin Mahesania
@@ -121,11 +122,11 @@ public class Player {
 
             // Catch user action for monitoring observer
             LogEntryBuffer.getInstance().setValue(l_command);
-            if(l_command.equalsIgnoreCase("commit")) break;
+            if (l_command.equalsIgnoreCase("commit")) break;
 
             String[] l_command_parts = l_command.split(" ");
             try {
-                if(this.hasReinforcementsArmies()){
+                if (this.hasReinforcementsArmies()) {
                     if (l_command_parts.length != 3 || !l_command_parts[0].equalsIgnoreCase("deploy")) {
                         d_displayToUser.instructionMessage("Invalid command. Use: deploy <countryID> <numberOfArmies>");
                         continue;
@@ -146,16 +147,16 @@ public class Player {
                     Deploy deployOrder = new Deploy(this, l_numOfArmies, l_countryID);
                     this.setOrders(deployOrder);
                     d_numberOfReinforcementsArmies -= l_numOfArmies;
-                    if(this.isReinforcementPhaseComplete()){
+                    if (this.isReinforcementPhaseComplete()) {
                         d_displayToUser.instructionMessage("✔ All armies have been deployed.");
                         d_displayToUser.instructionMessage("\nYou can use Advance order command to move or attack countries");
-                    }else{
+                    } else {
                         d_displayToUser.instructionMessage(this.getName() + " you have (" + this.getNumberOfReinforcementsArmies() + ") reinforcement armies.");
                     }
                 }
-                if(this.isReinforcementPhaseComplete()){
-                    if(l_command_parts[0].equalsIgnoreCase("Advance")){
-                        if(l_command_parts.length != 4){
+                if (this.isReinforcementPhaseComplete()) {
+                    if (l_command_parts[0].equalsIgnoreCase("Advance")) {
+                        if (l_command_parts.length != 4) {
                             d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
                             continue;
                         }
@@ -166,23 +167,30 @@ public class Player {
                             continue;
                         }
                         processAirliftCommand(l_command_parts);
-                    } else if(l_command_parts[0].equalsIgnoreCase("Bomb")){
-                        if(l_command_parts.length != 3){
+                    } else if (l_command_parts[0].equalsIgnoreCase("Bomb")) {
+                        if (l_command_parts.length != 3) {
+                            d_displayToUser.instructionMessage("Invalid command. Use: Bomb <sourceCountryID> <targetCountryID>");
+                            continue;
+                        }
+                        processBombCommand(l_command_parts[1], l_command_parts[2]);
+                    } else if (l_command_parts[0].equalsIgnoreCase("Reinforcement")) {
+                        if (l_command_parts.length != 4) {
+                            d_displayToUser.instructionMessage("Invalid command. Use: Reinforcement");
+                            continue;
+                        }
+                        processReinforcementCommand();
+                    } else if (l_command_parts[0].equalsIgnoreCase("Blockade")) {
+                        if (l_command_parts.length != 4) {
+                            d_displayToUser.instructionMessage("Invalid command. Use: Blockade <targetCountryID>");
+                            continue;
+                        }
+                        processBlockadeCommand(l_command_parts[1]);
+                    } /*else if (l_command_parts[0].equalsIgnoreCase("Diplomacy")) {
+                        if (l_command_parts.length != 4) {
                             d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
                             continue;
                         }
-
-                    } else if(l_command_parts[0].equalsIgnoreCase("Reinforcement")){
-                        if(l_command_parts.length != 4){
-                            d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
-                            continue;
-                        }
-                    } else if(l_command_parts[0].equalsIgnoreCase("Blockade")){
-                        if(l_command_parts.length != 4){
-                            d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
-                            continue;
-                        }
-                    }
+                    }*/
                 }
             } catch (NumberFormatException e) {
                 d_displayToUser.instructionMessage("Invalid number format. Please enter valid numeric values for country ID and number of armies.");
@@ -190,11 +198,63 @@ public class Player {
         }
     }
 
-    private void processBombCommand(String p_sourceCountryID, String p_targetCountryID){
+    private void processReinforcementCommand() {
+        if (!this.hasCard("reinforcement")) {
+            System.out.println("❌ Invalid order: no reinforcement cards available.");
+            return;
+        }
+
+        Reinforcement l_reinforcementOrder = new Reinforcement(this);
+        this.setOrders(l_reinforcementOrder);
+
+        // Consume one reinforcement card
+        this.useCard("reinforcement");
+    }
+
+    private void processBlockadeCommand(String p_targetCountryID) {
+        GameSession l_gameSession = GameSession.getInstance();
+        Country l_targetCountry = l_gameSession.getMap().getCountriesById(Integer.parseInt(p_targetCountryID));
+
+        if (l_targetCountry == null) {
+            System.out.println("❌ Target country does not exist.");
+            return;
+        }
+
+        // Validation: player must own the target country
+        if (!this.equals(l_targetCountry.getD_ownedBy())) {
+            System.out.println("❌ Invalid order: you do not own the target country.");
+            return;
+        }
+
+        int currentArmies = l_targetCountry.getExistingArmies();
+        if (currentArmies <= 0) {
+            System.out.println("❌ No armies to blockade.");
+            return;
+        }
+
+        if (!this.hasCard("blockade")) {
+            System.out.println("❌ Invalid order: no blockade cards available.");
+            return;
+        }
+
+        Blockade l_blockadeOrder = new Blockade(l_targetCountry);
+        this.setOrders(l_blockadeOrder);
+
+        // Consume one blockade card
+        this.useCard("blockade");
+    }
+
+    private void processBombCommand(String p_sourceCountryID, String p_targetCountryID) {
         GameSession l_gameSession = GameSession.getInstance();
 
         Country l_sourceCountry = l_gameSession.getMap().getCountriesById(Integer.parseInt(p_sourceCountryID));
         Country l_targetCountry = l_gameSession.getMap().getCountriesById(Integer.parseInt(p_targetCountryID));
+
+        if (l_sourceCountry == null || l_targetCountry == null) {
+            System.out.println("❌ Either source or target country does not exist.");
+            return;
+        }
+
         Player l_targetOwner = l_targetCountry.getD_ownedBy();
 
         // Validation: player must own the source country
@@ -221,14 +281,16 @@ public class Player {
             return;
         }
 
-        // Placeholder check – adjust this if getBombCards() is not defined
-        if (!this.hasBombCard()) {
+        if (!this.hasCard("bomb")) {
             System.out.println("❌ Invalid order: no bomb cards available.");
             return;
         }
 
-        Bomb bombOrder = new Bomb(l_sourceCountry,this,l_targetCountry);
+        Bomb bombOrder = new Bomb(l_sourceCountry, this, l_targetCountry);
         this.setOrders(bombOrder);
+
+        // Consume one bomb card
+        this.useCard("bomb");
     }
 
     private void processAdvanceCommand(String[] l_command_parts) {
@@ -270,9 +332,9 @@ public class Player {
         Country fromCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_fromCountryID);
         Country toCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_toCountryID);
 
-        Airlift airlift = new Airlift(fromCountry,toCountry,l_numOfArmies);
-        this.setOrders(airlift);
-        //this.useCard("airlift")
+        Airlift airliftOrder = new Airlift(fromCountry,toCountry,l_numOfArmies);
+        this.setOrders(airliftOrder);
+        this.useCard("airlift");
 
     }
 
@@ -280,9 +342,12 @@ public class Player {
      * Executes the next order in the player's order list.
      */
     public void next_order() {
-        for (Order order : this.getOrders()) {
+        this.getOrders().getFirst().execute();
+        this.getOrders().removeFirst();
+
+        /*for (Order order : this.getOrders()) {
             order.execute();
-        }
+        }*/
     }
 
     /**
@@ -342,30 +407,8 @@ public class Player {
         return l_numOfArmies <= d_numberOfReinforcementsArmies;
     }
 
-    /**
-     * Gets specific cards count.
-     *
-     * @param p_cardType the p card type
-     * @return the specific cards count
-     */
-    public int get_specific_cards_count(String p_cardType) {
-        return switch (p_cardType.toLowerCase()) {
-            case "bomb" -> d_cards_owned[0];
-            case "reinforcement" -> d_cards_owned[1];
-            case "blockade" -> d_cards_owned[2];
-            case "airlift" -> d_cards_owned[3];
-            case "diplomacy" -> d_cards_owned[4];
-            default -> 0;
-        };
-    }
-
-    /**
-     * Get d cards owned int [ ].
-     *
-     * @return the int [ ]
-     */
-    public int[] getD_cards_owned() {
-        return d_cards_owned;
+    public void setD_cards_owned(int card) {
+        this.d_cards_owned[card] += 1;
     }
 
     /**
@@ -378,20 +421,54 @@ public class Player {
     }
 
     /**
-     * Checks if the player has at least one bomb card.
+     * Checks if the player has at least one card of the given type.
      *
-     * @return true if bomb card is available, false otherwise.
+     * @param cardType the card type
+     * @return true if card is available, false otherwise.
      */
-    public boolean hasBombCard() {
-        return d_cards_owned != null && d_cards_owned.length > 0 && d_cards_owned[0] > 0;
+    public boolean hasCard(String cardType) {
+        return switch (cardType.toLowerCase()) {
+            case "bomb" -> d_cards_owned != null && d_cards_owned.length > 0 && d_cards_owned[0] > 0;
+            case "reinforcement" -> d_cards_owned != null && d_cards_owned.length > 0 && d_cards_owned[1] > 0;
+            case "blockade" -> d_cards_owned != null && d_cards_owned.length > 0 && d_cards_owned[2] > 0;
+            case "airlift" -> d_cards_owned != null && d_cards_owned.length > 0 && d_cards_owned[3] > 0;
+            case "diplomacy" -> d_cards_owned != null && d_cards_owned.length > 0 && d_cards_owned[4] > 0;
+            default -> false;
+        };
     }
 
     /**
-     * Uses one bomb card if available.
+     * Uses one card if available.
+     *
+     * @param cardType the card type
      */
-    public void useBombCard() {
-        if (hasBombCard()) {
-            d_cards_owned[0] -= 1;
+    public void useCard(String cardType) {
+        switch (cardType.toLowerCase()) {
+            case "bomb": {
+                if (hasCard("bomb")) {
+                    d_cards_owned[0] -= 1;
+                }
+            }
+            case "reinforcement": {
+                if (hasCard("reinforcement")) {
+                    d_cards_owned[1] -= 1;
+                }
+            }
+            case "blockade": {
+                if (hasCard("blockade")) {
+                    d_cards_owned[2] -= 1;
+                }
+            }
+            case "airlift": {
+                if (hasCard("airlift")) {
+                    d_cards_owned[3] -= 1;
+                }
+            }
+            case "diplomacy": {
+                if (hasCard("diplomacy")) {
+                    d_cards_owned[4] -= 1;
+                }
+            }
         }
     }
 

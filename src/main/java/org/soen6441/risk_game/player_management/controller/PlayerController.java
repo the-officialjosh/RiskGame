@@ -107,9 +107,10 @@ public class PlayerController {
         for (Player player : p_gameSession.getPlayers()) {
             d_displayToUser.instructionMessage("\n⚔ Issue Order Phase");
             d_displayToUser.instructionMessage("==========================");
-            d_displayToUser.instructionMessage("Use \"deploy <country_id> <number_of_armies>\" to deploy\n");
+            d_displayToUser.instructionMessage("Use \"Deploy <country_id> <number_of_armies>\" to deploy\n");
             d_displayToUser.instructionMessage("Use \"Advance <fromCountry_id> <toCountry_id> <number_of_armies>\" to Advance\n");
-            d_displayToUser.instructionMessage("Use \"Commit to complete orders\n");
+
+            d_displayToUser.instructionMessage("Use \"Commit\" to complete orders\n");
             player.issue_order();
         }
     }
