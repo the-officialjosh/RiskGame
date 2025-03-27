@@ -25,7 +25,6 @@ public class Player {
     private int d_numberOfReinforcementsArmies;
     private List<Order> d_orders;
     private List<Country> d_countries_owned;
-
     private int[] d_cards_owned;
     private final DisplayToUser d_displayToUser;
 
@@ -162,11 +161,12 @@ public class Player {
                             continue;
                         }
                         processAdvanceCommand(l_command_parts);
-                    } else if (l_command_parts[0].equalsIgnoreCase("Airlift")) {
-                        if (l_command_parts.length != 4) {
-                            d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
+                    } else if(l_command_parts[0].equalsIgnoreCase("Airlift")){
+                        if(l_command_parts.length != 4){
+                            d_displayToUser.instructionMessage("Invalid command. Use: Airlift <fromCountryID> <toCountryID> <numberOfArmies>");
                             continue;
                         }
+                        processAirliftCommand(l_command_parts);
                     } else if (l_command_parts[0].equalsIgnoreCase("Bomb")) {
                         if (l_command_parts.length != 3) {
                             d_displayToUser.instructionMessage("Invalid command. Use: Bomb <sourceCountryID> <targetCountryID>");
@@ -321,9 +321,20 @@ public class Player {
         int l_numOfArmies = Integer.parseInt(l_command_parts[3]);
 
         if (findCountryById(this.d_countries_owned, l_fromCountryID) == null) {
-            d_displayToUser.instructionMessage("You can only advance armies from countries you own. Try again.");
+            d_displayToUser.instructionMessage("You can only airlift armies from countries you own. Try again.");
             return;
         }
+
+        if (findCountryById(this.d_countries_owned, l_toCountryID) == null) {
+            d_displayToUser.instructionMessage("You can only airlift armies to countries you own. Try again.");
+            return;
+        }
+        Country fromCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_fromCountryID);
+        Country toCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_toCountryID);
+
+        Airlift airliftOrder = new Airlift(fromCountry,toCountry,l_numOfArmies);
+        this.setOrders(airliftOrder);
+        this.useCard("airlift");
 
     }
 
