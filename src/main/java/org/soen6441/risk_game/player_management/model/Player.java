@@ -249,7 +249,7 @@ public class Player {
         this.useCard("reinforcement");
     }
 
-    private void processBlockadeCommand(String p_targetCountryID) {
+    public void processBlockadeCommand(String p_targetCountryID) {
         GameSession l_gameSession = GameSession.getInstance();
         Country l_targetCountry = l_gameSession.getMap().getCountriesById(Integer.parseInt(p_targetCountryID));
 
@@ -331,7 +331,7 @@ public class Player {
         this.useCard("bomb");
     }
 
-    private void processAdvanceCommand(String[] l_command_parts) {
+    public void processAdvanceCommand(String[] l_command_parts) {
         int l_fromCountryID = Integer.parseInt(l_command_parts[1]);
         int l_toCountryID = Integer.parseInt(l_command_parts[2]);
         int l_numOfArmies = Integer.parseInt(l_command_parts[3]);
@@ -353,7 +353,7 @@ public class Player {
 
     }
 
-    private void processAirliftCommand(String[] l_command_parts) {
+    public void processAirliftCommand(String[] l_command_parts) {
         int l_fromCountryID = Integer.parseInt(l_command_parts[1]);
         int l_toCountryID = Integer.parseInt(l_command_parts[2]);
         int l_numOfArmies = Integer.parseInt(l_command_parts[3]);
