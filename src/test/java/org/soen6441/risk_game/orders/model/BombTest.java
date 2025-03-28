@@ -12,16 +12,25 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * The type Bomb test.
+ */
 public class BombTest {
     private GameMapController gameMapController;
     private GameSession gameSession;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     public void setUp() {
         gameMapController = new GameMapController();
         gameSession = GameSession.getInstance();
     }
 
+    /**
+     * Test bomb.
+     */
     @Test
     public void testBomb() {
         gameMapController.loadMap(gameSession, "europe.map");
@@ -50,12 +59,5 @@ public class BombTest {
             gameSession.getPlayers().get(0).processBombCommand(String.valueOf(p1Country.getCountryId()), String.valueOf(p2Country.getCountryId()));
             assertEquals(4, gameSession.getMap().getCountriesById(p2Country.getCountryId()).getExistingArmies());
         }
-
-
-        //assertEquals(4, gameSession.getPlayers().get(0).getNumberOfReinforcementsArmies());
-        //assertEquals(4, gameSession.getPlayers().get(1).getNumberOfReinforcementsArmies());
-//        Player player = new Player("Player1",3,new ArrayList<Order>());
-//        boolean result = player.validNumberOfReinforcementArmies(5);
-//        assertEquals(false,result);
     }
 }

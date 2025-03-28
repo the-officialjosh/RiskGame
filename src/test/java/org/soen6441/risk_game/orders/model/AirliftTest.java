@@ -12,16 +12,25 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * The type Airlift test.
+ */
 public class AirliftTest {
     private GameMapController gameMapController;
     private GameSession gameSession;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     public void setUp() {
         gameMapController = new GameMapController();
         gameSession = GameSession.getInstance();
     }
 
+    /**
+     * Test airlift.
+     */
     @Test
     public void testAirlift() {
         gameMapController.loadMap(gameSession, "europe.map");
