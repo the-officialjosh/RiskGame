@@ -498,7 +498,7 @@ public class GameMapController {
         GameMap l_gameMap = p_gameSession.getMap(); // Initialize l_gameMap
 
         // Regular expression to match individual commands
-        Pattern pattern = Pattern.compile("(\\w+\\s+-\\w+\\s+[^\\s]+\\s+\\d+|\\w+\\s+-\\w+\\s+[^\\s]+\\s+[^\\s]+|\\w+\\s+-\\w+\\s+[^\\s]+|\\w+\\s+[^\\s]+)");
+        Pattern pattern = Pattern.compile("(\\w+\\s+-\\w+\\s+[^\\s]+\\s+\\d+|\\w+\\s+-\\w+\\s+[^\\s]+\\s+[^\\s]+|\\w+\\s+-\\w+\\s+[^\\s]+|\\w+\\s+[^\\s]+|\\w+)");
         Matcher matcher = pattern.matcher(p_command);
 
         while (matcher.find()) {
@@ -514,6 +514,7 @@ public class GameMapController {
                             d_displayToUser.instructionMessage("Error: Missing map name for " + l_cmd + " command.");
                         } else {
                             loadMap(p_gameSession, l_parts[1]);
+                            d_displayToUser.instructionMessage("The Map \"" + l_parts[1] + "\" is valid and has been loaded into the game.");
                         }
                         break;
                     case "editcontinent":
@@ -607,7 +608,7 @@ public class GameMapController {
                         }
                         break;
                     case "validatemap":
-                        validateMap(p_gameSession.getMap());
+                        handleValidateMapCommand(p_gameSession.getMap());
                         break;
                     case "mapeditordone":
                         d_displayToUser.instructionMessage("Map editing session ended.");
