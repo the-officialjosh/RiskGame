@@ -465,11 +465,32 @@ public class GameMapController {
 
     /**
      * Handles various map-related commands for the game session.
+     * <p>
+     * This method parses the input command and executes the corresponding action
+     * on the game map. It supports commands for loading, editing, saving, and
+     * validating the map, as well as displaying the map and ending the map editing session.
+     * </p>
+     * <p>
+     * Supported commands:
+     * <ul>
+     *   <li><code>loadmap &lt;map_name&gt;</code>: Loads a map from the specified file.</li>
+     *   <li><code>editmap &lt;map_name&gt;</code>: Edits the specified map.</li>
+     *   <li><code>editcontinent -add &lt;continent_name&gt; &lt;control_value&gt;</code>: Adds a new continent with the specified control value.</li>
+     *   <li><code>editcontinent -remove &lt;continent_name&gt;</code>: Removes the specified continent.</li>
+     *   <li><code>editcountry -add &lt;country_name&gt; &lt;continent_name&gt;</code>: Adds a new country to the specified continent.</li>
+     *   <li><code>editcountry -remove &lt;country_name&gt;</code>: Removes the specified country.</li>
+     *   <li><code>editneighbor -add &lt;country_name&gt; &lt;neighbor_name&gt;</code>: Adds a neighbor to the specified country.</li>
+     *   <li><code>editneighbor -remove &lt;country_name&gt; &lt;neighbor_name&gt;</code>: Removes a neighbor from the specified country.</li>
+     *   <li><code>showmap</code>: Displays the current state of the map.</li>
+     *   <li><code>savemap &lt;map_name&gt;</code>: Saves the current map to the specified file.</li>
+     *   <li><code>validatemap</code>: Validates the current map.</li>
+     *   <li><code>mapeditordone</code>: Ends the map editing session.</li>
+     * </ul>
+     * </p>
      *
-     * @param p_command     The command to be executed.
-     * @param p_gameSession The current game session.
+     * @param p_command     The command to be executed, including any necessary parameters.
+     * @param p_gameSession The current game session containing the game map and other session data.
      */
-
     public void handleCommand(String p_command, GameSession p_gameSession) {
         String[] l_parts = p_command.split(" ");
         String l_cmd = l_parts[0];
