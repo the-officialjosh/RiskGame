@@ -1,5 +1,6 @@
 package org.soen6441.risk_game.orders.model;
 
+import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.player_management.model.Player;
@@ -84,6 +85,11 @@ public class Advance implements Order{
             System.out.println(attacker.getName() + " attacks " + defendingCountry.getName() + " from " + attackingCountry.getName());
             LogEntryBuffer.getInstance().setValue(
                     "💣 " + attacker.getName() + " attacks " + defendingCountry.getName() + " from " + attackingCountry.getName());
+            if(GameSession.getInstance().areInDiplomacy(attacker,defender)){
+                System.out.println("Can not attack target country because of Diplomacy card");
+                LogEntryBuffer.getInstance().setValue("Can not attack target country because of Diplomacy card");
+                return;
+            }
             if(d_numberOfDeployedArmies > attackingCountry.getExistingArmies()){
                 System.out.println(attacker.getName() + " does not have enough armies to attack.");
                 LogEntryBuffer.getInstance().setValue("💣 " +attacker.getName() + " does not have enough armies to move.");
