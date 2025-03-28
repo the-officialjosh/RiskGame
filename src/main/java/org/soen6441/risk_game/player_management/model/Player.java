@@ -1,5 +1,6 @@
 package org.soen6441.risk_game.player_management.model;
 
+import org.soen6441.risk_game.game_engine.controller.user_input.UserInputScanner;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
@@ -112,7 +113,7 @@ public class Player {
      * Prompts the player to issue an order.
      */
     public void issue_order() {
-        Scanner l_scanner = new Scanner(System.in);
+        Scanner l_scanner = UserInputScanner.getInstance().getScanner();
         if (d_numberOfReinforcementsArmies <= 0) {
             d_displayToUser.instructionMessage(this.d_name + " has no reinforcement left.");
         }

@@ -4,7 +4,7 @@ import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.player_management.controller.PlayerController;
 
 /**
- * {@inheritDoc}
+ * Class for ExecuteOrder phase
  */
 public class ExecuteOrderPhase implements Phase {
     private PlayerController d_playerController;

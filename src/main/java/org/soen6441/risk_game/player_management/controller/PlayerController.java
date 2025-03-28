@@ -1,5 +1,6 @@
 package org.soen6441.risk_game.player_management.controller;
 
+import org.soen6441.risk_game.game_engine.controller.user_input.UserInputScanner;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
@@ -39,7 +40,7 @@ public class PlayerController {
         d_displayToUser.instructionMessage("- ⚒ assigncountries  (Assign countries to players)");
         d_displayToUser.instructionMessage("----------------------------------------\n");
 
-        Scanner l_scanner = new Scanner(System.in);
+        Scanner l_scanner = UserInputScanner.getInstance().getScanner();
         String l_command;
         List<Player> playerList = new ArrayList<>();
 
