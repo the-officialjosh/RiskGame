@@ -265,12 +265,23 @@ public class GameMapController {
                 }
             }
         }
-        if (l_country != null && l_neighbor != null) {
-            l_country.getAdjacentCountries().add(l_neighbor);
-            l_neighbor.getAdjacentCountries().add(l_country);
-            d_displayToUser.instructionMessage("Neighbor " + p_neighborName + " added to country " + p_countryName + ".");
+        if (l_country == null) {
+            d_displayToUser.instructionMessage("Error: Country " + p_countryName + " does not exist.");
+            return;
         }
+        if (l_neighbor == null) {
+            d_displayToUser.instructionMessage("Error: Country " + p_neighborName + " does not exist.");
+            return;
+        }
+        if (l_country.getAdjacentCountries().contains(l_neighbor)) {
+            d_displayToUser.instructionMessage("Neighbor " + p_neighborName + " is already added to country " + p_countryName + ".");
+            return;
+        }
+        l_country.getAdjacentCountries().add(l_neighbor);
+        l_neighbor.getAdjacentCountries().add(l_country);
+        d_displayToUser.instructionMessage("Neighbor " + p_neighborName + " added to country " + p_countryName + ".");
     }
+
 
     /**
      * Removes a neighbor from a country.
@@ -280,18 +291,34 @@ public class GameMapController {
      * @param p_neighborName The name of the neighbor country.
      */
     public void removeNeighbor(GameMap p_gameMap, String p_countryName, String p_neighborName) {
+        Country l_country = null;
+        Country l_neighbor = null;
         for (Continent l_continent : p_gameMap.getContinents()) {
-            for (Country l_country : l_continent.getCountries()) {
-                if (l_country.getName().equals(p_countryName)) {
-                    l_country.getAdjacentCountries().removeIf(neighbor -> neighbor.getName().equals(p_neighborName));
-                    d_displayToUser.instructionMessage("Neighbor " + p_neighborName + " removed from country " + p_countryName + ".");
+            for (Country c : l_continent.getCountries()) {
+                if (c.getName().equals(p_countryName)) {
+                    l_country = c;
                 }
-                if (l_country.getName().equals(p_neighborName)) {
-                    l_country.getAdjacentCountries().removeIf(neighbor -> neighbor.getName().equals(p_countryName));
-                    d_displayToUser.instructionMessage("Neighbor " + p_countryName + " removed from country " + p_neighborName + ".");
+                if (c.getName().equals(p_neighborName)) {
+                    l_neighbor = c;
                 }
             }
         }
+        if (l_country == null) {
+            d_displayToUser.instructionMessage("Error: Country " + p_countryName + " does not exist.");
+            return;
+        }
+        if (l_neighbor == null) {
+            d_displayToUser.instructionMessage("Error: Country " + p_neighborName + " does not exist.");
+            return;
+        }
+        if (!l_country.getAdjacentCountries().contains(l_neighbor)) {
+            d_displayToUser.instructionMessage("Neighbor " + p_neighborName + " is not a neighbor of country " + p_countryName + ".");
+            return;
+        }
+        l_country.getAdjacentCountries().remove(l_neighbor);
+        l_neighbor.getAdjacentCountries().remove(l_country);
+        d_displayToUser.instructionMessage("Neighbor " + p_neighborName + " removed from country " + p_countryName + ".");
+        d_displayToUser.instructionMessage("Neighbor " + p_countryName + " removed from country " + p_neighborName + ".");
     }
 
     /**
@@ -435,6 +462,7 @@ public class GameMapController {
     }
 
 
+
     /**
      * Handles various map-related commands for the game session.
      *
@@ -443,13 +471,14 @@ public class GameMapController {
      */
 
     public void handleCommand(String p_command, GameSession p_gameSession) {
-        GameMap l_gameMap = p_gameSession.getMap();
         String[] l_parts = p_command.split(" ");
         String l_cmd = l_parts[0];
+        GameMap l_gameMap = p_gameSession.getMap(); // Initialize l_gameMap
 
         try {
             switch (l_cmd) {
-                case "loadmap", "editmap":
+                case "loadmap":
+                case "editmap":
                     if (l_parts.length < 2) {
                         d_displayToUser.instructionMessage("Error: Missing map name for " + l_cmd + " command.");
                     } else {
@@ -458,72 +487,108 @@ public class GameMapController {
                     break;
                 case "editcontinent":
                     if (l_parts.length < 3) {
-                        d_displayToUser.instructionMessage("Error: Missing options for editcontinent command.");
-                    } else {
-                        for (int i = 1; i < l_parts.length; i += 3) {
-                            if (l_parts[i].equals("-add")) {
-                                addContinent(l_gameMap, l_parts[i + 1], Integer.parseInt(l_parts[i + 2]));
-                            } else if (l_parts[i].equals("-remove")) {
-                                removeContinent(l_gameMap, l_parts[i + 1]);
-                            } else {
-                                d_displayToUser.instructionMessage("Error: Invalid option " + l_parts[i] + " for editcontinent command.");
-                            }
+                        d_displayToUser.instructionMessage("Error: Invalid command format for editcontinent.");
+                        break;
+                    }
+                    String action = l_parts[1];
+                    String continentName = l_parts[2];
+
+                    if (action.equals("-add")) {
+                        if (l_gameMap.getContinents().stream().anyMatch(continent -> continent.getName().equals(continentName))) {
+                            d_displayToUser.instructionMessage("Error: Continent " + continentName + " already exists.");
+                        } else {
+                            l_gameMap.addContinent(new Continent(continentName, new ArrayList<>(), Integer.parseInt(l_parts[3])));
+                            d_displayToUser.instructionMessage("Continent " + continentName + " added.");
                         }
+                    } else if (action.equals("-remove")) {
+                        if (l_gameMap.getContinents().removeIf(continent -> continent.getName().equals(continentName))) {
+                            d_displayToUser.instructionMessage("Continent " + continentName + " removed.");
+                        } else {
+                            d_displayToUser.instructionMessage("Error: Continent " + continentName + " does not exist.");
+                        }
+                    } else {
+                        d_displayToUser.instructionMessage("Error: Invalid action for editcontinent.");
                     }
                     break;
                 case "editcountry":
                     if (l_parts.length < 3) {
-                        d_displayToUser.instructionMessage("Error: Missing options for editcountry command.");
-                    } else {
-                        for (int i = 1; i < l_parts.length; i += 3) {
-                            if (l_parts[i].equals("-add")) {
-                                addCountry(l_gameMap, l_parts[i + 1], l_parts[i + 2]);
-                            } else if (l_parts[i].equals("-remove")) {
-                                removeCountry(l_gameMap, l_parts[i + 1]);
-                            } else {
-                                d_displayToUser.instructionMessage("Error: Invalid option " + l_parts[i] + " for editcountry command.");
+                        d_displayToUser.instructionMessage("Error: Invalid command format for editcountry.");
+                        break;
+                    }
+                    action = l_parts[1];
+                    String countryName = l_parts[2];
+
+                    if (action.equals("-add")) {
+                        String continentNameForCountry = l_parts[3];
+                        Continent continent = l_gameMap.getContinents().stream()
+                                .filter(c -> c.getName().equals(continentNameForCountry))
+                                .findFirst()
+                                .orElse(null);
+                        if (continent == null) {
+                            d_displayToUser.instructionMessage("Error: Continent " + continentNameForCountry + " does not exist.");
+                        } else if (continent.getCountries().stream().anyMatch(country -> country.getName().equals(countryName))) {
+                            d_displayToUser.instructionMessage("Error: Country " + countryName + " already exists in continent " + continentNameForCountry + ".");
+                        } else {
+                            continent.addCountry(new Country(continent.getD_continentId(), countryName, new ArrayList<>(), 0));
+                            d_displayToUser.instructionMessage("Country " + countryName + " added to continent " + continentNameForCountry + ".");
+                        }
+                    } else if (action.equals("-remove")) {
+                        boolean countryRemoved = false;
+                        for (Continent continent : l_gameMap.getContinents()) {
+                            if (continent.getCountries().removeIf(country -> country.getName().equals(countryName))) {
+                                d_displayToUser.instructionMessage("Country " + countryName + " removed.");
+                                countryRemoved = true;
+                                break;
                             }
                         }
+                        if (!countryRemoved) {
+                            d_displayToUser.instructionMessage("Error: Country " + countryName + " does not exist.");
+                        }
+                    } else {
+                        d_displayToUser.instructionMessage("Error: Invalid action for editcountry.");
                     }
                     break;
                 case "editneighbor":
-                    if (l_parts.length < 3) {
-                        d_displayToUser.instructionMessage("Error: Missing options for editneighbor command.");
+                    if (l_parts.length < 4) {
+                        d_displayToUser.instructionMessage("Error: Invalid command format for editneighbor.");
+                        break;
+                    }
+                    action = l_parts[1];
+                    String countryName1 = l_parts[2];
+                    String countryName2 = l_parts[3];
+
+                    if (action.equals("-add")) {
+                        addNeighbor(p_gameSession.getMap(), countryName1, countryName2);
+                    } else if (action.equals("-remove")) {
+                        removeNeighbor(p_gameSession.getMap(), countryName1, countryName2);
                     } else {
-                        for (int i = 1; i < l_parts.length; i += 3) {
-                            if (l_parts[i].equals("-add")) {
-                                addNeighbor(l_gameMap, l_parts[i + 1], l_parts[i + 2]);
-                            } else if (l_parts[i].equals("-remove")) {
-                                removeNeighbor(l_gameMap, l_parts[i + 1], l_parts[i + 2]);
-                            } else {
-                                d_displayToUser.instructionMessage("Error: Invalid option " + l_parts[i] + " for editneighbor command.");
-                            }
-                        }
+                        d_displayToUser.instructionMessage("Error: Invalid action for editneighbor.");
                     }
                     break;
                 case "showmap":
-                    showMap(l_gameMap);
+                    showMap(p_gameSession.getMap());
                     break;
                 case "savemap":
                     if (l_parts.length < 2) {
                         d_displayToUser.instructionMessage("Error: Missing map name for savemap command.");
                     } else {
-                        saveMap(l_gameMap, l_parts[1]);
+                        saveMap(p_gameSession.getMap(), l_parts[1]);
                     }
                     break;
                 case "validatemap":
-                    handleValidateMapCommand(l_gameMap);
+                    validateMap(p_gameSession.getMap());
                     break;
                 case "mapeditordone":
+                    d_displayToUser.instructionMessage("Map editing session ended.");
                     break;
                 default:
                     d_displayToUser.instructionMessage("Error: Invalid command " + l_cmd + ".");
+                    break;
             }
         } catch (Exception e) {
             d_displayToUser.instructionMessage("Error: " + e.getMessage());
         }
     }
-
     /**
      * Handles the map management step.
      *
