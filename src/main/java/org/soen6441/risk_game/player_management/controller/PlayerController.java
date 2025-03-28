@@ -1,10 +1,10 @@
 package org.soen6441.risk_game.player_management.controller;
 
+import org.soen6441.risk_game.game_engine.controller.user_input.UserInputScanner;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
-import org.soen6441.risk_game.orders.model.Order;
 import org.soen6441.risk_game.player_management.model.Player;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class PlayerController {
         d_displayToUser.instructionMessage("- ⚒ assigncountries  (Assign countries to players)");
         d_displayToUser.instructionMessage("----------------------------------------\n");
 
-        Scanner l_scanner = new Scanner(System.in);
+        Scanner l_scanner = UserInputScanner.getInstance().getScanner();
         String l_command;
         List<Player> playerList = new ArrayList<>();
 
@@ -107,26 +107,27 @@ public class PlayerController {
         for (Player player : p_gameSession.getPlayers()) {
             d_displayToUser.instructionMessage("\n⚔ Issue Order Phase");
             d_displayToUser.instructionMessage("==========================");
-            d_displayToUser.instructionMessage("Use \"Deploy <country_id> <number_of_armies>\" to deploy");
-            d_displayToUser.instructionMessage("Use \"Advance <fromCountry_id> <toCountry_id> <number_of_armies>\" to Advance");
-            d_displayToUser.instructionMessage("Use \"Blockade <targetCountryID>\" to use blockade card");
-            d_displayToUser.instructionMessage("Use \"Bomb <sourceCountryID> <targetCountryID>\" to use bomb card");
-            d_displayToUser.instructionMessage("Use \"Reinforcement\" to use reinforcement card");
-            //d_displayToUser.instructionMessage("Use \"Advance <fromCountry_id> <toCountry_id> <number_of_armies>\" to Advance");
+            d_displayToUser.instructionMessage("Use \"Deploy <country_id> <number_of_armies>\" to deploy.");
+            d_displayToUser.instructionMessage("Use \"Advance <fromCountry_id> <toCountry_id> <number_of_armies>\" to Advance.");
+            d_displayToUser.instructionMessage("Use \"Blockade <targetCountryID>\" to use blockade card.");
+            d_displayToUser.instructionMessage("Use \"Bomb <sourceCountryID> <targetCountryID>\" to use bomb card.");
+            d_displayToUser.instructionMessage("Use \"Reinforcement\" to use reinforcement card.");
+            d_displayToUser.instructionMessage("Use \"Diplomacy <targetPlayerName>\" to use diplomacy card.");
 
-            d_displayToUser.instructionMessage("Use \"Commit\" to complete orders\n");
+            d_displayToUser.instructionMessage("Use \"Commit\" to complete orders.\n");
 
             int[] cards = player.getD_cards_owned();
             d_displayToUser.instructionMessage("You have following cards:");
-            d_displayToUser.instructionMessage("1. Bomb = "+cards[0]);
-            d_displayToUser.instructionMessage("2. Reinforcement = "+cards[1]);
-            d_displayToUser.instructionMessage("3. Blockade = "+cards[2]);
-            d_displayToUser.instructionMessage("4. Airlift = "+cards[3]);
-            d_displayToUser.instructionMessage("5. Diplomacy = "+cards[4]);
+            d_displayToUser.instructionMessage("1. Bomb = " + cards[0]);
+            d_displayToUser.instructionMessage("2. Reinforcement = " + cards[1]);
+            d_displayToUser.instructionMessage("3. Blockade = " + cards[2]);
+            d_displayToUser.instructionMessage("4. Airlift = " + cards[3]);
+            d_displayToUser.instructionMessage("5. Diplomacy = " + cards[4]);
 
             player.issue_order();
         }
     }
+
     /**
      * This method handles the order execution phase.
      *

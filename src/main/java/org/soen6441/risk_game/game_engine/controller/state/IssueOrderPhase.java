@@ -5,7 +5,7 @@ import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.player_management.controller.PlayerController;
 
 /**
- * {@inheritDoc}
+ * Class for IssueOrder phase
  */
 public class IssueOrderPhase implements Phase {
     private GameMapController d_gameMapController;

@@ -8,6 +8,12 @@ import org.soen6441.risk_game.player_management.model.Player;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * This class represents the Advance order.
+ * @author Irfan Maknojia
+ * @author Safin Mahesania
+ * @version 1.0
+ */
 public class Advance implements Order{
 
     private Player d_issuer;

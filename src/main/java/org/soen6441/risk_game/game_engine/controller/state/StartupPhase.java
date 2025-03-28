@@ -6,7 +6,7 @@ import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.player_management.controller.PlayerController;
 
 /**
- * {@inheritDoc}
+ * Class for Startup phase
  */
 public class StartupPhase implements Phase {
     private GameMapController d_gameMapController;
