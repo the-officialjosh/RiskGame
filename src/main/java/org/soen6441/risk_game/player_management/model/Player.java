@@ -7,10 +7,7 @@ import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Represents a player in the game.
@@ -416,13 +413,24 @@ public class Player {
      */
     public void next_order() {
         if (this.getOrders().isEmpty()) return;
+        GameSession l_gameSession = GameSession.getInstance();
+
+        if(!this.getOrders().getFirst().getClass().getName().equals("org.soen6441.risk_game.orders.model.Deploy")){
+            while (!l_gameSession.getD_diplomacyPairs().isEmpty()) {
+                Iterator<Diplomacy> iterator = l_gameSession.getD_diplomacyPairs().iterator();
+                while (iterator.hasNext()) {
+                    Diplomacy pair = iterator.next();
+                    pair.incrementCount();
+
+                    if (pair.getCount() >= l_gameSession.getPlayers().size()) {
+                        iterator.remove();
+                    }
+                }
+            }
+        }
 
         this.getOrders().getFirst().execute();
         this.getOrders().removeFirst();
-
-        /*for (Order order : this.getOrders()) {
-            order.execute();
-        }*/
     }
 
     /**
@@ -548,24 +556,6 @@ public class Player {
                     d_cards_owned[4] -= 1;
                 }
             }
-        }
-    }
-
-    /**
-     * Checks if the player has at least one diplomacy card.
-     *
-     * @return true if diplomacy card is available, false otherwise.
-     */
-    public boolean hasDiplomacyCard() {
-        return d_cards_owned != null && d_cards_owned.length > 4 && d_cards_owned[4] > 0;
-    }
-
-    /**
-     * Uses one diplomacy card if available.
-     */
-    public void useDiplomacyCard() {
-        if (hasDiplomacyCard()) {
-            d_cards_owned[4] -= 1;
         }
     }
 }
