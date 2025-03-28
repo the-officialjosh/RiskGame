@@ -24,16 +24,7 @@ public class Blockade implements Order {
     public void execute() {
         GameSession l_gameSession = GameSession.getInstance();
 
-        /*if (targetCountry == null || l_player == null) {
-            return; // Invalid state, do nothing
-        }*/
-
         int currentArmies = l_gameSession.getMap().getCountriesById(l_country.getCountryId()).getExistingArmies();
-
-        /*if (currentArmies <= 0) {
-            return; // No armies to blockade
-        }*/
-
         l_gameSession.getMap().getCountriesById(l_country.getCountryId()).setExistingArmies(currentArmies * 3);
         l_gameSession.getMap().getCountriesById(l_country.getCountryId()).setD_isTerritoryNeutral(true);
         l_gameSession.getMap().getCountriesById(l_country.getCountryId()).setD_ownedBy(null);

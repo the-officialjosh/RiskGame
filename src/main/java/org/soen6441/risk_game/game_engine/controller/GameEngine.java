@@ -5,14 +5,9 @@ import org.soen6441.risk_game.game_engine.controller.state.IssueOrderPhase;
 import org.soen6441.risk_game.game_engine.controller.state.Phase;
 import org.soen6441.risk_game.game_engine.controller.state.StartupPhase;
 import org.soen6441.risk_game.game_engine.model.GameSession;
-import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.monitoring.LogEntryBufferObserver;
-import org.soen6441.risk_game.player_management.controller.PlayerController;
-
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * GameEngine class which is serving as the game entry point as well as handling

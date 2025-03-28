@@ -1,6 +1,7 @@
 package org.soen6441.risk_game.game_engine.model;
 
 import org.soen6441.risk_game.game_map.model.GameMap;
+import org.soen6441.risk_game.orders.model.Diplomacy;
 import org.soen6441.risk_game.player_management.model.Player;
 
 import java.util.ArrayList;
@@ -18,12 +19,15 @@ public class GameSession {
     private static final GameSession instance = new GameSession();
     private List<Player> d_players;
     private GameMap d_map;
-    private List<List<Player>> d_diplomacyPairs = new ArrayList<>();
 
-    private GameSession() {}
+    private List<Diplomacy> d_diplomacyPairs = new ArrayList<>();
+
+    private GameSession() {
+    }
 
     /**
      * Returns the instance of the GameSession.
+     *
      * @return instance The instance of the GameSession.
      */
     public static GameSession getInstance() {
@@ -32,6 +36,7 @@ public class GameSession {
 
     /**
      * Returns the list of players.
+     *
      * @return d_players The list of players.
      */
     public List<Player> getPlayers() {
@@ -40,6 +45,7 @@ public class GameSession {
 
     /**
      * Sets the list of players
+     *
      * @param p_players The list of players.
      */
     public void setPlayers(List<Player> p_players) {
@@ -63,6 +69,7 @@ public class GameSession {
 
     /**
      * Returns the game global map.
+     *
      * @return d_map The game map.
      */
     public GameMap getMap() {
@@ -71,6 +78,7 @@ public class GameSession {
 
     /**
      * Sets the game map.
+     *
      * @param p_map The game map.
      */
     public void setMap(GameMap p_map) {
@@ -84,8 +92,12 @@ public class GameSession {
      * @param p2 Second player
      */
     public void addDiplomacyPair(Player p1, Player p2) {
-        d_diplomacyPairs.add(List.of(p1, p2));
-        d_diplomacyPairs.add(List.of(p2, p1)); // Ensure it's mutual
+        d_diplomacyPairs.add(new Diplomacy(p1, p2));
+        d_diplomacyPairs.add(new Diplomacy(p2, p1)); // Ensure it's mutual
+    }
+
+    public List<Diplomacy> getD_diplomacyPairs() {
+        return d_diplomacyPairs;
     }
 
     /**
@@ -96,7 +108,12 @@ public class GameSession {
      * @return true if they are in diplomacy, false otherwise.
      */
     public boolean areInDiplomacy(Player p1, Player p2) {
-        return d_diplomacyPairs.contains(List.of(p1, p2));
+        for (Diplomacy pair : d_diplomacyPairs) {
+            if ((pair.getD_issuer().equals(p1) && pair.getD_target().equals(p2)) || (pair.getD_issuer().equals(p2) && pair.getD_target().equals(p1))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
