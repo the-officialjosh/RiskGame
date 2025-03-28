@@ -12,6 +12,7 @@ import java.util.HashMap;
  *
  * @author Joshua Onyema
  * @author Safin Mahesania
+ * @author Irfan Maknojia
  * @version 1.0
  */
 public class Bomb implements Order {

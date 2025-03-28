@@ -4,7 +4,6 @@ import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
-import org.soen6441.risk_game.orders.model.Order;
 import org.soen6441.risk_game.player_management.model.Player;
 
 import java.util.ArrayList;
