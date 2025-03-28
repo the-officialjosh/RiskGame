@@ -474,7 +474,7 @@ public class Player {
      */
     public void assignCard() {
         Random rn = new Random();
-        int randomNumber = rn.nextInt(5);
+        int randomNumber = rn.nextInt(1,5);
         this.d_cards_owned[randomNumber - 1] += 1;
     }
 
