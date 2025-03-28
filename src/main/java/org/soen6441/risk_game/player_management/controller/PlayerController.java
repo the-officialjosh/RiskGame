@@ -132,8 +132,17 @@ public class PlayerController {
      * @param p_gameSession The game session.
      */
     public void executeOrder(GameSession p_gameSession) {
-        for (Player player : p_gameSession.getPlayers()) {
-            player.next_order();
+        int playersCompletionCount = 0;
+        while (playersCompletionCount != p_gameSession.getPlayers().size()) {
+            for (Player player : p_gameSession.getPlayers()) {
+                if (player.getOrders().isEmpty()) continue;
+                player.next_order();
+                if (player.getOrders().isEmpty()) {
+                    playersCompletionCount++;
+                }
+            }
+
         }
+
     }
 }
