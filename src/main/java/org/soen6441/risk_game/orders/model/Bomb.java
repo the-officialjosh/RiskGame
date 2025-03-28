@@ -4,7 +4,6 @@ import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.player_management.model.Player;
-import java.util.HashMap;
 
 /**
  * The Bomb order class.
@@ -25,7 +24,7 @@ public class Bomb implements Order {
      * Instantiates a new Bomb order.
      *
      * @param p_sourceCountry the source country (must be owned by the player)
-     * @param p_player the player issuing the order
+     * @param p_player        the player issuing the order
      * @param p_targetCountry the enemy country to bomb
      */
     public Bomb(Country p_sourceCountry, Player p_player, Country p_targetCountry) {
@@ -78,19 +77,23 @@ public class Bomb implements Order {
             return;
         }*/
 
-        // Proceed with bombing
-        int l_currentArmies = l_target.getExistingArmies();
-        int l_reducedArmies = l_currentArmies / 2;
+        if (l_gameSession.areInDiplomacy(d_sourceCountry.getD_ownedBy(), d_targetCountry.getD_ownedBy())) {
+            System.out.println("Bombing of " + d_sourceCountry.getD_ownedBy().getName() + " on " + d_targetCountry.getD_ownedBy().getName() + "'s territory that is " + d_targetCountry.getName() + " is not possible because they are in diplomacy terms.");
+        } else {
+            // Proceed with bombing
+            int l_currentArmies = l_target.getExistingArmies();
+            int l_reducedArmies = l_currentArmies / 2;
 
-        //l_target.setExistingArmies(updatedArmies);
-        l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).setExistingArmies(l_reducedArmies);
+            //l_target.setExistingArmies(updatedArmies);
+            l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).setExistingArmies(l_reducedArmies);
 
-        System.out.println("💣 Bomb executed on " + l_target.getName() + ". Armies reduced from " +
-                l_currentArmies + " to " + l_reducedArmies + ". Bomb card used.");
+            System.out.println("💣 Bomb executed on " + l_target.getName() + ". Armies reduced from " +
+                    l_currentArmies + " to " + l_reducedArmies + ". Bomb card used.");
 
-        LogEntryBuffer.getInstance().setValue(
-            "💣 " + d_player.getName() + " bombed " + l_target.getName() +
-            ", reducing armies from " + l_currentArmies + " to " + l_reducedArmies + "."
-        );
+            LogEntryBuffer.getInstance().setValue(
+                    "💣 " + d_player.getName() + " bombed " + l_target.getName() +
+                            ", reducing armies from " + l_currentArmies + " to " + l_reducedArmies + "."
+            );
+        }
     }
 }
