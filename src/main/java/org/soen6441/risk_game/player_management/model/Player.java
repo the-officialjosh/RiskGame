@@ -185,6 +185,11 @@ public class Player {
         }
     }
 
+    /**
+     * Process deploy command.
+     *
+     * @param l_command_parts the l command parts
+     */
     public void processDeployCommand(String[] l_command_parts) {
         int l_countryID = Integer.parseInt(l_command_parts[1]);
         int l_numOfArmies = Integer.parseInt(l_command_parts[2]);
@@ -237,6 +242,9 @@ public class Player {
         this.useCard("diplomacy");
     }
 
+    /**
+     * Process reinforcement command.
+     */
     public void processReinforcementCommand() {
         if (!this.hasCard("reinforcement")) {
             System.out.println("❌ Invalid order: no reinforcement cards available.");
@@ -250,6 +258,11 @@ public class Player {
         this.useCard("reinforcement");
     }
 
+    /**
+     * Process blockade command.
+     *
+     * @param p_targetCountryID the p target country id
+     */
     public void processBlockadeCommand(String p_targetCountryID) {
         GameSession l_gameSession = GameSession.getInstance();
         Country l_targetCountry = l_gameSession.getMap().getCountriesById(Integer.parseInt(p_targetCountryID));
@@ -283,6 +296,12 @@ public class Player {
         this.useCard("blockade");
     }
 
+    /**
+     * Process bomb command.
+     *
+     * @param p_sourceCountryID the p source country id
+     * @param p_targetCountryID the p target country id
+     */
     public void processBombCommand(String p_sourceCountryID, String p_targetCountryID) {
         GameSession l_gameSession = GameSession.getInstance();
 
@@ -332,6 +351,11 @@ public class Player {
         this.useCard("bomb");
     }
 
+    /**
+     * Process advance command.
+     *
+     * @param l_command_parts the l command parts
+     */
     public void processAdvanceCommand(String[] l_command_parts) {
         int l_fromCountryID = Integer.parseInt(l_command_parts[1]);
         int l_toCountryID = Integer.parseInt(l_command_parts[2]);
@@ -354,6 +378,11 @@ public class Player {
 
     }
 
+    /**
+     * Process airlift command.
+     *
+     * @param l_command_parts the l command parts
+     */
     public void processAirliftCommand(String[] l_command_parts) {
         int l_fromCountryID = Integer.parseInt(l_command_parts[1]);
         int l_toCountryID = Integer.parseInt(l_command_parts[2]);

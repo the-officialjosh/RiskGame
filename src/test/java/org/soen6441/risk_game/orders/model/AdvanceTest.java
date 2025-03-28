@@ -13,6 +13,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+/**
+ * The type Advance test.
+ */
 public class AdvanceTest {
     private GameMapController gameMapController;
     private GameSession gameSession;
@@ -25,6 +28,9 @@ public class AdvanceTest {
 
     }
 
+    /**
+     * Test process advance command valid move.
+     */
     @Test
     void testProcessAdvanceCommand_ValidMove() {
         gameMapController = new GameMapController();
@@ -48,6 +54,9 @@ public class AdvanceTest {
         assertEquals(1, attacker.getOrders().size(), "Advance order should be added to player's order list");
     }
 
+    /**
+     * Test process advance command non adjacent country.
+     */
     @Test
     void testProcessAdvanceCommand_NonAdjacentCountry() {
         gameMapController = new GameMapController();
@@ -72,6 +81,9 @@ public class AdvanceTest {
         assertEquals(0, attacker.getOrders().size(), "Advance order should be not added to player's order list");
     }
 
+    /**
+     * Test move armies not enough.
+     */
     @Test
     void testMoveArmiesNotEnough() {
         gameMapController = new GameMapController();
@@ -98,6 +110,9 @@ public class AdvanceTest {
         assertEquals(0, toCountry.getExistingArmies()); //should remain unchanged
     }
 
+    /**
+     * Test advance to owned country.
+     */
     @Test
     void testAdvanceToOwnedCountry() {
         gameMapController = new GameMapController();
@@ -126,6 +141,9 @@ public class AdvanceTest {
         assertEquals(5, toCountry.getExistingArmies());
     }
 
+    /**
+     * Test attack success.
+     */
     @Test
     void testAttackSuccess() {
         gameMapController = new GameMapController();
@@ -154,6 +172,9 @@ public class AdvanceTest {
         assertNotEquals(defender, toCountry.getD_ownedBy()); // Ownership should change
     }
 
+    /**
+     * Test defended successfully.
+     */
     @Test
     void testDefendedSuccessfully() {
         gameMapController = new GameMapController();
