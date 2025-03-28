@@ -358,6 +358,10 @@ public class Player {
         int l_toCountryID = Integer.parseInt(l_command_parts[2]);
         int l_numOfArmies = Integer.parseInt(l_command_parts[3]);
 
+        if (!this.hasCard("Airlift")) {
+            return;
+        }
+
         if (findCountryById(this.d_countries_owned, l_fromCountryID) == null) {
             d_displayToUser.instructionMessage("You can only airlift armies from countries you own. Try again.");
             return;
@@ -367,6 +371,7 @@ public class Player {
             d_displayToUser.instructionMessage("You can only airlift armies to countries you own. Try again.");
             return;
         }
+
         Country fromCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_fromCountryID);
         Country toCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_toCountryID);
 
@@ -380,8 +385,7 @@ public class Player {
      * Executes the next order in the player's order list.
      */
     public void next_order() {
-        if (this.getOrders().isEmpty())
-            return;
+        if (this.getOrders().isEmpty()) return;
 
         this.getOrders().getFirst().execute();
         this.getOrders().removeFirst();
