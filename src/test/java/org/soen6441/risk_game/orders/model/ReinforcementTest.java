@@ -12,16 +12,25 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * The type Reinforcement test.
+ */
 public class ReinforcementTest {
     private GameMapController gameMapController;
     private GameSession gameSession;
 
+    /**
+     * Sets up.
+     */
     @BeforeEach
     public void setUp() {
         gameMapController = new GameMapController();
         gameSession = GameSession.getInstance();
     }
 
+    /**
+     * Test reinforcment.
+     */
     @Test
     public void testReinforcment() {
         gameMapController.loadMap(gameSession, "europe.map");
