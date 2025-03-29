@@ -1,9 +1,11 @@
 package org.soen6441.risk_game.player_management.controller;
 
+import org.soen6441.risk_game.game_engine.controller.user_input.UserInputScanner;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
+import org.soen6441.risk_game.orders.model.Order;
 import org.soen6441.risk_game.player_management.model.Player;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,6 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * This class holds all the logic for players management.
+ *
+ * @author Irfan Maknojia
+ * @author Joshua Onyema
+ * @author Safin Mahesania
+ * @author Ahmed Fakhir
+ * @version 1.0
+ */
 public class PlayerController {
 
     private DisplayToUser d_displayToUser = new DisplayToUser();
@@ -22,7 +33,6 @@ public class PlayerController {
      *
      * @param p_gameSession The game session.
      */
-
     public void loadPlayers(GameSession p_gameSession) {
         d_displayToUser.instructionMessage("=====================================");
         d_displayToUser.instructionMessage("       PLAYER MANAGEMENT STEP        ");
@@ -33,7 +43,7 @@ public class PlayerController {
         d_displayToUser.instructionMessage("- ⚒ assigncountries  (Assign countries to players)");
         d_displayToUser.instructionMessage("----------------------------------------\n");
 
-        Scanner l_scanner = new Scanner(System.in);
+        Scanner l_scanner = UserInputScanner.getInstance().getScanner();
         String l_command;
         List<Player> playerList = new ArrayList<>();
 
@@ -99,6 +109,7 @@ public class PlayerController {
 
         p_gameSession.setPlayers(playerList);
     }
+
     /**
      * This method handles the order issuing phase, allowing players to issue orders.
      *
@@ -109,12 +120,14 @@ public class PlayerController {
         for (Player player : p_gameSession.getPlayers()) {
             d_displayToUser.instructionMessage("\n⚔ Issue Order Phase");
             d_displayToUser.instructionMessage("==========================");
-            d_displayToUser.instructionMessage("Use \"Deploy <country_id> <number_of_armies>\" to deploy");
-            d_displayToUser.instructionMessage("Use \"Advance <fromCountry_id> <toCountry_id> <number_of_armies>\" to Advance");
-            d_displayToUser.instructionMessage("Use \"Blockade <targetCountryID>\" to use blockade card");
-            d_displayToUser.instructionMessage("Use \"Bomb <sourceCountryID> <targetCountryID>\" to use bomb card");
-            d_displayToUser.instructionMessage("Use \"Reinforcement\" to use reinforcement card");
-            d_displayToUser.instructionMessage("Use \"Commit\" to complete orders\n");
+            d_displayToUser.instructionMessage("Use \"Deploy <country_id> <number_of_armies>\" to deploy.");
+            d_displayToUser.instructionMessage("Use \"Advance <fromCountry_id> <toCountry_id> <number_of_armies>\" to Advance.");
+            d_displayToUser.instructionMessage("Use \"Blockade <targetCountryID>\" to use blockade card.");
+            d_displayToUser.instructionMessage("Use \"Bomb <sourceCountryID> <targetCountryID>\" to use bomb card.");
+            d_displayToUser.instructionMessage("Use \"Reinforcement\" to use reinforcement card.");
+            d_displayToUser.instructionMessage("Use \"Diplomacy <targetPlayerName>\" to use diplomacy card.");
+
+            d_displayToUser.instructionMessage("Use \"Commit\" to complete orders.\n");
 
             int[] cards = player.getD_cards_owned();
             d_displayToUser.instructionMessage("You have following cards:");
@@ -134,8 +147,17 @@ public class PlayerController {
      * @param p_gameSession The game session.
      */
     public void executeOrder(GameSession p_gameSession) {
-        for (Player player : p_gameSession.getPlayers()) {
-            player.next_order();
+        int playersCompletionCount = 0;
+        while (playersCompletionCount != p_gameSession.getPlayers().size()) {
+            for (Player player : p_gameSession.getPlayers()) {
+                if (player.getOrders().isEmpty()) continue;
+                player.next_order();
+                if (player.getOrders().isEmpty()) {
+                    playersCompletionCount++;
+                }
+            }
+
         }
+
     }
 }

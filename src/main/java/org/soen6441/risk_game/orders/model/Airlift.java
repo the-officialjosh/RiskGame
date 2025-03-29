@@ -5,6 +5,8 @@ import org.soen6441.risk_game.game_map.model.Country;
 
 /**
  * The type Airlift.
+ * @author Irfan Maknojia
+ * @author Safin Mahesania
  */
 public class Airlift implements Order {
     private Country d_sourceCountry;

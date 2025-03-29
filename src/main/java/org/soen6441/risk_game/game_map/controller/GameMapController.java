@@ -1,5 +1,6 @@
 package org.soen6441.risk_game.game_map.controller;
 
+import org.soen6441.risk_game.game_engine.controller.user_input.UserInputScanner;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Continent;
 import org.soen6441.risk_game.game_map.model.Country;
@@ -628,7 +629,7 @@ public class GameMapController {
      * @param p_gameSession The game session.
      */
     public void handleMapManagementStep(GameSession p_gameSession) {
-        Scanner l_scanner = new Scanner(System.in);
+        Scanner l_scanner = UserInputScanner.getInstance().getScanner();
         String l_command;
 
         d_displayToUser.instructionMessage("=====================================");

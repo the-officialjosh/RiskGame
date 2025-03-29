@@ -1,5 +1,6 @@
 package org.soen6441.risk_game.orders.model;
 
+import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.player_management.model.Player;
@@ -7,6 +8,12 @@ import org.soen6441.risk_game.player_management.model.Player;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * This class represents the Advance order.
+ * @author Irfan Maknojia
+ * @author Safin Mahesania
+ * @version 1.0
+ */
 public class Advance implements Order{
 
     private Player d_issuer;
@@ -64,13 +71,25 @@ public class Advance implements Order{
         if(attackingCountry.getD_ownedBy().equals(defendingCountry.getD_ownedBy())){
             //move armies;
             if(d_numberOfDeployedArmies > attackingCountry.getExistingArmies()){
+                System.out.println(attacker.getName()+ "tried to moves armies from" + attackingCountry.getName()+" to "+defendingCountry.getName()+".");
                 System.out.println(attacker.getName() + " does not have enough armies to move.");
+                LogEntryBuffer.getInstance().setValue(attacker.getName()+ "tried to moves armies from" + attackingCountry.getName()+" to "+defendingCountry.getName()+".");
                 LogEntryBuffer.getInstance().setValue("💣 " +attacker.getName() + " does not have enough armies to move.");
                 return;
             }
             attackingCountry.setExistingArmies(attackingCountry.getExistingArmies() - d_numberOfDeployedArmies);
             defendingCountry.setExistingArmies(defendingCountry.getExistingArmies() + d_numberOfDeployedArmies);
+            System.out.println(attacker.getName() + "Moved armies from "+ attackingCountry.getName()+" to "+defendingCountry.getName()+"." );
+            LogEntryBuffer.getInstance().setValue("💣 " +attacker.getName() + "Moved armies from "+ attackingCountry.getName()+" to "+defendingCountry.getName()+"." );
         }else {
+            System.out.println(attacker.getName() + " attacks " + defendingCountry.getName() + " from " + attackingCountry.getName());
+            LogEntryBuffer.getInstance().setValue(
+                    "💣 " + attacker.getName() + " attacks " + defendingCountry.getName() + " from " + attackingCountry.getName());
+            if(GameSession.getInstance().areInDiplomacy(attacker,defender)){
+                System.out.println("Can not attack target country because of Diplomacy card");
+                LogEntryBuffer.getInstance().setValue("Can not attack target country because of Diplomacy card");
+                return;
+            }
             if(d_numberOfDeployedArmies > attackingCountry.getExistingArmies()){
                 System.out.println(attacker.getName() + " does not have enough armies to attack.");
                 LogEntryBuffer.getInstance().setValue("💣 " +attacker.getName() + " does not have enough armies to move.");
@@ -78,10 +97,6 @@ public class Advance implements Order{
             }
             int attackingArmies = d_numberOfDeployedArmies;
             int defendingArmies = defendingCountry.getExistingArmies();
-
-            System.out.println(attacker.getName() + " attacks " + defendingCountry.getName() + " from " + attackingCountry.getName());
-            LogEntryBuffer.getInstance().setValue(
-                    "💣 " + attacker.getName() + " attacks " + defendingCountry.getName() + " from " + attackingCountry.getName());
             Random random = new Random();
 
             while (attackingArmies > 0 && defendingArmies > 0) {
@@ -105,6 +120,8 @@ public class Advance implements Order{
             if (defendingArmies <= 0) {
                 // Attacker wins and captures the territory
                 defendingCountry.setD_ownedBy(attacker);
+                attacker.setD_countries_owned(defendingCountry);
+                defender.getD_countries_owned().remove(defendingCountry);
                 defendingCountry.setExistingArmies(attackingArmies);
                 attacker.assignCard();
                 System.out.println(attacker.getName() + " has conquered " + defendingCountry.getName() + "!");
