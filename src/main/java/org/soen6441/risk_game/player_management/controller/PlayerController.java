@@ -5,8 +5,10 @@ import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
+import org.soen6441.risk_game.orders.model.Order;
 import org.soen6441.risk_game.player_management.model.Player;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -26,7 +28,8 @@ public class PlayerController {
     private GameMapController d_gameMapController = new GameMapController();
 
     /**
-     * This method handles the players loading step.
+     * This method handles the player management step, allowing users to add or remove players
+     * and assign countries to players.
      *
      * @param p_gameSession The game session.
      */
@@ -44,53 +47,63 @@ public class PlayerController {
         String l_command;
         List<Player> playerList = new ArrayList<>();
 
+        // Regular expression to match individual commands
+        Pattern pattern = Pattern.compile("(gameplayer\\s+-\\w+\\s+[^\\s]+|assigncountries)");
+
+        boolean assignCountries = false;
+
         do {
             l_command = l_scanner.nextLine();
 
             // Catch user action for monitoring observer
             LogEntryBuffer.getInstance().setValue(l_command);
 
-            String[] l_commandArray = l_command.split(" ");
+            Matcher matcher = pattern.matcher(l_command);
+            while (matcher.find()) {
+                String command = matcher.group(1).trim();
+                String[] l_commandArray = command.split(" ");
 
-            if (!playerList.isEmpty() && l_command.equals("assigncountries")) {
-                break;
-            }
+                if (command.equals("assigncountries")) {
+                    if (!playerList.isEmpty()) {
+                        assignCountries = true;
+                        break;
+                    } else {
+                        d_displayToUser.instructionMessage("⚠ No players to assign countries to.");
+                        continue;
+                    }
+                }
 
-            if (!l_commandArray[0].equals("gameplayer")) {
-                d_displayToUser.instructionMessage("⚠ Invalid Command! Use: gameplayer -add <playername> or gameplayer -remove <playername>");
-                continue;
-            }
-
-            if (l_commandArray.length < 3) {
-                d_displayToUser.instructionMessage("⚠ Invalid Syntax! Correct usage: gameplayer -add <playername>");
-                continue;
-            }
-
-            String l_action = l_commandArray[1];
-            String l_playerName = l_commandArray[2];
-
-            if (l_action.equals("-add")) {
-                Player playerToAdd = new Player(l_playerName, 0, new ArrayList<>());
-                boolean exists = playerList.stream().anyMatch(player -> player.getName().equalsIgnoreCase(playerToAdd.getName()));
-                if (exists) {
-                    d_displayToUser.instructionMessage("⚠ Player already exists. Try a different name.");
+                if (l_commandArray.length < 3) {
+                    d_displayToUser.instructionMessage("⚠ Invalid Syntax! Correct usage: gameplayer -add <playername>");
                     continue;
                 }
-                playerList.add(playerToAdd);
-                d_displayToUser.instructionMessage("✔ Player " + l_playerName + " added.");
-            } else if (l_action.equals("-remove")) {
-                if (!playerList.isEmpty()) {
-                    boolean isRemoved = playerList.removeIf(player -> player.getName().equalsIgnoreCase(l_playerName));
-                    if (isRemoved) {
+
+                String l_action = l_commandArray[1];
+                String l_playerName = l_commandArray[2];
+
+                if (l_action.equals("-add")) {
+                    Player playerToAdd = new Player(l_playerName, 0, new ArrayList<>());
+                    boolean exists = playerList.stream().anyMatch(player -> player.getName().equalsIgnoreCase(playerToAdd.getName()));
+                    if (exists) {
+                        d_displayToUser.instructionMessage("⚠ Player " + l_playerName + " already exists.");
+                    } else {
+                        playerList.add(playerToAdd);
+                        d_displayToUser.instructionMessage("✔ Player " + l_playerName + " added.");
+                    }
+                } else if (l_action.equals("-remove")) {
+                    boolean removed = playerList.removeIf(player -> player.getName().equalsIgnoreCase(l_playerName));
+                    if (removed) {
                         d_displayToUser.instructionMessage("✔ Player " + l_playerName + " removed.");
                     } else {
-                        d_displayToUser.instructionMessage("⚠ Player not found.");
+                        d_displayToUser.instructionMessage("⚠ Player " + l_playerName + " does not exist.");
                     }
                 } else {
-                    d_displayToUser.instructionMessage("⚠ No players to remove.");
+                    d_displayToUser.instructionMessage("⚠ Invalid action. Use -add or -remove.");
                 }
-            } else {
-                d_displayToUser.instructionMessage("⚠ Invalid action. Use -add or -remove.");
+            }
+
+            if (assignCountries) {
+                break;
             }
         } while (true);
 
@@ -98,7 +111,7 @@ public class PlayerController {
     }
 
     /**
-     * This method handles the reinforcement phase.
+     * This method handles the order issuing phase, allowing players to issue orders.
      *
      * @param p_gameSession The game session.
      */
