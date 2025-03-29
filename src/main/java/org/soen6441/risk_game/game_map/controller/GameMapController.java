@@ -474,7 +474,7 @@ public class GameMapController {
      * on the game map. It supports commands for loading, editing, saving, and
      * validating the map, as well as displaying the map and ending the map editing session.
      * </p>
-     * <p>
+     *
      * Supported commands:
      * <ul>
      *   <li><code>loadmap &lt;map_name&gt;</code>: Loads a map from the specified file.</li>
@@ -490,7 +490,6 @@ public class GameMapController {
      *   <li><code>validatemap</code>: Validates the current map.</li>
      *   <li><code>mapeditordone</code>: Ends the map editing session.</li>
      * </ul>
-     * </p>
      *
      * @param p_command     The command to be executed, including any necessary parameters.
      * @param p_gameSession The current game session containing the game map and other session data.
