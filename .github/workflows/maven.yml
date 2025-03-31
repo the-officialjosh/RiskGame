@@ -39,26 +39,27 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Access the 3rd delivery directory
-      run: cd "3rd Delivery"
-
     - name: Compile the code
+      run: cd "3rd Delivery"
       run: mvn compile
 
     - name: Run tests
+      run: cd "3rd Delivery"
       run: mvn test  # Ensures all unit tests pass before allowing push
 
     - name: Generate Javadoc
+      run: cd "3rd Delivery"
       run: mvn javadoc:javadoc  # Generates Javadoc
 
     - name: Build with Maven
+      run: cd "3rd Delivery"
       run: mvn -B package --file pom.xml
 
     - name: Upload Javadoc as an artifact
       uses: actions/upload-artifact@v4
       with:
         name: javadoc
-        path: target/site/apidocs  # This is the default output folder for Javadoc
+        path: 3rd Delivery/target/site/apidocs  # This is the default output folder for Javadoc
         retention-days: 7  # Javadoc will be stored for 7 days
 
   
