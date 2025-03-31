@@ -40,19 +40,19 @@ jobs:
         cache: maven
 
     - name: Compile the code
-      working-directory: cd "3rd Delivery"
+      working-directory: 3rd Delivery
       run: mvn compile
 
     - name: Run tests
-      working-directory: cd "3rd Delivery"
+      working-directory: 3rd Delivery
       run: mvn test  # Ensures all unit tests pass before allowing push
 
     - name: Generate Javadoc
-      working-directory: cd "3rd Delivery"
+      working-directory: 3rd Delivery
       run: mvn javadoc:javadoc  # Generates Javadoc
 
     - name: Build with Maven
-      working-directory: cd "3rd Delivery"
+      working-directory: 3rd Delivery
       run: mvn -B package --file pom.xml
 
     - name: Upload Javadoc as an artifact
