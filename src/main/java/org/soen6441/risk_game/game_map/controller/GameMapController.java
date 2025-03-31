@@ -1,5 +1,6 @@
 package org.soen6441.risk_game.game_map.controller;
 
+import org.soen6441.risk_game.game_engine.controller.GameEngine;
 import org.soen6441.risk_game.game_engine.controller.user_input.UserInputScanner;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Continent;
@@ -171,7 +172,6 @@ public class GameMapController {
 
         System.out.println("=== Territory Assignment Complete ===");
         System.out.println("Countries have been strategically assigned to all players.");
-        System.out.println("---------------------------------------");
 
         // Catch user action for monitoring observer
         LogEntryBuffer.getInstance().setValue("Countries are successfully assigned to the players.");
@@ -434,19 +434,25 @@ public class GameMapController {
             }
         }
         l_bordersNumber /= 2;
+        if (l_continentsNumber < 3) {
+            d_displayToUser.instructionMessage("Invalid map since it should have at least 3 continents! Currently it has only: " + l_continentsNumber + " continents.");
+            return false;
+        }
+        if (l_countriesNumber < 5) {
+            d_displayToUser.instructionMessage("Invalid map since it should have at least 5 countries! Currently it has only: " + l_countriesNumber + " countries.");
+            return false;
+        }
+        if (l_bordersNumber < 5) {
+            d_displayToUser.instructionMessage("Invalid map since it should have at least 5 borders! Currently it has only: " + l_bordersNumber + " borders.");
+            return false;
+        }
         // Then verify if all countries are connected
         HashSet<Country> l_connectedCountries = new HashSet<>();
         connectionVerification(p_gameMap.getContinents().getFirst().getCountries().getFirst(), l_connectedCountries);
         boolean l_countriesAreConnected = l_countriesNumber == l_connectedCountries.size();
-        if (l_continentsNumber < 3)
-            d_displayToUser.instructionMessage("Invalid map since it should have at least 3 continents! Currently it has only: " + l_continentsNumber + " continents.");
-        if (l_countriesNumber < 5)
-            d_displayToUser.instructionMessage("Invalid map since it should have at least 5 countries! Currently it has only: " + l_countriesNumber + " countries.");
-        if (l_bordersNumber < 5)
-            d_displayToUser.instructionMessage("Invalid map since it should have at least 5 borders! Currently it has only: " + l_bordersNumber + " borders.");
         if (!l_countriesAreConnected)
             d_displayToUser.instructionMessage("Invalid map since the countries are not connected. The map should be totally connected for the game.");
-        return !((l_continentsNumber < 3) || (l_countriesNumber < 5) || (l_bordersNumber < 5) || !l_countriesAreConnected);
+        return l_countriesAreConnected;
     }
 
     /**
@@ -613,6 +619,11 @@ public class GameMapController {
                     case "mapeditordone":
                         d_displayToUser.instructionMessage("Map editing session ended.");
                         break;
+                    case "tournament":
+                        // Tournament mode triggered
+                        GameEngine.startTournamentModeGame(p_command);
+                        System.exit(0);
+                        break;
                     default:
                         d_displayToUser.instructionMessage("Error: Invalid command " + l_cmd + ".");
                         break;
@@ -639,6 +650,7 @@ public class GameMapController {
         d_displayToUser.instructionMessage(String.format("%-20s %-20s %-20s %-20s", "⛁ loadmap", "✎ editmap", "⎙ savemap", "⚲ showmap"));
         d_displayToUser.instructionMessage(String.format("%-20s %-20s %-20s %-20s", "✔ validatemap", "✎ editcontinent", "✎ editcountry", "✎ editneighbor"));
         d_displayToUser.instructionMessage("----------------------------------------\n");
+        d_displayToUser.instructionMessage(String.format("\uD83D\uDCA1 Please note that you can run the instruction: 'tournament' to go into the tournament mode.\n"));
 
         boolean l_isUserStillInTheStep = true;
         do {
