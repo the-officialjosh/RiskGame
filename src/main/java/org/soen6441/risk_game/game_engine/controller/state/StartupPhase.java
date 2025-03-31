@@ -26,6 +26,7 @@ public class StartupPhase implements Phase {
      * {@inheritDoc}
      */
     public void handlePhase(GameSession p_gameSession) {
+        // Show startup start message
         d_displayToUser.startupPhaseBeginningMessage();
 
         // Map management step

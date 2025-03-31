@@ -38,7 +38,7 @@ public class StartUpPhaseTest {
     @Order(1)
     @Test
     void testStartUpPhaseForEuropeMap() {
-        GameSession l_gameSession = GameSession.getInstance();
+        GameSession l_gameSession = new GameSession();
         (new StartupPhase()).handlePhase(l_gameSession);
         assertEquals("England",
                 l_gameSession.getMap().getCountries().getFirst().getName());
@@ -49,7 +49,7 @@ public class StartUpPhaseTest {
     @Order(2)
     @Test
     void testStartUpPhaseForInvalidEuropeMap() {
-        GameSession l_gameSession = GameSession.getInstance();
+        GameSession l_gameSession = new GameSession();
         (new StartupPhase()).handlePhase(l_gameSession);
         assertEquals("England",
                 l_gameSession.getMap().getCountries().getFirst().getName());

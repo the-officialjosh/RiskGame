@@ -25,7 +25,7 @@ public class ReinforcementTest {
     @BeforeEach
     public void setUp() {
         gameMapController = new GameMapController();
-        gameSession = GameSession.getInstance();
+        gameSession = new GameSession();
     }
 
     /**
@@ -35,8 +35,8 @@ public class ReinforcementTest {
     public void testReinforcment() {
         gameMapController.loadMap(gameSession, "europe.map");
         List<Player> players = new ArrayList<>();
-        players.add(new Player("Player1", 0, new ArrayList<>()));
-        players.add(new Player("Player2", 0, new ArrayList<>()));
+        players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
+        players.add(new Player("Player2", 0, new ArrayList<>(), gameSession));
         gameSession.setPlayers(players);
         gameMapController.assignCountries(gameSession);
         gameMapController.assignReinforcements(gameSession);
