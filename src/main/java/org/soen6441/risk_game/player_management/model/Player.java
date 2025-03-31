@@ -25,6 +25,7 @@ public class Player {
     private List<Country> d_countries_owned;
     private int[] d_cards_owned;
     private final DisplayToUser d_displayToUser;
+    private final GameSession d_gameSession;
 
     /**
      * Constructs a player with a given name, reinforcement armies, and order list.
@@ -33,13 +34,14 @@ public class Player {
      * @param p_numberOfReinforcementsArmies Initial reinforcement armies.
      * @param p_orders                       List of orders.
      */
-    public Player(String p_name, int p_numberOfReinforcementsArmies, List<Order> p_orders) {
+    public Player(String p_name, int p_numberOfReinforcementsArmies, List<Order> p_orders, GameSession p_gameSession) {
         this.d_name = p_name;
         this.d_numberOfReinforcementsArmies = p_numberOfReinforcementsArmies;
         this.d_orders = p_orders;
         this.d_countries_owned = new ArrayList<>();
         this.d_cards_owned = new int[]{0, 0, 0, 0, 0}; //index 0 = Bomb, 1 = Reinforcement, 2 = Blockade, 3 = Airlift, 4 = Diplomacy
         this.d_displayToUser = new DisplayToUser();
+        this.d_gameSession = p_gameSession;
     }
 
     /**
@@ -202,13 +204,13 @@ public class Player {
         }
 
         Deploy deployOrder = new Deploy(this, l_numOfArmies, l_countryID);
+        deployOrder.setD_gameSession(d_gameSession);
         this.setOrders(deployOrder);
         d_numberOfReinforcementsArmies -= l_numOfArmies;
     }
 
     private void processDiplomacyCommand(String p_targetPlayerName) {
-        GameSession l_gameSession = GameSession.getInstance();
-        Player l_targetPlayer = l_gameSession.getPlayerByName(p_targetPlayerName);
+        Player l_targetPlayer = d_gameSession.getPlayerByName(p_targetPlayerName);
 
         if (l_targetPlayer == null) {
             System.out.println("❌ Target player does not exist.");
@@ -221,7 +223,7 @@ public class Player {
             return;
         }
 
-        if (l_gameSession.areInDiplomacy(this, l_targetPlayer)) {
+        if (d_gameSession.areInDiplomacy(this, l_targetPlayer)) {
             System.out.println("ℹ️ Diplomacy already exists between " + this.getName() + " and " + l_targetPlayer.getName() + ".");
             return;
 
@@ -233,6 +235,7 @@ public class Player {
         }
 
         Diplomacy l_diplomacyOrder = new Diplomacy(this, l_targetPlayer);
+        l_diplomacyOrder.setD_gameSession(d_gameSession);
         this.setOrders(l_diplomacyOrder);
 
         // Consume one diplomacy card
@@ -249,6 +252,7 @@ public class Player {
         }
 
         Reinforcement l_reinforcementOrder = new Reinforcement(this);
+        l_reinforcementOrder.setD_gameSession(d_gameSession);
         this.setOrders(l_reinforcementOrder);
 
         // Consume one reinforcement card
@@ -261,8 +265,7 @@ public class Player {
      * @param p_targetCountryID the p target country id
      */
     public void processBlockadeCommand(String p_targetCountryID) {
-        GameSession l_gameSession = GameSession.getInstance();
-        Country l_targetCountry = l_gameSession.getMap().getCountriesById(Integer.parseInt(p_targetCountryID));
+        Country l_targetCountry = d_gameSession.getMap().getCountriesById(Integer.parseInt(p_targetCountryID));
 
         if (l_targetCountry == null) {
             System.out.println("❌ Target country does not exist.");
@@ -287,6 +290,7 @@ public class Player {
         }
 
         Blockade l_blockadeOrder = new Blockade(l_targetCountry);
+        l_blockadeOrder.setD_gameSession(d_gameSession);
         this.setOrders(l_blockadeOrder);
 
         // Consume one blockade card
@@ -300,10 +304,9 @@ public class Player {
      * @param p_targetCountryID the p target country id
      */
     public void processBombCommand(String p_sourceCountryID, String p_targetCountryID) {
-        GameSession l_gameSession = GameSession.getInstance();
 
-        Country l_sourceCountry = l_gameSession.getMap().getCountriesById(Integer.parseInt(p_sourceCountryID));
-        Country l_targetCountry = l_gameSession.getMap().getCountriesById(Integer.parseInt(p_targetCountryID));
+        Country l_sourceCountry = d_gameSession.getMap().getCountriesById(Integer.parseInt(p_sourceCountryID));
+        Country l_targetCountry = d_gameSession.getMap().getCountriesById(Integer.parseInt(p_targetCountryID));
 
         if (l_sourceCountry == null || l_targetCountry == null) {
             System.out.println("❌ Either source or target country does not exist.");
@@ -325,7 +328,7 @@ public class Player {
         }
 
         // Validation: cannot bomb if in diplomacy
-        if (l_targetOwner != null && GameSession.getInstance().areInDiplomacy(this, l_targetOwner)) {
+        if (l_targetOwner != null && d_gameSession.areInDiplomacy(this, l_targetOwner)) {
             System.out.println("❌ Invalid order: you cannot bomb a player you're in diplomacy with.");
             return;
         }
@@ -342,6 +345,7 @@ public class Player {
         }
 
         Bomb bombOrder = new Bomb(l_sourceCountry, this, l_targetCountry);
+        bombOrder.setD_gameSession(d_gameSession);
         this.setOrders(bombOrder);
 
         // Consume one bomb card
@@ -362,15 +366,16 @@ public class Player {
             d_displayToUser.instructionMessage("You can only advance armies from countries you own. Try again.");
             return;
         }
-        if (!findCountryById(GameSession.getInstance().getMap().getCountries(), l_fromCountryID).getAdjacentCountries().contains(findCountryById(GameSession.getInstance().getMap().getCountries(), l_toCountryID))) {
+        if (!findCountryById(d_gameSession.getMap().getCountries(), l_fromCountryID).getAdjacentCountries().contains(findCountryById(d_gameSession.getMap().getCountries(), l_toCountryID))) {
             d_displayToUser.instructionMessage("You can only Advance armies to adjacent countries, Try again.");
             return;
         }
 
-        Country fromCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_fromCountryID);
-        Country toCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_toCountryID);
+        Country fromCountry = findCountryById(d_gameSession.getMap().getCountries(), l_fromCountryID);
+        Country toCountry = findCountryById(d_gameSession.getMap().getCountries(), l_toCountryID);
 
         Advance advanceOrder = new Advance(this, fromCountry, toCountry, l_numOfArmies);
+        advanceOrder.setD_gameSession(d_gameSession);
         this.setOrders(advanceOrder);
 
     }
@@ -399,10 +404,11 @@ public class Player {
             return;
         }
 
-        Country fromCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_fromCountryID);
-        Country toCountry = findCountryById(GameSession.getInstance().getMap().getCountries(), l_toCountryID);
+        Country fromCountry = findCountryById(d_gameSession.getMap().getCountries(), l_fromCountryID);
+        Country toCountry = findCountryById(d_gameSession.getMap().getCountries(), l_toCountryID);
 
         Airlift airliftOrder = new Airlift(fromCountry, toCountry, l_numOfArmies);
+        airliftOrder.setD_gameSession(d_gameSession);
         this.setOrders(airliftOrder);
         this.useCard("airlift");
 
@@ -413,16 +419,15 @@ public class Player {
      */
     public void next_order() {
         if (this.getOrders().isEmpty()) return;
-        GameSession l_gameSession = GameSession.getInstance();
 
         if(!this.getOrders().getFirst().getClass().getName().equals("org.soen6441.risk_game.orders.model.Deploy")){
-            while (!l_gameSession.getD_diplomacyPairs().isEmpty()) {
-                Iterator<Diplomacy> iterator = l_gameSession.getD_diplomacyPairs().iterator();
+            while (!d_gameSession.getD_diplomacyPairs().isEmpty()) {
+                Iterator<Diplomacy> iterator = d_gameSession.getD_diplomacyPairs().iterator();
                 while (iterator.hasNext()) {
                     Diplomacy pair = iterator.next();
                     pair.incrementCount();
 
-                    if (pair.getCount() >= l_gameSession.getPlayers().size()) {
+                    if (pair.getCount() >= d_gameSession.getPlayers().size()) {
                         iterator.remove();
                     }
                 }
