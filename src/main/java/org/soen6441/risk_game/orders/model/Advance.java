@@ -20,12 +20,21 @@ public class Advance implements Order{
     private int d_numberOfDeployedArmies;
     private Country d_fromCountry;
     private Country d_toCountry;
+    private GameSession d_gameSession;
 
     public Advance(Player d_issuer, Country d_fromCountry, Country d_toCountry, int d_numberOfDeployedArmies) {
         this.d_issuer = d_issuer;
         this.d_numberOfDeployedArmies = d_numberOfDeployedArmies;
         this.d_fromCountry = d_fromCountry;
         this.d_toCountry = d_toCountry;
+    }
+
+    public GameSession getD_gameSession() {
+        return d_gameSession;
+    }
+
+    public void setD_gameSession(GameSession p_gameSession) {
+        this.d_gameSession = p_gameSession;
     }
 
     public Player getD_issuer() {
@@ -85,7 +94,7 @@ public class Advance implements Order{
             System.out.println(attacker.getName() + " attacks " + defendingCountry.getName() + " from " + attackingCountry.getName());
             LogEntryBuffer.getInstance().setValue(
                     "💣 " + attacker.getName() + " attacks " + defendingCountry.getName() + " from " + attackingCountry.getName());
-            if(GameSession.getInstance().areInDiplomacy(attacker,defender)){
+            if(d_gameSession.areInDiplomacy(attacker,defender)){
                 System.out.println("Can not attack target country because of Diplomacy card");
                 LogEntryBuffer.getInstance().setValue("Can not attack target country because of Diplomacy card");
                 return;
