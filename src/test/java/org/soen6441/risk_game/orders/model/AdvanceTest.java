@@ -34,12 +34,12 @@ public class AdvanceTest {
     @Test
     void testProcessAdvanceCommand_ValidMove() {
         gameMapController = new GameMapController();
-        gameSession = GameSession.getInstance();
+        gameSession = new GameSession();
         gameMapController.loadMap(gameSession, "europe.map");
 
         List<Player> players = new ArrayList<>();
-        players.add(new Player("Player1", 0, new ArrayList<>()));
-        players.add(new Player("Player2", 0, new ArrayList<>()));
+        players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
+        players.add(new Player("Player2", 0, new ArrayList<>(), gameSession));
         gameSession.setPlayers(players);
         gameMapController.assignCountries(gameSession);
 
@@ -60,12 +60,12 @@ public class AdvanceTest {
     @Test
     void testProcessAdvanceCommand_NonAdjacentCountry() {
         gameMapController = new GameMapController();
-        gameSession = GameSession.getInstance();
+        gameSession = new GameSession();
         gameMapController.loadMap(gameSession, "europe.map");
 
         List<Player> players = new ArrayList<>();
-        players.add(new Player("Player1", 5, new ArrayList<>()));
-        players.add(new Player("Player2", 5, new ArrayList<>()));
+        players.add(new Player("Player1", 5, new ArrayList<>(), gameSession));
+        players.add(new Player("Player2", 5, new ArrayList<>(), gameSession));
         gameSession.setPlayers(players);
         gameMapController.assignCountries(gameSession);
 
@@ -87,12 +87,12 @@ public class AdvanceTest {
     @Test
     void testMoveArmiesNotEnough() {
         gameMapController = new GameMapController();
-        gameSession = GameSession.getInstance();
+        gameSession = new GameSession();
         gameMapController.loadMap(gameSession, "europe.map");
 
         List<Player> players = new ArrayList<>();
-        players.add(new Player("Player1", 0, new ArrayList<>()));
-        players.add(new Player("Player2", 0, new ArrayList<>()));
+        players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
+        players.add(new Player("Player2", 0, new ArrayList<>(), gameSession));
         gameSession.setPlayers(players);
         gameMapController.assignCountries(gameSession);
 
@@ -116,12 +116,12 @@ public class AdvanceTest {
     @Test
     void testAdvanceToOwnedCountry() {
         gameMapController = new GameMapController();
-        gameSession = GameSession.getInstance();
+        gameSession = new GameSession();
         gameMapController.loadMap(gameSession, "europe.map");
 
         List<Player> players = new ArrayList<>();
-        players.add(new Player("Player1", 5, new ArrayList<>()));
-        players.add(new Player("Player2", 5, new ArrayList<>()));
+        players.add(new Player("Player1", 5, new ArrayList<>(), gameSession));
+        players.add(new Player("Player2", 5, new ArrayList<>(), gameSession));
         gameSession.setPlayers(players);
         gameMapController.assignCountries(gameSession);
         gameMapController.assignReinforcements(gameSession);
@@ -147,12 +147,12 @@ public class AdvanceTest {
     @Test
     void testAttackSuccess() {
         gameMapController = new GameMapController();
-        gameSession = GameSession.getInstance();
+        gameSession = new GameSession();
         gameMapController.loadMap(gameSession, "europe.map");
 
         List<Player> players = new ArrayList<>();
-        players.add(new Player("Player1", 0, new ArrayList<>()));
-        players.add(new Player("Player2", 0, new ArrayList<>()));
+        players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
+        players.add(new Player("Player2", 0, new ArrayList<>(), gameSession));
         gameSession.setPlayers(players);
         gameMapController.assignCountries(gameSession);
 
@@ -178,12 +178,12 @@ public class AdvanceTest {
     @Test
     void testDefendedSuccessfully() {
         gameMapController = new GameMapController();
-        gameSession = GameSession.getInstance();
+        gameSession = new GameSession();
         gameMapController.loadMap(gameSession, "europe.map");
 
         List<Player> players = new ArrayList<>();
-        players.add(new Player("Player1", 0, new ArrayList<>()));
-        players.add(new Player("Player2", 0, new ArrayList<>()));
+        players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
+        players.add(new Player("Player2", 0, new ArrayList<>(), gameSession));
         gameSession.setPlayers(players);
         gameMapController.assignCountries(gameSession);
 
