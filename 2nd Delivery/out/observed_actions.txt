@@ -1,0 +1,15 @@
+loadmap europe.map
+mapeditordone
+gameplayer -add Josh
+gameplayer -add Irfan
+assigncountries
+Countries are successfully assigned to the players.
+Reinforcements are successfully assigned to the players.
+deploy 24 4
+commit
+deploy 21 4
+commit
+4 armies of player: Josh has been deployed to the country: Luxembourg.
+4 armies of player: Irfan has been deployed to the country: France.
+Reinforcements are successfully assigned to the players.
+bomb 23 3
