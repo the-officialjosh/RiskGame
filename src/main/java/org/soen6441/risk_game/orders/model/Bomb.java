@@ -19,6 +19,7 @@ public class Bomb implements Order {
     private Player d_player;
     private Country d_sourceCountry;
     private Country d_targetCountry;
+    private GameSession d_gameSession;
 
     /**
      * Instantiates a new Bomb order.
@@ -33,15 +34,22 @@ public class Bomb implements Order {
         this.d_targetCountry = p_targetCountry;
     }
 
+    public GameSession getD_gameSession() {
+        return d_gameSession;
+    }
+
+    public void setD_gameSession(GameSession p_gameSession) {
+        this.d_gameSession = p_gameSession;
+    }
+
     /**
      * Executes the Bomb order, validating preconditions and applying effects.
      */
     @Override
     public void execute() {
-        GameSession l_gameSession = GameSession.getInstance();
-        Country l_target = l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId());
+        Country l_target = d_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId());
 
-        if (l_gameSession.areInDiplomacy(d_sourceCountry.getD_ownedBy(), d_targetCountry.getD_ownedBy())) {
+        if (d_gameSession.areInDiplomacy(d_sourceCountry.getD_ownedBy(), d_targetCountry.getD_ownedBy())) {
             System.out.println("Bombing of " + d_sourceCountry.getD_ownedBy().getName() + " on " + d_targetCountry.getD_ownedBy().getName() + "'s territory that is " + d_targetCountry.getName() + " is not possible because they are in diplomacy terms.");
         } else {
             // Proceed with bombing
@@ -49,7 +57,7 @@ public class Bomb implements Order {
             int l_reducedArmies = l_currentArmies / 2;
 
             //l_target.setExistingArmies(updatedArmies);
-            l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).setExistingArmies(l_reducedArmies);
+            d_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).setExistingArmies(l_reducedArmies);
 
             System.out.println("💣 Bomb executed on " + l_target.getName() + ". Armies reduced from " +
                     l_currentArmies + " to " + l_reducedArmies + ". Bomb card used.");

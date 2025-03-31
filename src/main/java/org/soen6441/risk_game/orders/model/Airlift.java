@@ -12,6 +12,7 @@ public class Airlift implements Order {
     private Country d_sourceCountry;
     private Country d_targetCountry;
     private int d_numberOfArmies;
+    private GameSession d_gameSession;
 
     /**
      * Instantiates a new Airlift.
@@ -26,18 +27,25 @@ public class Airlift implements Order {
         this.d_numberOfArmies = p_numberOfArmies;
     }
 
+    public GameSession getD_gameSession() {
+        return d_gameSession;
+    }
+
+    public void setD_gameSession(GameSession p_gameSession) {
+        this.d_gameSession = p_gameSession;
+    }
+
     @Override
     public void execute() {
-        GameSession l_gameSession = GameSession.getInstance();
         if (d_sourceCountry.getExistingArmies() < d_numberOfArmies) {
-            l_gameSession.getMap().getCountriesById(d_sourceCountry.getCountryId()).getD_ownedBy().setD_cards_owned(3);
+            d_gameSession.getMap().getCountriesById(d_sourceCountry.getCountryId()).getD_ownedBy().setD_cards_owned(3);
             return;
         }
 
         int l_sourceCountryExistingArmies = d_sourceCountry.getExistingArmies();
         int l_targetCountryExistingArmies = d_targetCountry.getExistingArmies();
 
-        l_gameSession.getMap().getCountriesById(d_sourceCountry.getCountryId()).setExistingArmies(l_sourceCountryExistingArmies - d_numberOfArmies);
-        l_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).setExistingArmies(l_targetCountryExistingArmies + d_numberOfArmies);
+        d_gameSession.getMap().getCountriesById(d_sourceCountry.getCountryId()).setExistingArmies(l_sourceCountryExistingArmies - d_numberOfArmies);
+        d_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).setExistingArmies(l_targetCountryExistingArmies + d_numberOfArmies);
     }
 }

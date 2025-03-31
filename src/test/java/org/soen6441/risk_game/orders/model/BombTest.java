@@ -25,7 +25,7 @@ public class BombTest {
     @BeforeEach
     public void setUp() {
         gameMapController = new GameMapController();
-        gameSession = GameSession.getInstance();
+        gameSession = new GameSession();
     }
 
     /**
@@ -35,16 +35,18 @@ public class BombTest {
     public void testBomb() {
         gameMapController.loadMap(gameSession, "europe.map");
         List<Player> players = new ArrayList<>();
-        players.add(new Player("Player1", 0, new ArrayList<>()));
-        players.add(new Player("Player2", 0, new ArrayList<>()));
+        players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
+        players.add(new Player("Player2", 0, new ArrayList<>(), gameSession));
         gameSession.setPlayers(players);
         gameMapController.assignCountries(gameSession);
         gameMapController.assignReinforcements(gameSession);
 
         Country p1Country = gameSession.getPlayers().get(0).getD_countries_owned().getFirst();
         Deploy order1 = new Deploy(gameSession.getPlayers().get(0), 4, p1Country.getCountryId());
+        order1.setD_gameSession(gameSession);
         Country p2Country = gameSession.getPlayers().get(1).getD_countries_owned().getFirst();
         Deploy order2 = new Deploy(gameSession.getPlayers().get(1), 4, p2Country.getCountryId());
+        order2.setD_gameSession(gameSession);
 
         order1.execute();
         order2.execute();

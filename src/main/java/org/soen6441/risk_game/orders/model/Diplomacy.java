@@ -16,6 +16,7 @@ public class Diplomacy implements Order {
     private Player d_issuer;
     private Player d_target;
     private int count;
+    private GameSession d_gameSession;
 
     public Player getD_issuer() {
         return d_issuer;
@@ -41,6 +42,14 @@ public class Diplomacy implements Order {
         this.count++;
     }
 
+    public GameSession getD_gameSession() {
+        return d_gameSession;
+    }
+
+    public void setD_gameSession(GameSession p_gameSession) {
+        this.d_gameSession = p_gameSession;
+    }
+
     /**
      * Creates a new Diplomacy order between the issuing player and the target player.
      *
@@ -58,9 +67,7 @@ public class Diplomacy implements Order {
      */
     @Override
     public void execute() {
-        GameSession l_gameSession = GameSession.getInstance();
-
-        l_gameSession.addDiplomacyPair(d_issuer, d_target);
+        d_gameSession.addDiplomacyPair(d_issuer, d_target);
 
 
         System.out.println("🕊️ " + d_issuer.getName() + " and " + d_target.getName() + " are now in diplomacy.");

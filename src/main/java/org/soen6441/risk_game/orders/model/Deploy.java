@@ -23,6 +23,7 @@ public class Deploy implements Order {
     private Player d_issuer;
     private int d_numberOfDeployedArmies;
     private int d_countryId;
+    private GameSession d_gameSession;
 
     /**
      * Constructor for class.
@@ -64,16 +65,23 @@ public class Deploy implements Order {
         this.d_numberOfDeployedArmies = p_numberOfDeployedArmies;
     }
 
+    public GameSession getD_gameSession() {
+        return d_gameSession;
+    }
+
+    public void setD_gameSession(GameSession p_gameSession) {
+        this.d_gameSession = p_gameSession;
+    }
+
     /**
      * This class executes the "deploy" order by updating
      * accordingly the provided gameSession.
      */
     public void execute() {
-        GameSession l_gameSession = GameSession.getInstance();
         Country l_country = d_issuer.findCountryById(d_issuer.getD_countries_owned(), d_countryId);
-        for (int i = 0; i < l_gameSession.getMap().getCountries().size(); i++) {
-            if (l_gameSession.getMap().getCountries().get(i).getCountryId() == l_country.getCountryId()) {
-                Country actualCountry = l_gameSession.getMap().getCountries().get(i);
+        for (int i = 0; i < d_gameSession.getMap().getCountries().size(); i++) {
+            if (d_gameSession.getMap().getCountries().get(i).getCountryId() == l_country.getCountryId()) {
+                Country actualCountry = d_gameSession.getMap().getCountries().get(i);
                 int currentArmies = actualCountry.getExistingArmies();
                 actualCountry.setExistingArmies(currentArmies + d_numberOfDeployedArmies);
                 break;
