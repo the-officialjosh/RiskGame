@@ -82,7 +82,7 @@ public class PlayerController {
                 String l_playerName = l_commandArray[2];
 
                 if (l_action.equals("-add")) {
-                    Player playerToAdd = new Player(l_playerName, 0, new ArrayList<>());
+                    Player playerToAdd = new Player(l_playerName, 0, new ArrayList<>(), p_gameSession);
                     boolean exists = playerList.stream().anyMatch(player -> player.getName().equalsIgnoreCase(playerToAdd.getName()));
                     if (exists) {
                         d_displayToUser.instructionMessage("⚠ Player " + l_playerName + " already exists.");
@@ -150,11 +150,11 @@ public class PlayerController {
         int playersCompletionCount = 0;
         while (playersCompletionCount != p_gameSession.getPlayers().size()) {
             for (Player player : p_gameSession.getPlayers()) {
-                if (player.getOrders().isEmpty()) continue;
-                player.next_order();
                 if (player.getOrders().isEmpty()) {
                     playersCompletionCount++;
                 }
+                if (player.getOrders().isEmpty()) continue;
+                player.next_order();
             }
 
         }
