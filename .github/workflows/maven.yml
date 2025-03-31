@@ -40,7 +40,7 @@ jobs:
         cache: maven
 
     - name: Access the 3rd delivery directory
-      run: cd 3rd Delivery
+      run: cd "3rd Delivery"
 
     - name: Compile the code
       run: mvn compile
