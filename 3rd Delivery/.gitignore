@@ -39,3 +39,6 @@ build/
 
 ### JavaDoc ignore
 docs/
+
+### Observer file ignore
+out/
