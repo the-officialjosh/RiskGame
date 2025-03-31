@@ -23,7 +23,7 @@ public class GameMapControllerTest {
     @BeforeEach
     public void setUp() {
         gameMapController = new GameMapController();
-        gameSession = GameSession.getInstance();
+        gameSession = new GameSession();
         gameMap = new GameMap("my_map", new ArrayList<>());
         gameSession.setMap(gameMap);
 
@@ -82,8 +82,8 @@ public class GameMapControllerTest {
     public void testReinforcementFor2Players() {
         gameMapController.loadMap(gameSession, "europe.map");
         List<Player> players = new ArrayList<>();
-        players.add(new Player("Player1", 0, new ArrayList<>()));
-        players.add(new Player("Player2", 0, new ArrayList<>()));
+        players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
+        players.add(new Player("Player2", 0, new ArrayList<>(), gameSession));
         gameSession.setPlayers(players);
         gameMapController.assignCountries(gameSession);
         gameMapController.assignReinforcements(gameSession);
@@ -95,11 +95,11 @@ public class GameMapControllerTest {
     public void testReinforcementFor5Players() {
         gameMapController.loadMap(gameSession, "europe.map");
         List<Player> players = new ArrayList<>();
-        players.add(new Player("Player1", 0, new ArrayList<>()));
-        players.add(new Player("Player2", 0, new ArrayList<>()));
-        players.add(new Player("Player3", 0, new ArrayList<>()));
-        players.add(new Player("Player4", 0, new ArrayList<>()));
-        players.add(new Player("Player5", 0, new ArrayList<>()));
+        players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
+        players.add(new Player("Player2", 0, new ArrayList<>(), gameSession));
+        players.add(new Player("Player3", 0, new ArrayList<>(), gameSession));
+        players.add(new Player("Player4", 0, new ArrayList<>(), gameSession));
+        players.add(new Player("Player5", 0, new ArrayList<>(), gameSession));
         gameSession.setPlayers(players);
         gameMapController.assignCountries(gameSession);
         gameMapController.assignReinforcements(gameSession);
