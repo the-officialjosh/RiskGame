@@ -37,5 +37,8 @@ build/
 ### Mac OS ###
 .DS_Store
 
+### JavaDoc ignore
 docs/
+
+### Observer file ignore
 out/
