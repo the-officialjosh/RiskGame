@@ -16,23 +16,10 @@ import java.util.List;
  * @version 1.0
  */
 public class GameSession {
-    private static final GameSession instance = new GameSession();
     private List<Player> d_players;
     private GameMap d_map;
 
     private List<Diplomacy> d_diplomacyPairs = new ArrayList<>();
-
-    private GameSession() {
-    }
-
-    /**
-     * Returns the instance of the GameSession.
-     *
-     * @return instance The instance of the GameSession.
-     */
-    public static GameSession getInstance() {
-        return instance;
-    }
 
     /**
      * Returns the list of players.
@@ -122,5 +109,4 @@ public class GameSession {
     public void clearDiplomacyPairs() {
         d_diplomacyPairs.clear();
     }
-
 }
