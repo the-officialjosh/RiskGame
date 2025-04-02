@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.model.Country;
+import org.soen6441.risk_game.player_management.model.HumanPlayer;
 import org.soen6441.risk_game.player_management.model.Player;
 
 import java.util.ArrayList;
@@ -52,13 +53,13 @@ public class BombTest {
         order2.execute();
 
         gameSession.getPlayers().get(0).setD_cards_owned(0);
-
+        HumanPlayer humanPlayer = new HumanPlayer(gameSession.getPlayers().get(0),gameSession);
         if (p1Country.getAdjacentCountries().contains(p2Country)) {
-            gameSession.getPlayers().get(0).processBombCommand(String.valueOf(p1Country.getCountryId()), String.valueOf(p2Country.getCountryId()));
+            humanPlayer.processBombCommand(String.valueOf(p1Country.getCountryId()), String.valueOf(p2Country.getCountryId()));
             gameSession.getPlayers().get(0).next_order();
             assertEquals(2, gameSession.getMap().getCountriesById(p2Country.getCountryId()).getExistingArmies());
         } else {
-            gameSession.getPlayers().get(0).processBombCommand(String.valueOf(p1Country.getCountryId()), String.valueOf(p2Country.getCountryId()));
+            humanPlayer.processBombCommand(String.valueOf(p1Country.getCountryId()), String.valueOf(p2Country.getCountryId()));
             assertEquals(4, gameSession.getMap().getCountriesById(p2Country.getCountryId()).getExistingArmies());
         }
     }
