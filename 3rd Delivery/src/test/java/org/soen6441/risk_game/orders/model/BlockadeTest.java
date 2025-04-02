@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.model.Country;
+import org.soen6441.risk_game.player_management.model.HumanPlayer;
 import org.soen6441.risk_game.player_management.model.Player;
 
 import java.util.ArrayList;
@@ -52,15 +53,15 @@ public class BlockadeTest {
         order2.execute();
 
         gameSession.getPlayers().get(0).setD_cards_owned(2);
-
-        gameSession.getPlayers().get(0).processBlockadeCommand(String.valueOf(p1Country.getCountryId()));
+        HumanPlayer humanPlayer = new HumanPlayer(gameSession.getPlayers().get(0),gameSession);
+        humanPlayer.processBlockadeCommand(String.valueOf(p1Country.getCountryId()));
         gameSession.getPlayers().get(0).next_order();
         assertEquals(6, gameSession.getMap().getCountriesById(p1Country.getCountryId()).getExistingArmies());
         assertEquals(null, gameSession.getMap().getCountriesById(p1Country.getCountryId()).getD_ownedBy());
         assertEquals(true, gameSession.getMap().getCountriesById(p1Country.getCountryId()).isD_isTerritoryNeutral());
 
 
-        gameSession.getPlayers().get(0).processBlockadeCommand(String.valueOf(p2Country.getCountryId()));
+        humanPlayer.processBlockadeCommand(String.valueOf(p2Country.getCountryId()));
         assertEquals(4, gameSession.getMap().getCountriesById(p2Country.getCountryId()).getExistingArmies());
         assertEquals(players.get(1), gameSession.getMap().getCountriesById(p2Country.getCountryId()).getD_ownedBy());
         assertEquals(false, gameSession.getMap().getCountriesById(p2Country.getCountryId()).isD_isTerritoryNeutral());
