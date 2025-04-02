@@ -6,6 +6,7 @@ import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.Order;
+import org.soen6441.risk_game.player_management.model.HumanPlayer;
 import org.soen6441.risk_game.player_management.model.Player;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -83,6 +84,7 @@ public class PlayerController {
 
                 if (l_action.equals("-add")) {
                     Player playerToAdd = new Player(l_playerName, 0, new ArrayList<>(), p_gameSession);
+                    playerToAdd.setD_playerStrategy(new HumanPlayer(playerToAdd,p_gameSession));
                     boolean exists = playerList.stream().anyMatch(player -> player.getName().equalsIgnoreCase(playerToAdd.getName()));
                     if (exists) {
                         d_displayToUser.instructionMessage("⚠ Player " + l_playerName + " already exists.");
