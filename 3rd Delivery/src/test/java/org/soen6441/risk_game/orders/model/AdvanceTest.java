@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.model.Country;
+import org.soen6441.risk_game.player_management.model.HumanPlayer;
 import org.soen6441.risk_game.player_management.model.Player;
 
 import java.util.ArrayList;
@@ -38,8 +39,11 @@ public class AdvanceTest {
         gameMapController.loadMap(gameSession, "europe.map");
 
         List<Player> players = new ArrayList<>();
-        players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
-        players.add(new Player("Player2", 0, new ArrayList<>(), gameSession));
+        Player player1 = new Player("Player1", 0, new ArrayList<>(), gameSession);
+        Player player2 = new Player("Player2", 0, new ArrayList<>(), gameSession);
+        players.add(player1);
+        players.add(player2);
+
         gameSession.setPlayers(players);
         gameMapController.assignCountries(gameSession);
 
@@ -49,7 +53,10 @@ public class AdvanceTest {
         Country toCountry = fromCountry.getAdjacentCountries().getFirst();
 
         String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "5"};
-        attacker.processAdvanceCommand(command);
+        HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
+        humanPlayer.processAdvanceCommand(command);
+        attacker.setD_playerStrategy(humanPlayer);
+        attacker.issue_order();
 
         assertEquals(1, attacker.getOrders().size(), "Advance order should be added to player's order list");
     }
@@ -76,7 +83,10 @@ public class AdvanceTest {
         Country toCountry = new Country(-1,"Non-AdjustantCountry",new ArrayList<>(),0);
 
         String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "5"};
-        attacker.processAdvanceCommand(command);
+        HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
+        humanPlayer.processAdvanceCommand(command);
+        attacker.setD_playerStrategy(humanPlayer);
+        attacker.issue_order();
 
         assertEquals(0, attacker.getOrders().size(), "Advance order should be not added to player's order list");
     }
@@ -104,7 +114,9 @@ public class AdvanceTest {
         toCountry.setExistingArmies(0);
         toCountry.setD_ownedBy(attacker);
         String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "6"}; // advancing more armies than the country have.
-        attacker.processAdvanceCommand(command);
+        HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
+        humanPlayer.processAdvanceCommand(command);
+        attacker.setD_playerStrategy(humanPlayer);
         attacker.next_order();
 
         assertEquals(0, toCountry.getExistingArmies()); //should remain unchanged
@@ -134,7 +146,9 @@ public class AdvanceTest {
         toCountry.setExistingArmies(0);
         toCountry.setD_ownedBy(attacker);
         String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "5"};
-        attacker.processAdvanceCommand(command);
+        HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
+        humanPlayer.processAdvanceCommand(command);
+        attacker.setD_playerStrategy(humanPlayer);
         attacker.next_order();
 
         assertEquals(0, fromCountry.getExistingArmies());
@@ -166,7 +180,9 @@ public class AdvanceTest {
         toCountry.setExistingArmies(2);
 
         String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "5"};
-        attacker.processAdvanceCommand(command);
+        HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
+        humanPlayer.processAdvanceCommand(command);
+        attacker.setD_playerStrategy(humanPlayer);
 
         attacker.next_order();
         assertNotEquals(defender, toCountry.getD_ownedBy()); // Ownership should change
@@ -197,7 +213,9 @@ public class AdvanceTest {
         toCountry.setExistingArmies(10);
 
         String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "5"};
-        attacker.processAdvanceCommand(command);
+        HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
+        humanPlayer.processAdvanceCommand(command);
+        attacker.setD_playerStrategy(humanPlayer);
 
         attacker.next_order();
         assertEquals(defender, toCountry.getD_ownedBy()); // Ownership should change
