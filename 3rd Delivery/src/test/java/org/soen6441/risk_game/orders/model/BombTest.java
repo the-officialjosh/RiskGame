@@ -39,6 +39,7 @@ public class BombTest {
         players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
         players.add(new Player("Player2", 0, new ArrayList<>(), gameSession));
         gameSession.setPlayers(players);
+        gameSession.getPlayers().get(1).setD_playerStrategy(new HumanPlayer(gameSession.getPlayers().get(1),gameSession));
         gameMapController.assignCountries(gameSession);
         gameMapController.assignReinforcements(gameSession);
 

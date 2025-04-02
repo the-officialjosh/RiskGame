@@ -130,7 +130,7 @@ public class HumanPlayer implements PlayerStrategy {
         }
 
         // Validation: player must own the target country
-        if (this.equals(l_targetPlayer)) {
+        if (d_player.equals(l_targetPlayer)) {
             System.out.println("❌ Diplomacy failed: a player cannot establish diplomacy with themselves.");
             return;
         }
@@ -228,13 +228,13 @@ public class HumanPlayer implements PlayerStrategy {
         Player l_targetOwner = l_targetCountry.getD_ownedBy();
 
         // Validation: player must own the source country
-        if (!this.equals(l_sourceCountry.getD_ownedBy())) {
+        if (!d_player.equals(l_sourceCountry.getD_ownedBy())) {
             System.out.println("❌ Invalid order: you do not own the source country.");
             return;
         }
 
         // Validation: can't bomb your own country
-        if (this.equals(l_targetOwner)) {
+        if (d_player.equals(l_targetOwner)) {
             System.out.println("❌ Invalid order: you cannot bomb your own country.");
             return;
         }
