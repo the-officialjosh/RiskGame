@@ -41,6 +41,7 @@ public class AdvanceTest {
         List<Player> players = new ArrayList<>();
         Player player1 = new Player("Player1", 0, new ArrayList<>(), gameSession);
         Player player2 = new Player("Player2", 0, new ArrayList<>(), gameSession);
+        player2.setD_playerStrategy(new HumanPlayer(player2,gameSession));
         players.add(player1);
         players.add(player2);
 
@@ -54,9 +55,8 @@ public class AdvanceTest {
 
         String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "5"};
         HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
-        humanPlayer.processAdvanceCommand(command);
         attacker.setD_playerStrategy(humanPlayer);
-        attacker.issue_order();
+        humanPlayer.processAdvanceCommand(command);
 
         assertEquals(1, attacker.getOrders().size(), "Advance order should be added to player's order list");
     }
@@ -84,9 +84,8 @@ public class AdvanceTest {
 
         String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "5"};
         HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
-        humanPlayer.processAdvanceCommand(command);
         attacker.setD_playerStrategy(humanPlayer);
-        attacker.issue_order();
+        humanPlayer.processAdvanceCommand(command);
 
         assertEquals(0, attacker.getOrders().size(), "Advance order should be not added to player's order list");
     }
@@ -115,8 +114,8 @@ public class AdvanceTest {
         toCountry.setD_ownedBy(attacker);
         String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "6"}; // advancing more armies than the country have.
         HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
-        humanPlayer.processAdvanceCommand(command);
         attacker.setD_playerStrategy(humanPlayer);
+        humanPlayer.processAdvanceCommand(command);
         attacker.next_order();
 
         assertEquals(0, toCountry.getExistingArmies()); //should remain unchanged

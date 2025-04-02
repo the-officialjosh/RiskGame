@@ -185,7 +185,7 @@ public class HumanPlayer implements PlayerStrategy {
         }
 
         // Validation: player must own the target country
-        if (!this.equals(l_targetCountry.getD_ownedBy())) {
+        if (!d_player.equals(l_targetCountry.getD_ownedBy())) {
             System.out.println("❌ Invalid order: you do not own the target country.");
             return;
         }
