@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.model.Country;
+import org.soen6441.risk_game.player_management.model.HumanPlayer;
 import org.soen6441.risk_game.player_management.model.Player;
 
 import java.util.ArrayList;
@@ -60,14 +61,15 @@ public class AirliftTest {
         //If source country and target country belong to same player.
         String command = "Airlift " + gameSession.getMap().getCountriesById(p1Country1.getCountryId()).getCountryId() + " " + gameSession.getMap().getCountriesById(p1Country2.getCountryId()).getCountryId() + " 1";
         String[] commandParts = command.split(" ");
-        gameSession.getPlayers().get(0).processAirliftCommand(commandParts);
+        HumanPlayer humanPlayer = new HumanPlayer(gameSession.getPlayers().get(0),gameSession);
+        humanPlayer.processAirliftCommand(commandParts);
         gameSession.getPlayers().get(0).next_order();
         assertEquals(3, gameSession.getMap().getCountriesById(p1Country2.getCountryId()).getExistingArmies());
 
         //If source country and target country belong to different players.
         String command2 = "Airlift " + gameSession.getMap().getCountriesById(p1Country1.getCountryId()).getCountryId() + " " + gameSession.getMap().getCountriesById(p2Country.getCountryId()).getCountryId() + " 1";
         String[] commandParts2 = command2.split(" ");
-        gameSession.getPlayers().get(0).processAirliftCommand(commandParts2);
+        humanPlayer.processAirliftCommand(commandParts);
         gameSession.getPlayers().get(0).next_order();
         assertEquals(2, gameSession.getMap().getCountriesById(p2Country.getCountryId()).getExistingArmies());
     }
