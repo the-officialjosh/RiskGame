@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.model.Country;
+import org.soen6441.risk_game.player_management.model.HumanPlayer;
 import org.soen6441.risk_game.player_management.model.Player;
 
 import java.util.ArrayList;
@@ -44,10 +45,11 @@ public class ReinforcementTest {
         Country p1Country = gameSession.getPlayers().get(0).getD_countries_owned().getFirst();
         String command = "Deploy " + String.valueOf(p1Country.getCountryId()) + " 3";
         String[] commandParts = command.split(" ");
-        gameSession.getPlayers().getFirst().processDeployCommand(commandParts);
+        HumanPlayer humanPlayer = new HumanPlayer(gameSession.getPlayers().getFirst(),gameSession);
+        humanPlayer.processDeployCommand(commandParts);
         gameSession.getPlayers().getFirst().next_order();
         gameSession.getPlayers().getFirst().setD_cards_owned(1);
-        gameSession.getPlayers().getFirst().processReinforcementCommand();
+        humanPlayer.processReinforcementCommand();
         gameSession.getPlayers().getFirst().next_order();
 
         assertEquals(6, gameSession.getPlayers().getFirst().getNumberOfReinforcementsArmies());
