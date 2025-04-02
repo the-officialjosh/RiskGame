@@ -50,7 +50,7 @@ public class HumanPlayer implements PlayerStrategy {
                         d_displayToUser.instructionMessage(d_player.getName() + " you have (" + d_player.getNumberOfReinforcementsArmies() + ") reinforcement armies.");
                     }
                 }
-                if (d_player.isReinforcementPhaseComplete()) {
+                else if (d_player.isReinforcementPhaseComplete()) {
                     if (l_command_parts[0].equalsIgnoreCase("Advance")) {
                         if (l_command_parts.length != 4) {
                             d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
@@ -87,6 +87,8 @@ public class HumanPlayer implements PlayerStrategy {
                             continue;
                         }
                         processDiplomacyCommand(l_command_parts[1]);
+                    }else{
+                        d_displayToUser.instructionMessage("Invalid command. Use one of the command given above");
                     }
                 }
             } catch (NumberFormatException e) {
