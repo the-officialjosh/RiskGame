@@ -8,6 +8,8 @@ import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.Order;
 import org.soen6441.risk_game.player_management.model.HumanPlayer;
 import org.soen6441.risk_game.player_management.model.Player;
+
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ import java.util.Scanner;
  * @author Ahmed Fakhir
  * @version 1.0
  */
-public class PlayerController {
+public class PlayerController implements Serializable {
 
     private DisplayToUser d_displayToUser = new DisplayToUser();
     private GameMapController d_gameMapController = new GameMapController();

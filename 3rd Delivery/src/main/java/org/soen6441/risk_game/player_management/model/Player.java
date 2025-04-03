@@ -8,6 +8,7 @@ import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.*;
 import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -19,7 +20,7 @@ import java.util.*;
  * @author Ahmed Fakhir
  * @version 1.0
  */
-public class Player {
+public class Player implements Serializable {
     private String d_name;
     private int d_numberOfReinforcementsArmies;
     private List<Order> d_orders;

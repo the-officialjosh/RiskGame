@@ -8,9 +8,10 @@ import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.*;
 import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class HumanPlayer implements PlayerStrategy {
+public class HumanPlayer implements PlayerStrategy, Serializable {
 
     private final Player d_player;
     private DisplayToUser d_displayToUser;

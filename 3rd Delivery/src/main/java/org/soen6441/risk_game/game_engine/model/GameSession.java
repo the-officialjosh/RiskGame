@@ -20,7 +20,7 @@ public class GameSession implements Serializable {
     private List<Player> d_players;
     private GameMap d_map;
     private List<Diplomacy> d_diplomacyPairs = new ArrayList<>();
-    private String d_saveGameFolderPath = "out/saved-games/";
+    private final String d_saveGameFolderPath = "out/saved-games/";
 
     /**
      * Returns the list of players.

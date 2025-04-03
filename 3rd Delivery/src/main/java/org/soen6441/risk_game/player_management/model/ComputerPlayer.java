@@ -3,9 +3,10 @@ package org.soen6441.risk_game.player_management.model;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.orders.model.Order;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ComputerPlayer extends Player {
+public class ComputerPlayer extends Player implements Serializable {
     private String d_playerBehavior;
     public ComputerPlayer(String p_name, int p_numberOfReinforcementsArmies, List<Order> p_orders, GameSession p_gameSession, String p_playerBehavior) {
         super(p_name, p_numberOfReinforcementsArmies, p_orders, p_gameSession);
