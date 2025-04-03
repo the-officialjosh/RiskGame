@@ -1,10 +1,8 @@
 package org.soen6441.risk_game.player_management.model;
 
-import org.soen6441.risk_game.game_engine.controller.user_input.UserInputScanner;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
-import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.*;
 import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
 
@@ -182,7 +180,7 @@ public class Player implements Serializable {
      *
      * @return True if no reinforcement armies are left.
      */
-    public boolean isReinforcementPhaseComplete() {
+    public boolean isReinforcementArmiesDeployed() {
         return d_numberOfReinforcementsArmies == 0;
     }
 

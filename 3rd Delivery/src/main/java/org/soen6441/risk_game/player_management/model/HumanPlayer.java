@@ -52,13 +52,13 @@ public class HumanPlayer implements PlayerStrategy, Serializable {
                         continue;
                     }
                     processDeployCommand(l_command_parts);
-                    if (d_player.isReinforcementPhaseComplete()) {
+                    if (d_player.isReinforcementArmiesDeployed()) {
                         d_displayToUser.instructionMessage("✔ All armies have been deployed.");
                         d_displayToUser.instructionMessage("\nYou can use Advance order command to move or attack countries");
                     } else {
                         d_displayToUser.instructionMessage(d_player.getName() + " you have (" + d_player.getNumberOfReinforcementsArmies() + ") reinforcement armies.");
                     }
-                } else if (d_player.isReinforcementPhaseComplete()) {
+                } else if (d_player.isReinforcementArmiesDeployed()) {
                     if (l_command_parts[0].equalsIgnoreCase("Advance")) {
                         if (l_command_parts.length != 4) {
                             d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
