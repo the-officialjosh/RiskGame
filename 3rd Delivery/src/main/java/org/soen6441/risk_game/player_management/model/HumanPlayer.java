@@ -106,10 +106,17 @@ public class HumanPlayer implements PlayerStrategy, Serializable {
     }
 
     private void processSaveGameCommand(String filename) {
-        String folderName = "out/saved-games/" + filename + ".dat";
+        String folderName = "out/saved-games";
         File folder = new File(folderName);
+        if (!folder.mkdir()) {
+            System.out.println("Error occurred. Please try again.");
+            return;
+        }
 
-        if (folder.exists()) {
+        String file_name = "out/saved-games/" + filename + ".dat";
+        File file = new File(file_name);
+
+        if (file.exists()) {
             System.out.println("❌ Filename already exist.");
             System.out.println("❌ Do you want to replace existing file?\nY for Yes\tN for No");
             Scanner sc = new Scanner(System.in);
