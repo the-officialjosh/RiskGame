@@ -1,5 +1,6 @@
 package org.soen6441.risk_game.game_map.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * @author Kawshik Kumar Ghosh
  * @version 1.0
  */
-public class Continent {
+public class Continent implements Serializable {
     private int d_continentId;
     private String d_name;
     private List<Country> d_countries;

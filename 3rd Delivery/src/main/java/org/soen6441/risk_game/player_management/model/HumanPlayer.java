@@ -106,7 +106,7 @@ public class HumanPlayer implements PlayerStrategy, Serializable {
     }
 
     private void processSaveGameCommand(String filename) {
-        String folderName = "out/save-game/" + filename + ".dat";
+        String folderName = "out/saved-games/" + filename + ".dat";
         File folder = new File(folderName);
 
         if (folder.exists()) {

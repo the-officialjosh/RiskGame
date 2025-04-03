@@ -44,14 +44,6 @@ public class GameEngine {
             // Startup Phase
             phase = new StartupPhase();
             phase.handlePhase(l_gameSession);
-        } else {
-            // Issue Order Phase
-            phase = new IssueOrderPhase();
-            phase.handlePhase(l_gameSession);
-
-            // Execute order phase
-            phase = new ExecuteOrderPhase();
-            phase.handlePhase(l_gameSession);
         }
 
         // Game loop
@@ -115,7 +107,7 @@ public class GameEngine {
                             l_displayToUser.instructionMessage("Invalid command. Use: loadgame <filename>");
                             continue;
                         }
-                        String folderName = "out/save-game/" + l_command_parts[1] + ".dat";
+                        String folderName = "out/saved-games/" + l_command_parts[1] + ".dat";
                         File folder = new File(folderName);
 
                         if (folder.exists()) {
@@ -124,8 +116,6 @@ public class GameEngine {
                             break;
                         } else {
                             l_displayToUser.instructionMessage("File not found.\nPlease enter correct file name.");
-
-
                         }
                     }
 

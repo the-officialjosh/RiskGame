@@ -1,15 +1,16 @@
 package org.soen6441.risk_game.game_map.view;
 
+import java.io.Serializable;
+
 /**
  * Handles user display messages for the game.
  *
  * @author Ahmed Fakhir
  * @author Joshua Onyema
  * @author Kawshik Kumar Ghosh
- *
  * @version 1.0
  */
-public class DisplayToUser {
+public class DisplayToUser implements Serializable {
 
     /**
      * Displays a welcome message to the user.
@@ -34,7 +35,6 @@ public class DisplayToUser {
         instructionMessage("----------------- STARTUP PHASE ENDED -----------------\n");
 
     }
-
 
 
     /**
