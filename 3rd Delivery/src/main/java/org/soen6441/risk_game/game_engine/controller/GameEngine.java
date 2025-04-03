@@ -40,9 +40,19 @@ public class GameEngine {
 
         l_displayToUser.welcomeMessage();
 
-        // Startup Phase
-        phase = new StartupPhase();
-        phase.handlePhase(l_gameSession);
+        if (!loadSaveGame(l_gameSession)) {
+            // Startup Phase
+            phase = new StartupPhase();
+            phase.handlePhase(l_gameSession);
+        } else {
+            // Issue Order Phase
+            phase = new IssueOrderPhase();
+            phase.handlePhase(l_gameSession);
+
+            // Execute order phase
+            phase = new ExecuteOrderPhase();
+            phase.handlePhase(l_gameSession);
+        }
 
         // Game loop
         while (true) {
