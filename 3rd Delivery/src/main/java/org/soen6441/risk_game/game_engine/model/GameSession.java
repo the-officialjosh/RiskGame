@@ -4,7 +4,7 @@ import org.soen6441.risk_game.game_map.model.GameMap;
 import org.soen6441.risk_game.orders.model.Diplomacy;
 import org.soen6441.risk_game.player_management.model.Player;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,4 +119,31 @@ public class GameSession implements Serializable {
     public void setD_diplomacyPairs(List<Diplomacy> d_diplomacyPairs) {
         this.d_diplomacyPairs = d_diplomacyPairs;
     }
+
+    /**
+     * Load game.
+     *
+     * @param gameName the game name
+     */
+    public void loadGame(String gameName) {
+        String filename = d_saveGameFolderPath + gameName + ".dat";
+        GameSession temp_gameSession = null;
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
+            try {
+                while (true) {
+                    temp_gameSession = (GameSession) ois.readObject();
+                }
+            } catch (EOFException _) {
+            }
+            ois.close();
+            this.setPlayers(temp_gameSession.d_players);
+            this.setMap(temp_gameSession.d_map);
+            this.setD_diplomacyPairs(temp_gameSession.d_diplomacyPairs);
+            System.out.println("File loaded.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }
