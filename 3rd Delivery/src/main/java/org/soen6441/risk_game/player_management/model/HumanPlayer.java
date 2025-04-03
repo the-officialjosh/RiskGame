@@ -8,6 +8,7 @@ import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.*;
 import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Scanner;
 
@@ -98,12 +99,38 @@ public class HumanPlayer implements PlayerStrategy, Serializable {
         }
     }
 
+    private void processSaveGameCommand(String filename) {
+        String folderName = "out/save-game/" + filename + ".dat";
+        File folder = new File(folderName);
+
+        if (folder.exists()) {
+            System.out.println("❌ Filename already exist.");
+            System.out.println("❌ Do you want to replace existing file?\nY for Yes\tN for No");
+            Scanner sc = new Scanner(System.in);
+            char opt;
+            while (true) {
+                opt = sc.next().charAt(0);
+                if (opt == 'N' || opt == 'n' || opt == 'Y' || opt == 'y') break;
+                System.out.println("Invalid option. Please select the correct option.");
+            }
+            if (opt == 'n' || opt == 'N') {
+                System.out.println("File not saved, try again.");
+            } else {
+                d_gameSession.saveGame(filename);
+                System.out.println("File saved.");
+            }
+        } else {
+            d_gameSession.saveGame(filename);
+            System.out.println("File saved.");
+        }
+    }
+
     /**
      * Process deploy command.
      *
      * @param l_command_parts the l command parts
      */
-    public void processDeployCommand(String[] l_command_parts) {
+    private void processDeployCommand(String[] l_command_parts) {
         int l_countryID = Integer.parseInt(l_command_parts[1]);
         int l_numOfArmies = Integer.parseInt(l_command_parts[2]);
 
@@ -124,7 +151,12 @@ public class HumanPlayer implements PlayerStrategy, Serializable {
         d_player.setNumberOfReinforcementsArmies(remainingReinforcementArmies);
     }
 
-    private void processDiplomacyCommand(String p_targetPlayerName) {
+    /**
+     * Process diplomacy command.
+     *
+     * @param p_targetPlayerName the p target player name
+     */
+    public void processDiplomacyCommand(String p_targetPlayerName) {
         Player l_targetPlayer = d_gameSession.getPlayerByName(p_targetPlayerName);
 
         if (l_targetPlayer == null) {
