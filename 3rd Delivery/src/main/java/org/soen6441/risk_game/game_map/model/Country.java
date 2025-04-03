@@ -3,8 +3,8 @@ package org.soen6441.risk_game.game_map.model;
 import org.soen6441.risk_game.player_management.model.Player;
 
 
+import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @version 1.0
  */
-public class Country {
+public class Country implements Serializable {
     private int d_countryId;
     private String d_name;
     private Player d_ownedBy;

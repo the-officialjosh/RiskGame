@@ -3,12 +3,15 @@ package org.soen6441.risk_game.orders.model;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.player_management.model.Player;
 
+import java.io.Serializable;
+
 /**
  * The type Reinforcement.
+ *
  * @author Safin Mahesania
  * @version 1.0
  */
-public class Reinforcement implements Order {
+public class Reinforcement implements Order, Serializable {
     private Player d_player;
     private GameSession d_gameSession;
 

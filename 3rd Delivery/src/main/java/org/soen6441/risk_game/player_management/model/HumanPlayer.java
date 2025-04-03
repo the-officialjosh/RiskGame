@@ -8,14 +8,17 @@ import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.*;
 import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
 
+import java.io.File;
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class HumanPlayer implements PlayerStrategy {
+public class HumanPlayer implements PlayerStrategy, Serializable {
 
     private final Player d_player;
     private DisplayToUser d_displayToUser;
     private GameSession d_gameSession;
-    public HumanPlayer(Player p_player, GameSession p_gameSession){
+
+    public HumanPlayer(Player p_player, GameSession p_gameSession) {
         this.d_player = p_player;
         this.d_displayToUser = new DisplayToUser();
         this.d_gameSession = p_gameSession;
@@ -37,20 +40,25 @@ public class HumanPlayer implements PlayerStrategy {
 
             String[] l_command_parts = l_command.split(" ");
             try {
-                if (d_player.hasReinforcementsArmies()) {
+                if (l_command_parts[0].equalsIgnoreCase("savegame")) {
+                    if (l_command_parts.length != 2) {
+                        d_displayToUser.instructionMessage("Invalid command. Use: savegame <filename>");
+                        continue;
+                    }
+                    processSaveGameCommand(l_command_parts[1]);
+                } else if (d_player.hasReinforcementsArmies()) {
                     if (l_command_parts.length != 3 || !l_command_parts[0].equalsIgnoreCase("deploy")) {
                         d_displayToUser.instructionMessage("Invalid command. Use: deploy <countryID> <numberOfArmies>");
                         continue;
                     }
                     processDeployCommand(l_command_parts);
-                    if (d_player.isReinforcementPhaseComplete()) {
+                    if (d_player.isReinforcementArmiesDeployed()) {
                         d_displayToUser.instructionMessage("✔ All armies have been deployed.");
                         d_displayToUser.instructionMessage("\nYou can use Advance order command to move or attack countries");
                     } else {
                         d_displayToUser.instructionMessage(d_player.getName() + " you have (" + d_player.getNumberOfReinforcementsArmies() + ") reinforcement armies.");
                     }
-                }
-                else if (d_player.isReinforcementPhaseComplete()) {
+                } else if (d_player.isReinforcementArmiesDeployed()) {
                     if (l_command_parts[0].equalsIgnoreCase("Advance")) {
                         if (l_command_parts.length != 4) {
                             d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
@@ -87,13 +95,39 @@ public class HumanPlayer implements PlayerStrategy {
                             continue;
                         }
                         processDiplomacyCommand(l_command_parts[1]);
-                    }else{
+                    } else {
                         d_displayToUser.instructionMessage("Invalid command. Use one of the command given above");
                     }
                 }
             } catch (NumberFormatException e) {
                 d_displayToUser.instructionMessage("Invalid number format. Please enter valid numeric values for country ID and number of armies.");
             }
+        }
+    }
+
+    private void processSaveGameCommand(String filename) {
+        String folderName = "out/saved-games/" + filename + ".dat";
+        File folder = new File(folderName);
+
+        if (folder.exists()) {
+            System.out.println("❌ Filename already exist.");
+            System.out.println("❌ Do you want to replace existing file?\nY for Yes\tN for No");
+            Scanner sc = new Scanner(System.in);
+            char opt;
+            while (true) {
+                opt = sc.next().charAt(0);
+                if (opt == 'N' || opt == 'n' || opt == 'Y' || opt == 'y') break;
+                System.out.println("Invalid option. Please select the correct option.");
+            }
+            if (opt == 'n' || opt == 'N') {
+                System.out.println("File not saved, try again.");
+            } else {
+                d_gameSession.saveGame(filename);
+                System.out.println("File saved.");
+            }
+        } else {
+            d_gameSession.saveGame(filename);
+            System.out.println("File saved.");
         }
     }
 
@@ -123,7 +157,12 @@ public class HumanPlayer implements PlayerStrategy {
         d_player.setNumberOfReinforcementsArmies(remainingReinforcementArmies);
     }
 
-    private void processDiplomacyCommand(String p_targetPlayerName) {
+    /**
+     * Process diplomacy command.
+     *
+     * @param p_targetPlayerName the p target player name
+     */
+    public void processDiplomacyCommand(String p_targetPlayerName) {
         Player l_targetPlayer = d_gameSession.getPlayerByName(p_targetPlayerName);
 
         if (l_targetPlayer == null) {

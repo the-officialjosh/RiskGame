@@ -5,8 +5,7 @@ import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.player_management.model.Player;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
 
 /**
  * This class represents the Deploy order.
@@ -15,10 +14,10 @@ import java.util.Map;
  * @author Irfan Maknojia
  * @author Safin Mahesania
  * @author Joshua Onyema
- * @see Order
  * @version 1.0
+ * @see Order
  */
-public class Deploy implements Order {
+public class Deploy implements Order, Serializable {
 
     private Player d_issuer;
     private int d_numberOfDeployedArmies;
@@ -28,7 +27,7 @@ public class Deploy implements Order {
     /**
      * Constructor for class.
      *
-     * @param p_issuer               The player who issued the order.
+     * @param p_issuer                 The player who issued the order.
      * @param p_numberOfDeployedArmies The number of armies to deploy.
      */
     public Deploy(Player p_issuer, int p_numberOfDeployedArmies, int d_countryId) {
@@ -89,7 +88,6 @@ public class Deploy implements Order {
         }
 
         // Catch user action for monitoring observer
-        LogEntryBuffer.getInstance().setValue(d_numberOfDeployedArmies + " armies of player: " + d_issuer.getName()
-                + " has been deployed to the country: " + l_country.getName()  + ".");
+        LogEntryBuffer.getInstance().setValue(d_numberOfDeployedArmies + " armies of player: " + d_issuer.getName() + " has been deployed to the country: " + l_country.getName() + ".");
     }
 }

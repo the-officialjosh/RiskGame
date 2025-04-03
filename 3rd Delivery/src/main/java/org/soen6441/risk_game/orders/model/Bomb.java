@@ -5,6 +5,8 @@ import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.player_management.model.Player;
 
+import java.io.Serializable;
+
 /**
  * The Bomb order class.
  * Destroys half of the armies in an opponent’s adjacent territory, consuming one bomb card.
@@ -14,7 +16,7 @@ import org.soen6441.risk_game.player_management.model.Player;
  * @author Irfan Maknojia
  * @version 1.0
  */
-public class Bomb implements Order {
+public class Bomb implements Order, Serializable {
 
     private Player d_player;
     private Country d_sourceCountry;
@@ -59,13 +61,9 @@ public class Bomb implements Order {
             //l_target.setExistingArmies(updatedArmies);
             d_gameSession.getMap().getCountriesById(d_targetCountry.getCountryId()).setExistingArmies(l_reducedArmies);
 
-            System.out.println("💣 Bomb executed on " + l_target.getName() + ". Armies reduced from " +
-                    l_currentArmies + " to " + l_reducedArmies + ". Bomb card used.");
+            System.out.println("💣 Bomb executed on " + l_target.getName() + ". Armies reduced from " + l_currentArmies + " to " + l_reducedArmies + ". Bomb card used.");
 
-            LogEntryBuffer.getInstance().setValue(
-                    "💣 " + d_player.getName() + " bombed " + l_target.getName() +
-                            ", reducing armies from " + l_currentArmies + " to " + l_reducedArmies + "."
-            );
+            LogEntryBuffer.getInstance().setValue("💣 " + d_player.getName() + " bombed " + l_target.getName() + ", reducing armies from " + l_currentArmies + " to " + l_reducedArmies + ".");
         }
     }
 }

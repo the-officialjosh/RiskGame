@@ -1,5 +1,6 @@
 package org.soen6441.risk_game.game_map.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @version 1.0
  */
-public class GameMap {
+public class GameMap implements Serializable {
     private String d_name;
     private List<Continent> d_continents;
 
