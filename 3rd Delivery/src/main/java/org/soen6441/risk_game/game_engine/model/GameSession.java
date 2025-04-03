@@ -4,6 +4,7 @@ import org.soen6441.risk_game.game_map.model.GameMap;
 import org.soen6441.risk_game.orders.model.Diplomacy;
 import org.soen6441.risk_game.player_management.model.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +16,11 @@ import java.util.List;
  * @author Irfan Maknojia
  * @version 1.0
  */
-public class GameSession {
+public class GameSession implements Serializable {
     private List<Player> d_players;
     private GameMap d_map;
-
     private List<Diplomacy> d_diplomacyPairs = new ArrayList<>();
+    private String d_saveGameFolderPath = "out/saved-games/";
 
     /**
      * Returns the list of players.
@@ -108,5 +109,14 @@ public class GameSession {
      */
     public void clearDiplomacyPairs() {
         d_diplomacyPairs.clear();
+    }
+
+    /**
+     * Sets d diplomacy pairs.
+     *
+     * @param d_diplomacyPairs the d diplomacy pairs
+     */
+    public void setD_diplomacyPairs(List<Diplomacy> d_diplomacyPairs) {
+        this.d_diplomacyPairs = d_diplomacyPairs;
     }
 }
