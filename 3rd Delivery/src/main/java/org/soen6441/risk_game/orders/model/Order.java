@@ -8,7 +8,6 @@ package org.soen6441.risk_game.orders.model;
  * @author Ahmed Fakhir
  * @author Safin Mahesania
  * @version 1.0
- *
  */
 public interface Order {
     /**
