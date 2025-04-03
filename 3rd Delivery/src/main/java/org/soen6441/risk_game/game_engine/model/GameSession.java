@@ -146,4 +146,19 @@ public class GameSession implements Serializable {
         }
     }
 
+    /**
+     * Save game.
+     *
+     * @param gameName the game name
+     */
+    public void saveGame(String gameName) {
+        String filename = d_saveGameFolderPath + gameName + ".dat";
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
+            oos.writeObject(this);
+            oos.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
