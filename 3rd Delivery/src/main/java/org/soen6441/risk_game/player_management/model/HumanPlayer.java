@@ -17,7 +17,8 @@ public class HumanPlayer implements PlayerStrategy, Serializable {
     private final Player d_player;
     private DisplayToUser d_displayToUser;
     private GameSession d_gameSession;
-    public HumanPlayer(Player p_player, GameSession p_gameSession){
+
+    public HumanPlayer(Player p_player, GameSession p_gameSession) {
         this.d_player = p_player;
         this.d_displayToUser = new DisplayToUser();
         this.d_gameSession = p_gameSession;
@@ -39,7 +40,13 @@ public class HumanPlayer implements PlayerStrategy, Serializable {
 
             String[] l_command_parts = l_command.split(" ");
             try {
-                if (d_player.hasReinforcementsArmies()) {
+                if (l_command_parts[0].equalsIgnoreCase("savegame")) {
+                    if (l_command_parts.length != 2) {
+                        d_displayToUser.instructionMessage("Invalid command. Use: savegame <filename>");
+                        continue;
+                    }
+                    processSaveGameCommand(l_command_parts[1]);
+                } else if (d_player.hasReinforcementsArmies()) {
                     if (l_command_parts.length != 3 || !l_command_parts[0].equalsIgnoreCase("deploy")) {
                         d_displayToUser.instructionMessage("Invalid command. Use: deploy <countryID> <numberOfArmies>");
                         continue;
@@ -51,8 +58,7 @@ public class HumanPlayer implements PlayerStrategy, Serializable {
                     } else {
                         d_displayToUser.instructionMessage(d_player.getName() + " you have (" + d_player.getNumberOfReinforcementsArmies() + ") reinforcement armies.");
                     }
-                }
-                else if (d_player.isReinforcementPhaseComplete()) {
+                } else if (d_player.isReinforcementPhaseComplete()) {
                     if (l_command_parts[0].equalsIgnoreCase("Advance")) {
                         if (l_command_parts.length != 4) {
                             d_displayToUser.instructionMessage("Invalid command. Use: Advance <fromCountryID> <toCountryID> <numberOfArmies>");
@@ -89,7 +95,7 @@ public class HumanPlayer implements PlayerStrategy, Serializable {
                             continue;
                         }
                         processDiplomacyCommand(l_command_parts[1]);
-                    }else{
+                    } else {
                         d_displayToUser.instructionMessage("Invalid command. Use one of the command given above");
                     }
                 }
