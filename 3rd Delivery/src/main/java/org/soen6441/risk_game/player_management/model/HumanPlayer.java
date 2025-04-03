@@ -136,7 +136,7 @@ public class HumanPlayer implements PlayerStrategy, Serializable {
      *
      * @param l_command_parts the l command parts
      */
-    private void processDeployCommand(String[] l_command_parts) {
+    public void processDeployCommand(String[] l_command_parts) {
         int l_countryID = Integer.parseInt(l_command_parts[1]);
         int l_numOfArmies = Integer.parseInt(l_command_parts[2]);
 
