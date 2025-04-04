@@ -10,15 +10,29 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * This class represents a random player strategy.
+ * The random player deploys, attacks, and moves armies randomly.
+ */
 public class RandomPlayer implements PlayerStrategy, Serializable {
     private final Player d_player;
     private GameSession d_gameSession;
 
+    /**
+     * Constructor for the RandomPlayer class.
+     *
+     * @param d_player The player object.
+     * @param d_gameSession The game session object.
+     */
     public RandomPlayer(Player d_player, GameSession d_gameSession) {
         this.d_player = d_player;
         this.d_gameSession = d_gameSession;
     }
 
+    /**
+     * Issues orders for the random player.
+     * Deploys reinforcements to a random country, attacks random neighboring countries, and moves armies randomly.
+     */
     @Override
     public void issueOrder() {
         Random rand = new Random();

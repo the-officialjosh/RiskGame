@@ -9,16 +9,30 @@ import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * This class represents an aggressive player strategy.
+ * The aggressive player focuses on centralizing forces and attacking with the strongest country.
+ */
 public class AggressivePlayer implements PlayerStrategy, Serializable {
 
     private final Player d_player;
     private GameSession d_gameSession;
 
+    /**
+     * Constructor for the AggressivePlayer class.
+     *
+     * @param d_player The player object.
+     * @param d_gameSession The game session object.
+     */
     public AggressivePlayer(Player d_player, GameSession d_gameSession) {
         this.d_player = d_player;
         this.d_gameSession = d_gameSession;
     }
 
+    /**
+     * Issues orders for the aggressive player.
+     * Deploys all reinforcements to the strongest country and attacks from the strongest country.
+     */
     @Override
     public void issueOrder() {
         // Deploy all reinforcements to the strongest country

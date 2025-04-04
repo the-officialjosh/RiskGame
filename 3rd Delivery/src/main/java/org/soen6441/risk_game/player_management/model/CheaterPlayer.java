@@ -7,15 +7,29 @@ import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * This class represents a cheater player strategy.
+ * The cheater player conquers all immediate neighboring enemy countries and doubles the number of armies on its countries with enemy neighbors.
+ */
 public class CheaterPlayer implements PlayerStrategy, Serializable {
     private final Player d_player;
     private GameSession d_gameSession;
 
+    /**
+     * Constructor for the CheaterPlayer class.
+     *
+     * @param d_player The player object.
+     * @param d_gameSession The game session object.
+     */
     public CheaterPlayer(Player d_player, GameSession d_gameSession) {
         this.d_player = d_player;
         this.d_gameSession = d_gameSession;
     }
 
+    /**
+     * Issues orders for the cheater player.
+     * Conquers all immediate neighboring enemy countries and doubles the number of armies on its countries with enemy neighbors.
+     */
     @Override
     public void issueOrder() {
         // Conquer all adjacent enemy countries

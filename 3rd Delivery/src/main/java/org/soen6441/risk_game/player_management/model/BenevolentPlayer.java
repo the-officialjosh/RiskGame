@@ -9,16 +9,30 @@ import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * This class represents a benevolent player strategy.
+ * The benevolent player focuses on protecting its weak countries.
+ */
 public class BenevolentPlayer implements PlayerStrategy, Serializable {
 
     private final Player d_player;
     private GameSession d_gameSession;
 
+    /**
+     * Constructor for the BenevolentPlayer class.
+     *
+     * @param d_player The player object.
+     * @param d_gameSession The game session object.
+     */
     public BenevolentPlayer(Player d_player, GameSession d_gameSession) {
         this.d_player = d_player;
         this.d_gameSession = d_gameSession;
     }
 
+    /**
+     * Issues orders for the benevolent player.
+     * Deploys reinforcements to the weakest country and reinforces the weakest country by moving armies.
+     */
     @Override
     public void issueOrder() {
         // Deploy to weakest country
