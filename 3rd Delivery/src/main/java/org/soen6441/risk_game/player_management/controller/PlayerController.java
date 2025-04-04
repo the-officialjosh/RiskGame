@@ -6,8 +6,7 @@ import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.Order;
-import org.soen6441.risk_game.player_management.model.HumanPlayer;
-import org.soen6441.risk_game.player_management.model.Player;
+import org.soen6441.risk_game.player_management.model.*;
 
 import java.io.Serializable;
 import java.util.regex.Matcher;
@@ -30,12 +29,6 @@ public class PlayerController implements Serializable {
     private DisplayToUser d_displayToUser = new DisplayToUser();
     private GameMapController d_gameMapController = new GameMapController();
 
-    /**
-     * This method handles the player management step, allowing users to add or remove players
-     * and assign countries to players.
-     *
-     * @param p_gameSession The game session.
-     */
     public void loadPlayers(GameSession p_gameSession) {
         d_displayToUser.instructionMessage("=====================================");
         d_displayToUser.instructionMessage("       PLAYER MANAGEMENT STEP        ");
@@ -50,7 +43,6 @@ public class PlayerController implements Serializable {
         String l_command;
         List<Player> playerList = new ArrayList<>();
 
-        // Regular expression to match individual commands
         Pattern pattern = Pattern.compile("(gameplayer\\s+-\\w+\\s+[^\\s]+|assigncountries)");
 
         boolean assignCountries = false;
@@ -58,7 +50,6 @@ public class PlayerController implements Serializable {
         do {
             l_command = l_scanner.nextLine();
 
-            // Catch user action for monitoring observer
             LogEntryBuffer.getInstance().setValue(l_command);
 
             Matcher matcher = pattern.matcher(l_command);
@@ -81,28 +72,61 @@ public class PlayerController implements Serializable {
                     continue;
                 }
 
-                String l_action = l_commandArray[1];
-                String l_playerName = l_commandArray[2];
+                if (l_commandArray[0].equals("gameplayer")) {
+                    String l_action = l_commandArray[1];
+                    String l_playerName;
+                    String strategy = "human"; // Default strategy
 
-                if (l_action.equals("-add")) {
-                    Player playerToAdd = new Player(l_playerName, 0, new ArrayList<>(), p_gameSession);
-                    playerToAdd.setD_playerStrategy(new HumanPlayer(playerToAdd, p_gameSession));
-                    boolean exists = playerList.stream().anyMatch(player -> player.getName().equalsIgnoreCase(playerToAdd.getName()));
-                    if (exists) {
-                        d_displayToUser.instructionMessage("⚠ Player " + l_playerName + " already exists.");
+                    if (l_action.equals("-add")) {
+                        l_playerName = l_commandArray[2];
+                        // Check for strategy parameter
+                        for (int i = 3; i < l_commandArray.length; i++) {
+                            if (l_commandArray[i].equals("-strategy") && i + 1 < l_commandArray.length) {
+                                strategy = l_commandArray[i + 1].toLowerCase();
+                                break;
+                            }
+                        }
+
+                        Player playerToAdd = new Player(l_playerName, 0, new ArrayList<>(), p_gameSession);
+                        switch (strategy) {
+                            case "human":
+                                playerToAdd.setD_playerStrategy(new HumanPlayer(playerToAdd, p_gameSession));
+                                break;
+                            case "aggressive":
+                                playerToAdd.setD_playerStrategy(new AggressivePlayer(playerToAdd, p_gameSession));
+                                break;
+                            case "benevolent":
+                                playerToAdd.setD_playerStrategy(new BenevolentPlayer(playerToAdd, p_gameSession));
+                                break;
+                            case "random":
+                                playerToAdd.setD_playerStrategy(new RandomPlayer(playerToAdd, p_gameSession));
+                                break;
+                            case "cheater":
+                                playerToAdd.setD_playerStrategy(new CheaterPlayer(playerToAdd, p_gameSession));
+                                break;
+                            default:
+                                d_displayToUser.instructionMessage("⚠ Invalid strategy. Defaulting to Human.");
+                                playerToAdd.setD_playerStrategy(new HumanPlayer(playerToAdd, p_gameSession));
+                                break;
+                        }
+
+                        boolean exists = playerList.stream().anyMatch(p -> p.getName().equalsIgnoreCase(l_playerName));
+                        if (exists) {
+                            d_displayToUser.instructionMessage("⚠ Player " + l_playerName + " already exists.");
+                        } else {
+                            playerList.add(playerToAdd);
+                            d_displayToUser.instructionMessage("✔ Player " + l_playerName + " added with " + strategy + " strategy.");
+                        }
+                    } else if (l_action.equals("-remove")) {
+                        boolean removed = playerList.removeIf(player -> player.getName().equalsIgnoreCase(l_commandArray[2]));
+                        if (removed) {
+                            d_displayToUser.instructionMessage("✔ Player " + l_commandArray[2] + " removed.");
+                        } else {
+                            d_displayToUser.instructionMessage("⚠ Player " + l_commandArray[2] + " does not exist.");
+                        }
                     } else {
-                        playerList.add(playerToAdd);
-                        d_displayToUser.instructionMessage("✔ Player " + l_playerName + " added.");
+                        d_displayToUser.instructionMessage("⚠ Invalid action. Use -add or -remove.");
                     }
-                } else if (l_action.equals("-remove")) {
-                    boolean removed = playerList.removeIf(player -> player.getName().equalsIgnoreCase(l_playerName));
-                    if (removed) {
-                        d_displayToUser.instructionMessage("✔ Player " + l_playerName + " removed.");
-                    } else {
-                        d_displayToUser.instructionMessage("⚠ Player " + l_playerName + " does not exist.");
-                    }
-                } else {
-                    d_displayToUser.instructionMessage("⚠ Invalid action. Use -add or -remove.");
                 }
             }
 
