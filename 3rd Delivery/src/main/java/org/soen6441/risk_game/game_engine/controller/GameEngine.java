@@ -107,8 +107,8 @@ public class GameEngine {
                             l_displayToUser.instructionMessage("Invalid command. Use: loadgame <filename>");
                             continue;
                         }
-                        String folderName = "out/saved-games/" + l_command_parts[1] + ".dat";
-                        File folder = new File(folderName);
+                        String file = "out/saved-games/" + l_command_parts[1] + ".dat";
+                        File folder = new File(file);
 
                         if (folder.exists()) {
                             p_gameSession.loadGame(l_command_parts[1]);
