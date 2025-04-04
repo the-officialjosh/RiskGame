@@ -3,17 +3,17 @@ package org.soen6441.risk_game.orders.model;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
-import org.soen6441.risk_game.player_management.model.Player;
 
-import java.util.HashMap;
+import java.io.Serializable;
 
 /**
  * This class represents the Blockade order.
+ *
  * @author Joshua Onyema
  * @author Safin Mahesania
  * @version 1.0
  */
-public class Blockade implements Order {
+public class Blockade implements Order, Serializable {
     private Country l_country;
     private GameSession d_gameSession;
 

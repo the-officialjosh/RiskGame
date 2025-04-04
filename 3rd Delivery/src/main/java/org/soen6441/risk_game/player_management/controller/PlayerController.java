@@ -8,6 +8,8 @@ import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.Order;
 import org.soen6441.risk_game.player_management.model.HumanPlayer;
 import org.soen6441.risk_game.player_management.model.Player;
+
+import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ import java.util.Scanner;
  * @author Ahmed Fakhir
  * @version 1.0
  */
-public class PlayerController {
+public class PlayerController implements Serializable {
 
     private DisplayToUser d_displayToUser = new DisplayToUser();
     private GameMapController d_gameMapController = new GameMapController();
@@ -84,7 +86,7 @@ public class PlayerController {
 
                 if (l_action.equals("-add")) {
                     Player playerToAdd = new Player(l_playerName, 0, new ArrayList<>(), p_gameSession);
-                    playerToAdd.setD_playerStrategy(new HumanPlayer(playerToAdd,p_gameSession));
+                    playerToAdd.setD_playerStrategy(new HumanPlayer(playerToAdd, p_gameSession));
                     boolean exists = playerList.stream().anyMatch(player -> player.getName().equalsIgnoreCase(playerToAdd.getName()));
                     if (exists) {
                         d_displayToUser.instructionMessage("⚠ Player " + l_playerName + " already exists.");
@@ -117,9 +119,10 @@ public class PlayerController {
      *
      * @param p_gameSession The game session.
      */
-    public void issueOrderPhase(GameSession p_gameSession) {
+    public void issueOrderPhase(GameSession p_gameSession, int playerNumber) {
         d_gameMapController.showMap(p_gameSession.getMap());
-        for (Player player : p_gameSession.getPlayers()) {
+        //for (Player player : p_gameSession.getPlayers()) {
+        for (int i = playerNumber; i < p_gameSession.getPlayers().size(); i++) {
             d_displayToUser.instructionMessage("\n⚔ Issue Order Phase");
             d_displayToUser.instructionMessage("==========================");
             d_displayToUser.instructionMessage("Use \"Deploy <country_id> <number_of_armies>\" to deploy.");
@@ -129,9 +132,10 @@ public class PlayerController {
             d_displayToUser.instructionMessage("Use \"Reinforcement\" to use reinforcement card.");
             d_displayToUser.instructionMessage("Use \"Diplomacy <targetPlayerName>\" to use diplomacy card.");
 
+            d_displayToUser.instructionMessage("Use \"Savegame <filename>\" to use save game.");
             d_displayToUser.instructionMessage("Use \"Commit\" to complete orders.\n");
 
-            int[] cards = player.getD_cards_owned();
+            int[] cards = p_gameSession.getPlayers().get(i).getD_cards_owned();
             d_displayToUser.instructionMessage("You have following cards:");
             d_displayToUser.instructionMessage("1. Bomb = " + cards[0]);
             d_displayToUser.instructionMessage("2. Reinforcement = " + cards[1]);
@@ -139,7 +143,7 @@ public class PlayerController {
             d_displayToUser.instructionMessage("4. Airlift = " + cards[3]);
             d_displayToUser.instructionMessage("5. Diplomacy = " + cards[4]);
 
-            player.issue_order();
+            p_gameSession.getPlayers().get(i).issue_order();
         }
     }
 

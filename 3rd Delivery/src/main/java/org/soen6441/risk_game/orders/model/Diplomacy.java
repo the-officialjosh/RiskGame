@@ -4,6 +4,8 @@ import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.player_management.model.Player;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 
+import java.io.Serializable;
+
 /**
  * The Diplomacy order establishes a temporary truce between two players for the current turn.
  * Neither player can attack the other after this order is executed.
@@ -11,7 +13,7 @@ import org.soen6441.risk_game.monitoring.LogEntryBuffer;
  * @author Joshua Onyema
  * @version 1.0
  */
-public class Diplomacy implements Order {
+public class Diplomacy implements Order, Serializable {
 
     private Player d_issuer;
     private Player d_target;
@@ -59,7 +61,7 @@ public class Diplomacy implements Order {
     public Diplomacy(Player p_issuer, Player p_target) {
         this.d_issuer = p_issuer;
         this.d_target = p_target;
-        this.count=0;
+        this.count = 0;
     }
 
     /**

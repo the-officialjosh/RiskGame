@@ -1,13 +1,12 @@
 package org.soen6441.risk_game.player_management.model;
 
-import org.soen6441.risk_game.game_engine.controller.user_input.UserInputScanner;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
-import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.*;
 import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -19,7 +18,7 @@ import java.util.*;
  * @author Ahmed Fakhir
  * @version 1.0
  */
-public class Player {
+public class Player implements Serializable {
     private String d_name;
     private int d_numberOfReinforcementsArmies;
     private List<Order> d_orders;
@@ -181,7 +180,7 @@ public class Player {
      *
      * @return True if no reinforcement armies are left.
      */
-    public boolean isReinforcementPhaseComplete() {
+    public boolean isReinforcementArmiesDeployed() {
         return d_numberOfReinforcementsArmies == 0;
     }
 

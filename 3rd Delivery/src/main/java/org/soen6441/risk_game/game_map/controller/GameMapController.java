@@ -25,7 +25,7 @@ import java.util.*;
  * @author Kawshik Kumar Ghosh
  * @version 1.0
  */
-public class GameMapController {
+public class GameMapController implements Serializable {
     private DisplayToUser d_displayToUser = new DisplayToUser();
     private final String d_mapFolderPath = "maps/";
 

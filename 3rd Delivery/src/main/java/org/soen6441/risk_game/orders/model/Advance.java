@@ -5,7 +5,7 @@ import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.player_management.model.Player;
 
-import java.util.HashMap;
+import java.io.Serializable;
 import java.util.Random;
 
 /**
@@ -14,7 +14,7 @@ import java.util.Random;
  * @author Safin Mahesania
  * @version 1.0
  */
-public class Advance implements Order{
+public class Advance implements Order, Serializable {
 
     private Player d_issuer;
     private int d_numberOfDeployedArmies;

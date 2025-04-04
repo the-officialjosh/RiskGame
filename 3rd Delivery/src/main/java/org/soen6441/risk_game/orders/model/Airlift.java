@@ -3,12 +3,14 @@ package org.soen6441.risk_game.orders.model;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
 
+import java.io.Serializable;
+
 /**
  * The type Airlift.
  * @author Irfan Maknojia
  * @author Safin Mahesania
  */
-public class Airlift implements Order {
+public class Airlift implements Order, Serializable {
     private Country d_sourceCountry;
     private Country d_targetCountry;
     private int d_numberOfArmies;
