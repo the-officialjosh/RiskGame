@@ -7,6 +7,10 @@ import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.player_management.model.HumanPlayer;
 import org.soen6441.risk_game.player_management.model.Player;
+import org.soen6441.risk_game.game_map.adapter.MapFormatDetector;
+import org.soen6441.risk_game.game_map.adapter.MapFileHandler;
+import org.soen6441.risk_game.game_map.adapter.ConquestMapFileAdapter;
+import org.soen6441.risk_game.game_map.adapter.DominationMapFileHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +38,14 @@ public class ReinforcementTest {
      */
     @Test
     public void testReinforcment() {
-        gameMapController.loadMap(gameSession, "europe.map");
+        MapFileHandler mapFileHandler;
+        String mapFormat = MapFormatDetector.detectFormat("europe.map");
+        if ("conquest".equalsIgnoreCase(mapFormat)) {
+            mapFileHandler = new ConquestMapFileAdapter();
+        } else {
+            mapFileHandler = new DominationMapFileHandler();
+        }
+        mapFileHandler.loadMap(gameSession, "europe.map");
         List<Player> players = new ArrayList<>();
         players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
         players.add(new Player("Player2", 0, new ArrayList<>(), gameSession));

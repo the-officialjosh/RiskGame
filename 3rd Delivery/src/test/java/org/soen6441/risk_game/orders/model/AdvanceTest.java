@@ -3,6 +3,10 @@ package org.soen6441.risk_game.orders.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.soen6441.risk_game.game_engine.model.GameSession;
+import org.soen6441.risk_game.game_map.adapter.MapFormatDetector;
+import org.soen6441.risk_game.game_map.adapter.MapFileHandler;
+import org.soen6441.risk_game.game_map.adapter.ConquestMapFileAdapter;
+import org.soen6441.risk_game.game_map.adapter.DominationMapFileHandler;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.player_management.model.HumanPlayer;
@@ -34,9 +38,10 @@ public class AdvanceTest {
      */
     @Test
     void testProcessAdvanceCommand_ValidMove() {
-        gameMapController = new GameMapController();
         gameSession = new GameSession();
-        gameMapController.loadMap(gameSession, "europe.map");
+        String format = MapFormatDetector.detectFormat("europe.map");
+        MapFileHandler mapFileHandler = format.equals("conquest") ? new ConquestMapFileAdapter() : new DominationMapFileHandler();
+        mapFileHandler.loadMap(gameSession, "europe.map");
 
         List<Player> players = new ArrayList<>();
         Player player1 = new Player("Player1", 0, new ArrayList<>(), gameSession);
@@ -66,9 +71,10 @@ public class AdvanceTest {
      */
     @Test
     void testProcessAdvanceCommand_NonAdjacentCountry() {
-        gameMapController = new GameMapController();
         gameSession = new GameSession();
-        gameMapController.loadMap(gameSession, "europe.map");
+        String format = MapFormatDetector.detectFormat("europe.map");
+        MapFileHandler mapFileHandler = format.equals("conquest") ? new ConquestMapFileAdapter() : new DominationMapFileHandler();
+        mapFileHandler.loadMap(gameSession, "europe.map");
 
         List<Player> players = new ArrayList<>();
         players.add(new Player("Player1", 5, new ArrayList<>(), gameSession));
@@ -95,9 +101,10 @@ public class AdvanceTest {
      */
     @Test
     void testMoveArmiesNotEnough() {
-        gameMapController = new GameMapController();
         gameSession = new GameSession();
-        gameMapController.loadMap(gameSession, "europe.map");
+        String format = MapFormatDetector.detectFormat("europe.map");
+        MapFileHandler mapFileHandler = format.equals("conquest") ? new ConquestMapFileAdapter() : new DominationMapFileHandler();
+        mapFileHandler.loadMap(gameSession, "europe.map");
 
         List<Player> players = new ArrayList<>();
         players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
@@ -126,9 +133,10 @@ public class AdvanceTest {
      */
     @Test
     void testAdvanceToOwnedCountry() {
-        gameMapController = new GameMapController();
         gameSession = new GameSession();
-        gameMapController.loadMap(gameSession, "europe.map");
+        String format = MapFormatDetector.detectFormat("europe.map");
+        MapFileHandler mapFileHandler = format.equals("conquest") ? new ConquestMapFileAdapter() : new DominationMapFileHandler();
+        mapFileHandler.loadMap(gameSession, "europe.map");
 
         List<Player> players = new ArrayList<>();
         players.add(new Player("Player1", 5, new ArrayList<>(), gameSession));
@@ -159,9 +167,10 @@ public class AdvanceTest {
      */
     @Test
     void testAttackSuccess() {
-        gameMapController = new GameMapController();
         gameSession = new GameSession();
-        gameMapController.loadMap(gameSession, "europe.map");
+        String format = MapFormatDetector.detectFormat("europe.map");
+        MapFileHandler mapFileHandler = format.equals("conquest") ? new ConquestMapFileAdapter() : new DominationMapFileHandler();
+        mapFileHandler.loadMap(gameSession, "europe.map");
 
         List<Player> players = new ArrayList<>();
         players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
@@ -192,9 +201,10 @@ public class AdvanceTest {
      */
     @Test
     void testDefendedSuccessfully() {
-        gameMapController = new GameMapController();
         gameSession = new GameSession();
-        gameMapController.loadMap(gameSession, "europe.map");
+        String format = MapFormatDetector.detectFormat("europe.map");
+        MapFileHandler mapFileHandler = format.equals("conquest") ? new ConquestMapFileAdapter() : new DominationMapFileHandler();
+        mapFileHandler.loadMap(gameSession, "europe.map");
 
         List<Player> players = new ArrayList<>();
         players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
@@ -219,9 +229,4 @@ public class AdvanceTest {
         attacker.next_order();
         assertEquals(defender, toCountry.getD_ownedBy()); // Ownership should change
     }
-
-
-
-
-
 }

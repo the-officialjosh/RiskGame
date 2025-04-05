@@ -3,6 +3,10 @@ package org.soen6441.risk_game.orders.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.soen6441.risk_game.game_engine.model.GameSession;
+import org.soen6441.risk_game.game_map.adapter.ConquestMapFileAdapter;
+import org.soen6441.risk_game.game_map.adapter.DominationMapFileHandler;
+import org.soen6441.risk_game.game_map.adapter.MapFileHandler;
+import org.soen6441.risk_game.game_map.adapter.MapFormatDetector;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.player_management.model.HumanPlayer;
@@ -27,6 +31,12 @@ public class AirliftTest {
     public void setUp() {
         gameMapController = new GameMapController();
         gameSession = new GameSession();
+        String mapName = "europe.map";
+        String format = MapFormatDetector.detectFormat(mapName);
+        MapFileHandler mapFileHandler = "conquest".equals(format)
+                ? new ConquestMapFileAdapter()
+                : new DominationMapFileHandler();
+        mapFileHandler.loadMap(gameSession, mapName);
     }
 
     /**
@@ -34,7 +44,6 @@ public class AirliftTest {
      */
     @Test
     public void testAirlift() {
-        gameMapController.loadMap(gameSession, "europe.map");
         List<Player> players = new ArrayList<>();
         players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
         players.add(new Player("Player2", 0, new ArrayList<>(), gameSession));

@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  */
 public class GameMapController implements Serializable {
 
-    private final DisplayToUser displayToUser = new DisplayToUser();
+    private final DisplayToUser d_displayToUser = new DisplayToUser();
     private final String mapFolderPath = "maps/";
 
     /**
@@ -72,7 +72,7 @@ public class GameMapController implements Serializable {
      */
     public void assignReinforcements(GameSession gameSession) {
         for (Player player : gameSession.getPlayers()) {
-            player.reinforcement(3);
+            player.reinforcement(4);
         }
         LogEntryBuffer.getInstance().setValue("Reinforcements assigned to players.");
     }
@@ -83,7 +83,7 @@ public class GameMapController implements Serializable {
     public void addContinent(GameMap gameMap, String continentName, int continentValue) {
         Continent continent = new Continent(continentName, new ArrayList<>(), continentValue);
         gameMap.getContinents().add(continent);
-        displayToUser.instructionMessage("Continent " + continentName + " added.");
+        d_displayToUser.instructionMessage("Continent " + continentName + " added.");
     }
 
     /**
@@ -92,7 +92,7 @@ public class GameMapController implements Serializable {
     public void removeContinent(GameMap gameMap, String continentName) {
         gameMap.getContinents().removeIf(continent -> continent.getName().equals(continentName));
         Continent.continentIdCounter--;
-        displayToUser.instructionMessage("Continent " + continentName + " removed.");
+        d_displayToUser.instructionMessage("Continent " + continentName + " removed.");
     }
 
     /**
@@ -103,11 +103,11 @@ public class GameMapController implements Serializable {
             if (continent.getName().equals(continentName)) {
                 Country country = new Country(gameMap.getCountries().size() + 1, countryName, new ArrayList<>(), 0);
                 continent.getCountries().add(country);
-                displayToUser.instructionMessage("Country " + countryName + " added to continent " + continentName + ".");
+                d_displayToUser.instructionMessage("Country " + countryName + " added to continent " + continentName + ".");
                 return;
             }
         }
-        displayToUser.instructionMessage("Error: Continent " + continentName + " does not exist.");
+        d_displayToUser.instructionMessage("Error: Continent " + continentName + " does not exist.");
     }
 
     /**
@@ -117,7 +117,7 @@ public class GameMapController implements Serializable {
         for (Continent continent : gameMap.getContinents()) {
             continent.getCountries().removeIf(country -> country.getName().equals(countryName));
         }
-        displayToUser.instructionMessage("Country " + countryName + " removed.");
+        d_displayToUser.instructionMessage("Country " + countryName + " removed.");
     }
 
     /**
@@ -128,16 +128,16 @@ public class GameMapController implements Serializable {
         Country neighbor = findCountry(gameMap, neighborName);
 
         if (country == null || neighbor == null) {
-            displayToUser.instructionMessage("Error: One or both countries do not exist.");
+            d_displayToUser.instructionMessage("Error: One or both countries do not exist.");
             return;
         }
         if (country.getAdjacentCountries().contains(neighbor)) {
-            displayToUser.instructionMessage("Neighbor " + neighborName + " already exists for " + countryName + ".");
+            d_displayToUser.instructionMessage("Neighbor " + neighborName + " already exists for " + countryName + ".");
             return;
         }
         country.getAdjacentCountries().add(neighbor);
         neighbor.getAdjacentCountries().add(country);
-        displayToUser.instructionMessage("Neighbor " + neighborName + " added to country " + countryName + ".");
+        d_displayToUser.instructionMessage("Neighbor " + neighborName + " added to country " + countryName + ".");
     }
 
     /**
@@ -148,16 +148,16 @@ public class GameMapController implements Serializable {
         Country neighbor = findCountry(gameMap, neighborName);
 
         if (country == null || neighbor == null) {
-            displayToUser.instructionMessage("Error: One or both countries do not exist.");
+            d_displayToUser.instructionMessage("Error: One or both countries do not exist.");
             return;
         }
         if (!country.getAdjacentCountries().contains(neighbor)) {
-            displayToUser.instructionMessage("Neighbor " + neighborName + " is not a neighbor of " + countryName + ".");
+            d_displayToUser.instructionMessage("Neighbor " + neighborName + " is not a neighbor of " + countryName + ".");
             return;
         }
         country.getAdjacentCountries().remove(neighbor);
         neighbor.getAdjacentCountries().remove(country);
-        displayToUser.instructionMessage("Neighbor " + neighborName + " removed from country " + countryName + ".");
+        d_displayToUser.instructionMessage("Neighbor " + neighborName + " removed from country " + countryName + ".");
     }
 
     private Country findCountry(GameMap gameMap, String countryName) {
@@ -172,7 +172,7 @@ public class GameMapController implements Serializable {
      */
     public void showMap(GameMap gameMap) {
         if (gameMap == null) {
-            displayToUser.instructionMessage("Cannot show map. No map is loaded.");
+            d_displayToUser.instructionMessage("Cannot show map. No map is loaded.");
             return;
         }
 
@@ -202,15 +202,15 @@ public class GameMapController implements Serializable {
         int borders = gameMap.getCountries().stream().mapToInt(c -> c.getAdjacentCountries().size()).sum() / 2;
 
         if (continents < 3) {
-            displayToUser.instructionMessage("Invalid map: at least 3 continents required. Found: " + continents);
+            d_displayToUser.instructionMessage("Invalid map: at least 3 continents required. Found: " + continents);
             return false;
         }
         if (countries < 5) {
-            displayToUser.instructionMessage("Invalid map: at least 5 countries required. Found: " + countries);
+            d_displayToUser.instructionMessage("Invalid map: at least 5 countries required. Found: " + countries);
             return false;
         }
         if (borders < 5) {
-            displayToUser.instructionMessage("Invalid map: at least 5 borders required. Found: " + borders);
+            d_displayToUser.instructionMessage("Invalid map: at least 5 borders required. Found: " + borders);
             return false;
         }
 
@@ -218,7 +218,7 @@ public class GameMapController implements Serializable {
         explore(gameMap.getCountries().getFirst(), connected);
 
         if (connected.size() != countries) {
-            displayToUser.instructionMessage("Invalid map: countries are not fully connected.");
+            d_displayToUser.instructionMessage("Invalid map: countries are not fully connected.");
             return false;
         }
 
@@ -241,11 +241,12 @@ public class GameMapController implements Serializable {
         Scanner scanner = UserInputScanner.getInstance().getScanner();
         String command;
 
-        displayToUser.instructionMessage("=====================================");
-        displayToUser.instructionMessage("       MAP MANAGEMENT STEP          ");
-        displayToUser.instructionMessage("=====================================");
-        displayToUser.instructionMessage("Use commands: loadmap, editmap, savemap, showmap, validatemap, editcontinent, editcountry, editneighbor, mapeditordone");
-        displayToUser.instructionMessage("Type 'tournament' to enter tournament mode.");
+        d_displayToUser.instructionMessage("Use the following commands to manage the game map:");
+        d_displayToUser.instructionMessage(String.format("%-20s %-20s %-20s %-20s", "⛁ loadmap", "✎ editmap", "⎙ savemap", "⚲ showmap"));
+        d_displayToUser.instructionMessage(String.format("%-20s %-20s %-20s %-20s", "✔ validatemap", "✎ editcontinent", "✎ editcountry", "✎ editneighbor"));
+        d_displayToUser.instructionMessage("----------------------------------------");
+        d_displayToUser.instructionMessage("\uD83D\uDCA1 Please note that you can run the instruction: 'tournament' to go into the tournament mode.\n");
+
 
         boolean active = true;
         while (active) {
@@ -256,17 +257,17 @@ public class GameMapController implements Serializable {
 
             if (command.startsWith("mapeditordone")) {
                 if (validateMap(gameSession.getMap())) {
-                    displayToUser.instructionMessage("✔ The map is valid and will be used for the game.");
+                    d_displayToUser.instructionMessage("✔ The map is valid and will be used for the game.");
                     active = false;
                 } else {
-                    displayToUser.instructionMessage("⚠ The map is invalid. Please fix it before proceeding.");
+                    d_displayToUser.instructionMessage("⚠ The map is invalid. Please fix it before proceeding.");
                 }
             }
         }
 
-        displayToUser.instructionMessage("=====================================");
-        displayToUser.instructionMessage("    MAP MANAGEMENT STEP COMPLETED    ");
-        displayToUser.instructionMessage("=====================================");
+        d_displayToUser.instructionMessage("=====================================");
+        d_displayToUser.instructionMessage("    MAP MANAGEMENT STEP COMPLETED    ");
+        d_displayToUser.instructionMessage("=====================================");
     }
 
     /**
@@ -285,7 +286,7 @@ public class GameMapController implements Serializable {
                 switch (action) {
                     case "loadmap", "editmap" -> {
                         if (parts.length < 2) {
-                            displayToUser.instructionMessage("Error: Map name is missing.");
+                            d_displayToUser.instructionMessage("Error: Map name is missing.");
                             break;
                         }
                         String mapName = parts[1];
@@ -294,15 +295,15 @@ public class GameMapController implements Serializable {
                     }
                     case "showmap" -> showMap(gameSession.getMap());
                     case "validatemap" -> validateMap(gameSession.getMap());
-                    case "mapeditordone" -> displayToUser.instructionMessage("Map editing session ended.");
+                    case "mapeditordone" -> d_displayToUser.instructionMessage("Map editing session ended.");
                     case "tournament" -> {
                         GameEngine.startTournamentModeGame(command);
                         System.exit(0);
                     }
-                    default -> displayToUser.instructionMessage("Error: Unknown command '" + action + "'.");
+                    default -> d_displayToUser.instructionMessage("Error: Unknown command '" + action + "'.");
                 }
             } catch (Exception e) {
-                displayToUser.instructionMessage("Error: " + e.getMessage());
+                d_displayToUser.instructionMessage("Error: " + e.getMessage());
             }
         }
     }

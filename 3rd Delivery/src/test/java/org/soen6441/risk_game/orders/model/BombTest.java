@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.soen6441.risk_game.game_map.adapter.MapFileHandler;
+import org.soen6441.risk_game.game_map.adapter.ConquestMapFileAdapter;
+import org.soen6441.risk_game.game_map.adapter.DominationMapFileHandler;
+import org.soen6441.risk_game.game_map.adapter.MapFormatDetector;
 
 /**
  * The type Bomb test.
@@ -34,7 +38,9 @@ public class BombTest {
      */
     @Test
     public void testBomb() {
-        gameMapController.loadMap(gameSession, "europe.map");
+        String mapFormat = MapFormatDetector.detectFormat("europe.map");
+        MapFileHandler mapFileHandler = mapFormat.equals("conquest") ? new ConquestMapFileAdapter() : new DominationMapFileHandler();
+        mapFileHandler.loadMap(gameSession, "europe.map");
         List<Player> players = new ArrayList<>();
         players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
         players.add(new Player("Player2", 0, new ArrayList<>(), gameSession));

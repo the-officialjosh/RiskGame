@@ -3,6 +3,7 @@ package org.soen6441.risk_game.orders.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.soen6441.risk_game.game_engine.model.GameSession;
+import org.soen6441.risk_game.game_map.adapter.MapFileHandler;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.player_management.model.HumanPlayer;
@@ -27,6 +28,11 @@ public class BlockadeTest {
     public void setUp() {
         gameMapController = new GameMapController();
         gameSession = new GameSession();
+        String mapFormat = org.soen6441.risk_game.game_map.adapter.MapFormatDetector.detectFormat("europe.map");
+        MapFileHandler mapFileHandler = mapFormat.equals("conquest") ?
+                new org.soen6441.risk_game.game_map.adapter.ConquestMapFileAdapter() :
+                new org.soen6441.risk_game.game_map.adapter.DominationMapFileHandler();
+        mapFileHandler.loadMap(gameSession, "europe.map");
     }
 
     /**
@@ -34,7 +40,6 @@ public class BlockadeTest {
      */
     @Test
     public void testBlockade() {
-        gameMapController.loadMap(gameSession, "europe.map");
         List<Player> players = new ArrayList<>();
         players.add(new Player("Player1", 0, new ArrayList<>(), gameSession));
         players.add(new Player("Player2", 0, new ArrayList<>(), gameSession));

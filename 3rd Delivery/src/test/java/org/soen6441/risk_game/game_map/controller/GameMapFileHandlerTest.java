@@ -114,7 +114,7 @@ public class GameMapFileHandlerTest {
         gameMapController.assignReinforcements(gameSession);
 
         for (Player player : gameSession.getPlayers()) {
-            assertEquals(3, player.getNumberOfReinforcementsArmies());
+            assertEquals(4, player.getNumberOfReinforcementsArmies());
         }
     }
 

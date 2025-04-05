@@ -15,6 +15,10 @@ import java.util.ArrayList;
 
 /**
  * Class for Tournament phase.
+ *
+ * @author Ahmed Fakhir
+ * @author Joshua Onyema
+ * @version 1.0
  */
 public class TournamentPhase implements Phase {
     private GameMapController d_gameMapController;
