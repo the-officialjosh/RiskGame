@@ -30,7 +30,9 @@ public class AdvanceTest {
      */
     @BeforeEach
     public void setUp() {
-
+        // Initialize gameMapController and gameSession
+        gameMapController = new GameMapController();
+        gameSession = new GameSession();
     }
 
     /**
@@ -38,7 +40,6 @@ public class AdvanceTest {
      */
     @Test
     void testProcessAdvanceCommand_ValidMove() {
-        gameSession = new GameSession();
         String format = MapFormatDetector.detectFormat("europe.map");
         MapFileHandler mapFileHandler = format.equals("conquest") ? new ConquestMapFileAdapter() : new DominationMapFileHandler();
         mapFileHandler.loadMap(gameSession, "europe.map");
@@ -46,7 +47,7 @@ public class AdvanceTest {
         List<Player> players = new ArrayList<>();
         Player player1 = new Player("Player1", 0, new ArrayList<>(), gameSession);
         Player player2 = new Player("Player2", 0, new ArrayList<>(), gameSession);
-        player2.setD_playerStrategy(new HumanPlayer(player2,gameSession));
+        player2.setD_playerStrategy(new HumanPlayer(player2, gameSession));
         players.add(player1);
         players.add(player2);
 
@@ -58,8 +59,8 @@ public class AdvanceTest {
         Country fromCountry = attacker.getD_countries_owned().getFirst();
         Country toCountry = fromCountry.getAdjacentCountries().getFirst();
 
-        String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "5"};
-        HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
+        String[] command = {"advance", fromCountry.getCountryId() + "", toCountry.getCountryId() + "", "5"};
+        HumanPlayer humanPlayer = new HumanPlayer(attacker, gameSession);
         attacker.setD_playerStrategy(humanPlayer);
         humanPlayer.processAdvanceCommand(command);
 
@@ -71,7 +72,6 @@ public class AdvanceTest {
      */
     @Test
     void testProcessAdvanceCommand_NonAdjacentCountry() {
-        gameSession = new GameSession();
         String format = MapFormatDetector.detectFormat("europe.map");
         MapFileHandler mapFileHandler = format.equals("conquest") ? new ConquestMapFileAdapter() : new DominationMapFileHandler();
         mapFileHandler.loadMap(gameSession, "europe.map");
@@ -86,14 +86,14 @@ public class AdvanceTest {
         Player defender = gameSession.getPlayers().getLast();
 
         Country fromCountry = attacker.getD_countries_owned().getFirst();
-        Country toCountry = new Country(-1,"Non-AdjustantCountry",new ArrayList<>(),0);
+        Country toCountry = new Country(-1, "Non-AdjacentCountry", new ArrayList<>(), 0);
 
-        String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "5"};
-        HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
+        String[] command = {"advance", fromCountry.getCountryId() + "", toCountry.getCountryId() + "", "5"};
+        HumanPlayer humanPlayer = new HumanPlayer(attacker, gameSession);
         attacker.setD_playerStrategy(humanPlayer);
         humanPlayer.processAdvanceCommand(command);
 
-        assertEquals(0, attacker.getOrders().size(), "Advance order should be not added to player's order list");
+        assertEquals(0, attacker.getOrders().size(), "Advance order should not be added to player's order list");
     }
 
     /**
@@ -101,7 +101,6 @@ public class AdvanceTest {
      */
     @Test
     void testMoveArmiesNotEnough() {
-        gameSession = new GameSession();
         String format = MapFormatDetector.detectFormat("europe.map");
         MapFileHandler mapFileHandler = format.equals("conquest") ? new ConquestMapFileAdapter() : new DominationMapFileHandler();
         mapFileHandler.loadMap(gameSession, "europe.map");
@@ -119,13 +118,13 @@ public class AdvanceTest {
         fromCountry.setExistingArmies(5);
         toCountry.setExistingArmies(0);
         toCountry.setD_ownedBy(attacker);
-        String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "6"}; // advancing more armies than the country have.
-        HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
+        String[] command = {"advance", fromCountry.getCountryId() + "", toCountry.getCountryId() + "", "6"}; // advancing more armies than the country has
+        HumanPlayer humanPlayer = new HumanPlayer(attacker, gameSession);
         attacker.setD_playerStrategy(humanPlayer);
         humanPlayer.processAdvanceCommand(command);
         attacker.next_order();
 
-        assertEquals(0, toCountry.getExistingArmies()); //should remain unchanged
+        assertEquals(0, toCountry.getExistingArmies()); // should remain unchanged
     }
 
     /**
@@ -133,7 +132,6 @@ public class AdvanceTest {
      */
     @Test
     void testAdvanceToOwnedCountry() {
-        gameSession = new GameSession();
         String format = MapFormatDetector.detectFormat("europe.map");
         MapFileHandler mapFileHandler = format.equals("conquest") ? new ConquestMapFileAdapter() : new DominationMapFileHandler();
         mapFileHandler.loadMap(gameSession, "europe.map");
@@ -152,8 +150,8 @@ public class AdvanceTest {
         fromCountry.setExistingArmies(5);
         toCountry.setExistingArmies(0);
         toCountry.setD_ownedBy(attacker);
-        String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "5"};
-        HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
+        String[] command = {"advance", fromCountry.getCountryId() + "", toCountry.getCountryId() + "", "5"};
+        HumanPlayer humanPlayer = new HumanPlayer(attacker, gameSession);
         humanPlayer.processAdvanceCommand(command);
         attacker.setD_playerStrategy(humanPlayer);
         attacker.next_order();
@@ -167,7 +165,6 @@ public class AdvanceTest {
      */
     @Test
     void testAttackSuccess() {
-        gameSession = new GameSession();
         String format = MapFormatDetector.detectFormat("europe.map");
         MapFileHandler mapFileHandler = format.equals("conquest") ? new ConquestMapFileAdapter() : new DominationMapFileHandler();
         mapFileHandler.loadMap(gameSession, "europe.map");
@@ -187,8 +184,8 @@ public class AdvanceTest {
         fromCountry.setExistingArmies(5);
         toCountry.setExistingArmies(2);
 
-        String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "5"};
-        HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
+        String[] command = {"advance", fromCountry.getCountryId() + "", toCountry.getCountryId() + "", "5"};
+        HumanPlayer humanPlayer = new HumanPlayer(attacker, gameSession);
         humanPlayer.processAdvanceCommand(command);
         attacker.setD_playerStrategy(humanPlayer);
 
@@ -201,7 +198,6 @@ public class AdvanceTest {
      */
     @Test
     void testDefendedSuccessfully() {
-        gameSession = new GameSession();
         String format = MapFormatDetector.detectFormat("europe.map");
         MapFileHandler mapFileHandler = format.equals("conquest") ? new ConquestMapFileAdapter() : new DominationMapFileHandler();
         mapFileHandler.loadMap(gameSession, "europe.map");
@@ -221,12 +217,12 @@ public class AdvanceTest {
         fromCountry.setExistingArmies(5);
         toCountry.setExistingArmies(10);
 
-        String[] command = {"advance", fromCountry.getCountryId()+"", toCountry.getCountryId()+"", "5"};
-        HumanPlayer humanPlayer = new HumanPlayer(attacker,gameSession);
+        String[] command = {"advance", fromCountry.getCountryId() + "", toCountry.getCountryId() + "", "5"};
+        HumanPlayer humanPlayer = new HumanPlayer(attacker, gameSession);
         humanPlayer.processAdvanceCommand(command);
         attacker.setD_playerStrategy(humanPlayer);
 
         attacker.next_order();
-        assertEquals(defender, toCountry.getD_ownedBy()); // Ownership should change
+        assertEquals(defender, toCountry.getD_ownedBy()); // Ownership should not change
     }
 }
