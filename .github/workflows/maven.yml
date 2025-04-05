@@ -40,22 +40,26 @@ jobs:
         cache: maven
 
     - name: Compile the code
+      working-directory: 3rd Delivery
       run: mvn compile
 
     - name: Run tests
+      working-directory: 3rd Delivery
       run: mvn test  # Ensures all unit tests pass before allowing push
 
     - name: Generate Javadoc
+      working-directory: 3rd Delivery
       run: mvn javadoc:javadoc  # Generates Javadoc
 
     - name: Build with Maven
+      working-directory: 3rd Delivery
       run: mvn -B package --file pom.xml
 
     - name: Upload Javadoc as an artifact
       uses: actions/upload-artifact@v4
       with:
         name: javadoc
-        path: target/site/apidocs  # This is the default output folder for Javadoc
+        path: 3rd Delivery/target/site/apidocs  # This is the default output folder for Javadoc
         retention-days: 7  # Javadoc will be stored for 7 days
 
   

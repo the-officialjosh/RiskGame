@@ -1,0 +1,2 @@
+Single game mode chosen.
+loadmap europe.map

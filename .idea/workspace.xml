@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ccf494d0-52e5-4e49-a480-6a6e3f26bd2f" name="Changes" comment="Create two separate folders for 2nd and 3rd deliveries">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2uvu5MjaE7ixJhQdB7BADQRlT4S" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.GameDriver.executor": "Debug",
+    "Application.GameEngine.executor": "Debug",
+    "JUnit.TournamentPhaseTest.executor": "Debug",
+    "JUnit.controller in Riskgame.executor": "Run",
+    "JUnit.java in Riskgame.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/AhmedFakhir/Desktop/repo/RiskGame/3rd Delivery",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Color Scheme Font",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="TournamentPhaseTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Riskgame" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.soen6441.risk_game.game_engine.controller.state.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.soen6441.risk_game.game_engine.controller.state" />
+      <option name="MAIN_CLASS_NAME" value="org.soen6441.risk_game.game_engine.controller.state.TournamentPhaseTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="controller in Riskgame" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Riskgame" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/3rd Delivery/src/main/java/org/soen6441/risk_game/game_engine/controller" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="RiskGame" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="RiskGame" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.controller in Riskgame" />
+        <item itemvalue="JUnit.TournamentPhaseTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ccf494d0-52e5-4e49-a480-6a6e3f26bd2f" name="Changes" comment="" />
+      <created>1743141186134</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1743141186134</updated>
+      <workItem from="1743141188715" duration="440000" />
+      <workItem from="1743142947980" duration="337000" />
+      <workItem from="1743143903299" duration="3759000" />
+      <workItem from="1743202138756" duration="5426000" />
+      <workItem from="1743252258807" duration="23310000" />
+    </task>
+    <task id="LOCAL-00001" summary="Update GameMapController to use the unified Scanner object">
+      <option name="closed" value="true" />
+      <created>1743147629594</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1743147629594</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Update Player to use the unified Scanner object">
+      <option name="closed" value="true" />
+      <created>1743147639815</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1743147639815</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Update Player to use the unified Scanner object">
+      <option name="closed" value="true" />
+      <created>1743147646144</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1743147646144</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Update class javadoc">
+      <option name="closed" value="true" />
+      <created>1743147855810</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1743147855810</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Update class javadoc">
+      <option name="closed" value="true" />
+      <created>1743147860903</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1743147860903</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Update class javadoc">
+      <option name="closed" value="true" />
+      <created>1743147867211</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1743147867211</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Add Test for StartUpPhase">
+      <option name="closed" value="true" />
+      <created>1743147881226</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1743147881226</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add Test for StartUpPhase">
+      <option name="closed" value="true" />
+      <created>1743208088764</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1743208088764</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Fix Javadoc for handleCommand method">
+      <option name="closed" value="true" />
+      <created>1743209763349</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1743209763349</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Refactor Advance to use the new GameSession object acess">
+      <option name="closed" value="true" />
+      <created>1743380335254</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380335254</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Refactor Advance Test to use the new GameSession object acess">
+      <option name="closed" value="true" />
+      <created>1743380346527</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380346527</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Refactor classes to use the new GameSession object acess">
+      <option name="closed" value="true" />
+      <created>1743380400423</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380400423</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Add Tournament mode to GameEngine">
+      <option name="closed" value="true" />
+      <created>1743380422791</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380422791</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Add Tournament mode to GameMapController">
+      <option name="closed" value="true" />
+      <created>1743380432531</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380432531</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Refactor Tets to use the new GameSession object access">
+      <option name="closed" value="true" />
+      <created>1743380450175</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380450175</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Refactor Test to use the new GameSession object access">
+      <option name="closed" value="true" />
+      <created>1743380468274</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380468274</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Remove the Singleton pattern since with the tournament we will need to create">
+      <option name="closed" value="true" />
+      <created>1743380720561</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380720561</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Refactor Player to use the new GameSession object access">
+      <option name="closed" value="true" />
+      <created>1743380745738</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380745738</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Refactor PlayerController to use the new GameSession object access">
+      <option name="closed" value="true" />
+      <created>1743380755571</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380755571</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Refactor PlayerControllerTest to use the new GameSession object access">
+      <option name="closed" value="true" />
+      <created>1743380768706</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380768706</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Refactor classes to use the new GameSession object access">
+      <option name="closed" value="true" />
+      <created>1743380780273</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380780273</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Add new maps for the game">
+      <option name="closed" value="true" />
+      <created>1743380803618</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380803618</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Add ComputerPlayer class for automatic players">
+      <option name="closed" value="true" />
+      <created>1743380828416</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380828416</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Add Tournament phase implementation">
+      <option name="closed" value="true" />
+      <created>1743380884549</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380884549</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Add Tournament phase test">
+      <option name="closed" value="true" />
+      <created>1743380894592</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1743380894592</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Create two separate folders for 2nd and 3rd deliveries">
+      <option name="closed" value="true" />
+      <created>1743381241548</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1743381241548</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update GameMapController to use the unified Scanner object" />
+    <MESSAGE value="Update Player to use the unified Scanner object" />
+    <MESSAGE value="Update class javadoc" />
+    <MESSAGE value="Add Test for StartUpPhase" />
+    <MESSAGE value="Fix Javadoc for handleCommand method" />
+    <MESSAGE value="Refactor Advance to use the new GameSession object acess" />
+    <MESSAGE value="Refactor Advance Test to use the new GameSession object acess" />
+    <MESSAGE value="Refactor classes to use the new GameSession object acess" />
+    <MESSAGE value="Add Tournament mode to GameEngine" />
+    <MESSAGE value="Add Tournament mode to GameMapController" />
+    <MESSAGE value="Refactor Tets to use the new GameSession object access" />
+    <MESSAGE value="Refactor Test to use the new GameSession object access" />
+    <MESSAGE value="Remove the Singleton pattern since with the tournament we will need to create" />
+    <MESSAGE value="Refactor Player to use the new GameSession object access" />
+    <MESSAGE value="Refactor PlayerController to use the new GameSession object access" />
+    <MESSAGE value="Refactor PlayerControllerTest to use the new GameSession object access" />
+    <MESSAGE value="Refactor classes to use the new GameSession object access" />
+    <MESSAGE value="Add new maps for the game" />
+    <MESSAGE value="Add ComputerPlayer class for automatic players" />
+    <MESSAGE value="Add Tournament phase implementation" />
+    <MESSAGE value="Add Tournament phase test" />
+    <MESSAGE value="Create two separate folders for 2nd and 3rd deliveries" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create two separate folders for 2nd and 3rd deliveries" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
