@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 public class GameMapController implements Serializable {
 
     private final DisplayToUser d_displayToUser = new DisplayToUser();
-    private final String mapFolderPath = "maps/";
+
 
     /**
      * Handles the assign countries step.
@@ -244,7 +244,7 @@ public class GameMapController implements Serializable {
         d_displayToUser.instructionMessage("Use the following commands to manage the game map:");
         d_displayToUser.instructionMessage(String.format("%-20s %-20s %-20s %-20s", "⛁ loadmap", "✎ editmap", "⎙ savemap", "⚲ showmap"));
         d_displayToUser.instructionMessage(String.format("%-20s %-20s %-20s %-20s", "✔ validatemap", "✎ editcontinent", "✎ editcountry", "✎ editneighbor"));
-        d_displayToUser.instructionMessage("----------------------------------------");
+        d_displayToUser.instructionMessage("-----------------------------------------");
         d_displayToUser.instructionMessage("\uD83D\uDCA1 Please note that you can run the instruction: 'tournament' to go into the tournament mode.\n");
 
 
