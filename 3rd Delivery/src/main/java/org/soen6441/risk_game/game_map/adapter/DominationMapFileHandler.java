@@ -77,6 +77,8 @@ public class DominationMapFileHandler implements MapFileHandler {
                             break;
                         }
                     }
+                    // Add the country to the global country list
+                    gameMap.getCountries().add(country);
                 }
 
                 if (readingBorders) {
