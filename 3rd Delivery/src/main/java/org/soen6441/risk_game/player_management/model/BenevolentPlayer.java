@@ -2,76 +2,83 @@ package org.soen6441.risk_game.player_management.model;
 
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
+import org.soen6441.risk_game.player_management.model.Player;
 import org.soen6441.risk_game.orders.model.Advance;
 import org.soen6441.risk_game.orders.model.Deploy;
 import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
-/**
- * This class represents a benevolent player strategy.
- * The benevolent player focuses on protecting its weak countries.
- */
 public class BenevolentPlayer implements PlayerStrategy, Serializable {
-
     private final Player d_player;
-    private GameSession d_gameSession;
+    private final GameSession d_gameSession;
+    private Country d_weakestCountry;
 
-    /**
-     * Constructor for the BenevolentPlayer class.
-     *
-     * @param d_player The player object.
-     * @param d_gameSession The game session object.
-     */
-    public BenevolentPlayer(Player d_player, GameSession d_gameSession) {
-        this.d_player = d_player;
-        this.d_gameSession = d_gameSession;
+    public BenevolentPlayer(Player p_player, GameSession p_gameSession) {
+        this.d_player = p_player;
+        this.d_gameSession = p_gameSession;
     }
 
-    /**
-     * Issues orders for the benevolent player.
-     * Deploys reinforcements to the weakest country and reinforces the weakest country by moving armies.
-     */
     @Override
     public void issueOrder() {
-        // Deploy to weakest country
-        List<Country> owned = d_player.getD_countries_owned();
-        if (owned.isEmpty()) return;
+        updateWeakestCountry();
 
-        Country weakest = null;
-        int minArmies = Integer.MAX_VALUE;
-        for (Country c : owned) {
-            if (c.getExistingArmies() < minArmies) {
-                minArmies = c.getExistingArmies();
-                weakest = c;
-            }
-        }
+        // Phase 1: Deploy all reinforcements to weakest country
+        deployReinforcements();
 
-        if (weakest != null && d_player.getNumberOfReinforcementsArmies() > 0) {
-            Deploy deployOrder = new Deploy(d_player, d_player.getNumberOfReinforcementsArmies(), weakest.getCountryId());
+        // Phase 2: Reinforce weakest from strongest adjacent ally
+        reinforceWeakest();
+
+        // Mark turn completion
+        d_player.setDoneOrder(true);
+    }
+
+    private void updateWeakestCountry() {
+        d_weakestCountry = d_player.getD_countries_owned().stream()
+                .min(Comparator.comparingInt(Country::getExistingArmies))
+                .orElse(null);
+    }
+
+    private void deployReinforcements() {
+        if (d_weakestCountry == null) return;
+
+        int reinforcements = d_player.getNumberOfReinforcementsArmies();
+        if (reinforcements > 0) {
+            Deploy deployOrder = new Deploy(
+                    d_player,
+                    reinforcements,
+                    d_weakestCountry.getCountryId()
+            );
             deployOrder.setD_gameSession(d_gameSession);
             d_player.setOrders(deployOrder);
             d_player.setNumberOfReinforcementsArmies(0);
         }
+    }
 
-        // Reinforce weakest country by moving armies
-        if (weakest != null) {
-            Country strongestAlly = null;
-            int maxArmiesAlly = -1;
-            for (Country c : owned) {
-                if (c != weakest && c.getExistingArmies() > maxArmiesAlly) {
-                    maxArmiesAlly = c.getExistingArmies();
-                    strongestAlly = c;
-                }
-            }
+    private void reinforceWeakest() {
+        if (d_weakestCountry == null) return;
 
-            if (strongestAlly != null && strongestAlly.getExistingArmies() > 1) {
-                int armiesToMove = strongestAlly.getExistingArmies() - 1;
-                Advance advanceOrder = new Advance(d_player, strongestAlly, weakest, armiesToMove);
+        getStrongestAdjacentAlly().ifPresent(source -> {
+            int movableArmies = source.getExistingArmies() - 1;
+            if (movableArmies > 0) {
+                Advance advanceOrder = new Advance(
+                        d_player,
+                        source,
+                        d_weakestCountry,
+                        movableArmies
+                );
                 advanceOrder.setD_gameSession(d_gameSession);
                 d_player.setOrders(advanceOrder);
             }
-        }
+        });
+    }
+
+    private Optional<Country> getStrongestAdjacentAlly() {
+        return d_weakestCountry.getAdjacentCountries().stream()
+                .filter(neighbor -> neighbor.getD_ownedBy().equals(d_player))
+                .max(Comparator.comparingInt(Country::getExistingArmies));
     }
 }
