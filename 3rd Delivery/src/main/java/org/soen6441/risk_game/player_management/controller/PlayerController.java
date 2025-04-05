@@ -6,10 +6,10 @@ import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.Order;
-import org.soen6441.risk_game.player_management.model.HumanPlayer;
-import org.soen6441.risk_game.player_management.model.Player;
+import org.soen6441.risk_game.player_management.model.*;
 
 import java.io.Serializable;
+import java.util.InputMismatchException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
@@ -85,15 +85,52 @@ public class PlayerController implements Serializable {
                 String l_playerName = l_commandArray[2];
 
                 if (l_action.equals("-add")) {
-                    Player playerToAdd = new Player(l_playerName, 0, new ArrayList<>(), p_gameSession);
-                    playerToAdd.setD_playerStrategy(new HumanPlayer(playerToAdd, p_gameSession));
-                    boolean exists = playerList.stream().anyMatch(player -> player.getName().equalsIgnoreCase(playerToAdd.getName()));
-                    if (exists) {
-                        d_displayToUser.instructionMessage("⚠ Player " + l_playerName + " already exists.");
-                    } else {
-                        playerList.add(playerToAdd);
-                        d_displayToUser.instructionMessage("✔ Player " + l_playerName + " added.");
+                    d_displayToUser.instructionMessage("Select player strategy:\n");
+                    d_displayToUser.instructionMessage("1. Human player");
+                    d_displayToUser.instructionMessage("2. Aggressive player");
+                    d_displayToUser.instructionMessage("3. Benevolent player");
+                    d_displayToUser.instructionMessage("4. Cheater player");
+                    try {
+                        Player playerToAdd = new Player(l_playerName, 0, new ArrayList<>(), p_gameSession);
+                        String choice = "";
+                        do {
+                            d_displayToUser.instructionMessage("Enter: ");
+                            choice = l_scanner.next();
+                            switch (choice) {
+                                case "1": {
+                                    playerToAdd.setD_playerStrategy(new HumanPlayer(playerToAdd, p_gameSession));
+                                    break;
+                                }
+                                case "2": {
+                                    playerToAdd.setD_playerStrategy(new AggressivePlayer(playerToAdd, p_gameSession));
+                                    break;
+                                }
+                                case "3": {
+                                    playerToAdd.setD_playerStrategy(new BenevolentPlayer(playerToAdd, p_gameSession));
+                                    break;
+                                }
+                                case "4": {
+                                    playerToAdd.setD_playerStrategy(new CheaterPlayer(playerToAdd, p_gameSession));
+                                    break;
+                                }
+                                default:
+                                    d_displayToUser.instructionMessage("Invalid option. try again");
+                            }
+                        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3") && !choice.equals("4"));
+                        boolean exists = playerList.stream().anyMatch(player -> player.getName().equalsIgnoreCase(playerToAdd.getName()));
+                        if (exists) {
+                            d_displayToUser.instructionMessage("⚠ Player " + l_playerName + " already exists.");
+                        } else {
+                            playerList.add(playerToAdd);
+                            d_displayToUser.instructionMessage("✔ Player " + l_playerName + " added.");
+                        }
+                    }catch (InputMismatchException e){
+                        d_displayToUser.instructionMessage("Invalid option.");
                     }
+
+
+
+
                 } else if (l_action.equals("-remove")) {
                     boolean removed = playerList.removeIf(player -> player.getName().equalsIgnoreCase(l_playerName));
                     if (removed) {
