@@ -116,11 +116,5 @@ public class GameSession {
         return false;
     }
 
-    /**
-     * Clears all diplomacy pairs. Should be called at the end of each round.
-     */
-    public void clearDiplomacyPairs() {
-        d_diplomacyPairs.clear();
-    }
 
 }

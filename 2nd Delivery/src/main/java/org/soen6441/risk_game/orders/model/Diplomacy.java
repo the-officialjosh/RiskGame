@@ -9,6 +9,7 @@ import org.soen6441.risk_game.monitoring.LogEntryBuffer;
  * Neither player can attack the other after this order is executed.
  *
  * @author Joshua Onyema
+ * @author Safin Mahesania
  * @version 1.0
  */
 public class Diplomacy implements Order {
