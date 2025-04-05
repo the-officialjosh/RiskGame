@@ -125,6 +125,22 @@ public class Player implements Serializable {
     }
 
     /**
+     * Sets the done order status for the player.
+     *
+     * @param p_done True if the player has finished issuing orders, false otherwise.
+     */
+    private boolean d_doneOrder = false;
+
+    /**
+     * Sets the done order status for the player.
+     *
+     * @param p_done True if the player has finished issuing orders, false otherwise.
+     */
+    public void setDoneOrder(boolean p_done) {
+        this.d_doneOrder = p_done;
+    }
+
+    /**
      * Executes the next order in the player's order list.
      */
     public void next_order() {
