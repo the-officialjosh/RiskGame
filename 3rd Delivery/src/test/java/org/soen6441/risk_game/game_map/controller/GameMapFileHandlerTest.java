@@ -18,7 +18,7 @@ import org.soen6441.risk_game.player_management.model.Player;
 /**
  * Test suite for Map functionalities using MapFileHandler.
  */
-public class GameMapControllerTest {
+public class GameMapFileHandlerTest {
 
     private GameMapController gameMapController;
     private GameSession gameSession;
