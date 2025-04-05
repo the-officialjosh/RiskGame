@@ -127,4 +127,22 @@ public class GameMapControllerTest {
         mapFileHandler.loadMap(gameSession, "eurasia.map");
         assertTrue(gameMapController.validateMap(gameSession.getMap()));
     }
+
+    @Test
+    public void testSaveMap_Domination() {
+        mapFileHandler.loadMap(gameSession, "europe.map");
+        gameMapController.saveMap(gameSession.getMap(), "saved_europe.map");
+        // Re-load to confirm it's saved correctly
+        mapFileHandler.loadMap(gameSession, "saved_europe.map");
+        assertTrue(gameMapController.validateMap(gameSession.getMap()));
+    }
+
+    @Test
+    public void testSaveMap_Conquest() {
+        mapFileHandler = new ConquestMapFileAdapter();
+        mapFileHandler.loadMap(gameSession, "eurasia.map");
+        mapFileHandler.saveMap(gameSession.getMap(), "saved_eurasia.map");
+        mapFileHandler.loadMap(gameSession, "saved_eurasia.map");
+        assertTrue(gameMapController.validateMap(gameSession.getMap()));
+    }
 }
