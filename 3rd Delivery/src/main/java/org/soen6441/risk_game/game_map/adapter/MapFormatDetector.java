@@ -1,5 +1,7 @@
 package org.soen6441.risk_game.game_map.adapter;
 
+import org.soen6441.risk_game.monitoring.LogEntryBuffer;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -33,7 +35,7 @@ public class MapFormatDetector {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error reading the map file for format detection: " + e.getMessage());
+            LogEntryBuffer.getInstance().setValue("Error reading the map file for format detection: " + e.getMessage());
         }
         return "unknown";
     }
