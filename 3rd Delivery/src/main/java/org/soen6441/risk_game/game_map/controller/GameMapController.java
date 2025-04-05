@@ -51,20 +51,26 @@ public class GameMapController implements Serializable {
         }
 
         Random random = new Random();
-        for (Country country : countries) {
-            Player assignedPlayer;
-            do {
-                assignedPlayer = players.get(random.nextInt(players.size()));
-            } while (country.getD_ownedBy() != null);
+        for (int i = 0, j = 0; i < countries.size(); i++, j++) {
+            if (j == players.size()) {
+                j = 0;
+            }
 
-            country.setD_ownedBy(assignedPlayer);
-            assignedPlayer.setD_countries_owned(country);
+            int randomIndex = random.nextInt(countries.size());
+            while (countries.get(randomIndex).getD_ownedBy() != null) {
+                randomIndex = random.nextInt(countries.size());
+            }
+
+            Country selectedCountry = countries.get(randomIndex);
+            Player assignedPlayer = players.get(j);
+
+            selectedCountry.setD_ownedBy(assignedPlayer);
+            assignedPlayer.setD_countries_owned(selectedCountry);
         }
 
         System.out.println("=== Territory Assignment Complete ===");
         LogEntryBuffer.getInstance().setValue("Countries assigned to players.");
     }
-
     /**
      * Assigns reinforcements to players.
      *

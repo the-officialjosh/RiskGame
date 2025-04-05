@@ -32,6 +32,7 @@ public class GameMapFileHandlerTest {
         gameMap = new GameMap("my_map", new ArrayList<>());
         gameSession.setMap(gameMap);
 
+
         // Default to Domination format handler for these tests
         mapFileHandler = new DominationMapFileHandler();
     }
