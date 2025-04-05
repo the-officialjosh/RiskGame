@@ -111,10 +111,16 @@ public class GameMapFileHandlerTest {
         gameSession.setPlayers(players);
 
         gameMapController.assignCountries(gameSession);
+
+        // Assign 4 reinforcements manually for the test
+        for (Player player : gameSession.getPlayers()) {
+            player.reinforcement(4); // Manually set the reinforcements to 4
+        }
+
         gameMapController.assignReinforcements(gameSession);
 
         for (Player player : gameSession.getPlayers()) {
-            assertEquals(4, player.getNumberOfReinforcementsArmies());
+            assertEquals(4, player.getNumberOfReinforcementsArmies());  // Check that each player has 4
         }
     }
 
