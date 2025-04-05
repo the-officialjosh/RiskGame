@@ -7,6 +7,7 @@ import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.orders.model.Order;
 import org.soen6441.risk_game.player_management.model.*;
+import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
 
 import java.io.Serializable;
 import java.util.InputMismatchException;
@@ -90,6 +91,7 @@ public class PlayerController implements Serializable {
                     d_displayToUser.instructionMessage("2. Aggressive player");
                     d_displayToUser.instructionMessage("3. Benevolent player");
                     d_displayToUser.instructionMessage("4. Cheater player");
+                    d_displayToUser.instructionMessage("5. Random player");
                     try {
                         Player playerToAdd = new Player(l_playerName, 0, new ArrayList<>(), p_gameSession);
                         String choice = "";
@@ -113,10 +115,14 @@ public class PlayerController implements Serializable {
                                     playerToAdd.setD_playerStrategy(new CheaterPlayer(playerToAdd, p_gameSession));
                                     break;
                                 }
+                                case "5": {
+                                    playerToAdd.setD_playerStrategy(new RandomPlayer(playerToAdd, p_gameSession));
+                                    break;
+                                }
                                 default:
                                     d_displayToUser.instructionMessage("Invalid option. try again");
                             }
-                        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3") && !choice.equals("4"));
+                        } while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3") && !choice.equals("4") && !choice.equals("5"));
                         boolean exists = playerList.stream().anyMatch(player -> player.getName().equalsIgnoreCase(playerToAdd.getName()));
                         if (exists) {
                             d_displayToUser.instructionMessage("⚠ Player " + l_playerName + " already exists.");
