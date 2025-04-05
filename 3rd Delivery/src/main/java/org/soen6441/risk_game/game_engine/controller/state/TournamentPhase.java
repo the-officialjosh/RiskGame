@@ -1,6 +1,10 @@
 package org.soen6441.risk_game.game_engine.controller.state;
 
 import org.soen6441.risk_game.game_engine.model.GameSession;
+import org.soen6441.risk_game.game_map.adapter.ConquestMapFileAdapter;
+import org.soen6441.risk_game.game_map.adapter.DominationMapFileHandler;
+import org.soen6441.risk_game.game_map.adapter.MapFileHandler;
+import org.soen6441.risk_game.game_map.adapter.MapFormatDetector;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
@@ -30,132 +34,118 @@ public class TournamentPhase implements Phase {
      * {@inheritDoc}
      */
     public void handlePhase(GameSession p_gameSession) {
-        // "p_gameSession" parameter will not be used since we will create
-        // new GameSession objects for each game
         tournamentMode();
         System.exit(0);
     }
 
+    /**
+     * Handles the tournament mode gameplay.
+     */
     public void tournamentMode() {
-        ArrayList<String> l_gameMapsFileNames = new ArrayList<String>();
-        ArrayList<String> l_computerPlayerStrategies = new ArrayList<String>();
+        ArrayList<String> l_gameMapsFileNames = new ArrayList<>();
+        ArrayList<String> l_computerPlayerStrategies = new ArrayList<>();
         int l_numberOfGames = 0, l_maxTurnsPerEachGame = 0;
+
         String[] l_tournamentUserDetails = d_tournamentCommand.split(" ");
         for (int i = 0; i < l_tournamentUserDetails.length; i++) {
-            if (l_tournamentUserDetails[i].equals("-M")) {
-                if (i == (l_tournamentUserDetails.length - 1))
-                    break;
-                else
+            switch (l_tournamentUserDetails[i]) {
+                case "-M" -> {
                     i++;
-                while (l_tournamentUserDetails[i].toCharArray()[0] != '-') {
-                    l_gameMapsFileNames.add(l_tournamentUserDetails[i]);
-                    if (i == (l_tournamentUserDetails.length - 1))
-                        break;
-                    else
+                    while (i < l_tournamentUserDetails.length && !l_tournamentUserDetails[i].startsWith("-")) {
+                        l_gameMapsFileNames.add(l_tournamentUserDetails[i]);
                         i++;
+                    }
+                    i--;
                 }
-                i--;
-            }
-            if (l_tournamentUserDetails[i].equals("-P")) {
-                if (i == (l_tournamentUserDetails.length - 1))
-                    break;
-                else
+                case "-P" -> {
                     i++;
-                while (l_tournamentUserDetails[i].toCharArray()[0] != '-') {
-                    l_computerPlayerStrategies.add(l_tournamentUserDetails[i]);
-                    if (i == (l_tournamentUserDetails.length - 1))
-                        break;
-                    else
+                    while (i < l_tournamentUserDetails.length && !l_tournamentUserDetails[i].startsWith("-")) {
+                        l_computerPlayerStrategies.add(l_tournamentUserDetails[i]);
                         i++;
+                    }
+                    i--;
                 }
-                i--;
-            }
-            if (l_tournamentUserDetails[i].equals("-G")) {
-                if (i == (l_tournamentUserDetails.length - 1))
-                    break;
-                else
-                    i++;
-                l_numberOfGames = Integer.valueOf(l_tournamentUserDetails[i]);
-            }
-            if (l_tournamentUserDetails[i].equals("-D")) {
-                if (i == (l_tournamentUserDetails.length - 1))
-                    break;
-                else
-                    i++;
-                l_maxTurnsPerEachGame = Integer.valueOf(l_tournamentUserDetails[i]);
+                case "-G" -> {
+                    if (i + 1 < l_tournamentUserDetails.length) {
+                        l_numberOfGames = Integer.parseInt(l_tournamentUserDetails[++i]);
+                    }
+                }
+                case "-D" -> {
+                    if (i + 1 < l_tournamentUserDetails.length) {
+                        l_maxTurnsPerEachGame = Integer.parseInt(l_tournamentUserDetails[++i]);
+                    }
+                }
             }
         }
 
-        // Define the string that hold the report shown to the user
-        String l_resultReport = String.format("""
+        // Prepare report header
+        StringBuilder l_resultReport = new StringBuilder(String.format("""
                         M: %s
                         P: %s
                         G: %d
                         D: %d
                         
                         |                               |""",
-                l_gameMapsFileNames.toString(), l_computerPlayerStrategies.toString(),
-                l_numberOfGames, l_maxTurnsPerEachGame);
+                l_gameMapsFileNames, l_computerPlayerStrategies, l_numberOfGames, l_maxTurnsPerEachGame));
 
-        for (int i = 0; i < l_numberOfGames; i++)
-            l_resultReport += " Game " + (i + 1) + "                |";
+        for (int i = 0; i < l_numberOfGames; i++) {
+            l_resultReport.append(" Game ").append(i + 1).append("                |");
+        }
 
         for (String l_gameMap : l_gameMapsFileNames) {
-            l_resultReport += "\n| " + String.format("%-" + 21 + "s", l_gameMap) + "         |";
+            l_resultReport.append("\n| ").append(String.format("%-" + 29 + "s", l_gameMap)).append("|");
             for (int i = 0; i < l_numberOfGames; i++) {
-                System.out.print("\n\n............................... ⚔\uFE0F Map " + l_gameMap + " - Game " + (i + 1) + " ...............................\n\n");
+                System.out.print("\n\n............................... ⚔️ Map " + l_gameMap + " - Game " + (i + 1) + " ...............................\n\n");
                 GameSession l_gameSession = new GameSession();
 
-                // Show startup end message
                 d_displayToUser.startupPhaseBeginningMessage();
 
-                // Set the ComputerPlayers with the specified strategies
+                // Set computer players
                 ArrayList<Player> l_players = new ArrayList<>();
                 for (int j = 0; j < l_computerPlayerStrategies.size(); j++) {
-                    // TODO: Ensure GamePlayer are correctly created
-                    ComputerPlayer player = new ComputerPlayer("Player " + (j + 1), 0, new ArrayList<>(), l_gameSession, l_computerPlayerStrategies.get(j));
+                    ComputerPlayer player = new ComputerPlayer(
+                            "Player " + (j + 1),
+                            0,
+                            new ArrayList<>(),
+                            l_gameSession,
+                            l_computerPlayerStrategies.get(j)
+                    );
                     l_players.add(player);
                 }
                 l_gameSession.setPlayers(l_players);
 
-                // Load the map
-                d_gameMapController.loadMap(l_gameSession, l_gameMap);
-                if (!(d_gameMapController.validateMap(l_gameSession.getMap()))) {
-                    System.out.print("⚠\uFE0F Invalid Map specified! This game will be skipped.");
-                    System.out.print("\n\n........................... ⚔\uFE0F Map " + l_gameMap + " - Game " + (i + 1) + " End Game ..........................\n");
-                    // Update the report
-                    l_resultReport += " Skipped (Invalid Map) |";
+                // Detect format and load map properly
+                String mapFormat = MapFormatDetector.detectFormat(l_gameMap);
+                MapFileHandler mapFileHandler = "conquest".equals(mapFormat)
+                        ? new ConquestMapFileAdapter()
+                        : new DominationMapFileHandler();
+                mapFileHandler.loadMap(l_gameSession, l_gameMap);
+
+                // Validate map
+                if (!d_gameMapController.validateMap(l_gameSession.getMap())) {
+                    System.out.print("⚠️ Invalid Map specified! This game will be skipped.\n");
+                    System.out.print("\n\n........................... ⚔️ Map " + l_gameMap + " - Game " + (i + 1) + " End Game ..........................\n");
+                    l_resultReport.append(" Skipped (Invalid Map) |");
                     continue;
                 }
 
-                // Assign countries step
+                // Assign countries
                 d_gameMapController.assignCountries(l_gameSession);
 
-                // Show startup end message
                 d_displayToUser.startupPhaseEndMessage();
 
-                // Game loop
-                // TODO: Update end condition of a tournament game
-                // TODO: Take into consideration the maximum of turns
-                /*while (true) {
-                    // Issue Order Phase
-                    Phase phase = new IssueOrderPhase();
-                    phase.handlePhase(l_gameSession);
+                // Note: Here you should run the game logic, but it is TODO in your original code.
 
-                    // Execute order phase
-                    phase = new ExecuteOrderPhase();
-                    phase.handlePhase(l_gameSession);
-                }*/
+                // Report (Dummy result for now)
+                l_resultReport.append(" ")
+                        .append(String.format("%-" + 21 + "s", ((ComputerPlayer) l_gameSession.getPlayers().getFirst()).getD_playerBehavior()))
+                        .append(" |");
 
-                // Update the report
-                l_resultReport += " " + String.format("%-" + 21 + "s", ((ComputerPlayer) l_gameSession.getPlayers().getFirst()).getD_playerBehavior()) + " |";
-
-                System.out.print("\n\n........................... ⚔\uFE0F Map " + l_gameMap + " - Game " + (i + 1) + " End Game ..........................\n");
+                System.out.print("\n\n........................... ⚔️ Map " + l_gameMap + " - Game " + (i + 1) + " End Game ..........................\n");
             }
         }
 
-        // show tournament result report
-        System.out.print("\n⚔\uFE0F Tournament ended! Here is the result report:\n\n" + l_resultReport + "\n");
+        System.out.print("\n⚔️ Tournament ended! Here is the result report:\n\n" + l_resultReport + "\n");
 
         LogEntryBuffer.getInstance().setValue("\nTournament result report:\n\n" + l_resultReport);
     }

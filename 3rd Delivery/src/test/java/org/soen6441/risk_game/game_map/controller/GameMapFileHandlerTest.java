@@ -113,14 +113,11 @@ public class GameMapFileHandlerTest {
         gameMapController.assignCountries(gameSession);
         gameMapController.assignReinforcements(gameSession);
 
-        assertEquals(3, gameSession.getPlayers().get(0).getNumberOfReinforcementsArmies());
-        assertEquals(3, gameSession.getPlayers().get(1).getNumberOfReinforcementsArmies());
-        assertEquals(3, gameSession.getPlayers().get(2).getNumberOfReinforcementsArmies());
-        assertEquals(3, gameSession.getPlayers().get(3).getNumberOfReinforcementsArmies());
-        assertEquals(3, gameSession.getPlayers().get(4).getNumberOfReinforcementsArmies());
+        for (Player player : gameSession.getPlayers()) {
+            assertEquals(3, player.getNumberOfReinforcementsArmies());
+        }
     }
 
-    // ✅ NEW TEST: Conquest map loading and validation (uses eurasia.map)
     @Test
     public void testConnectedMapIsValid_Conquest() {
         mapFileHandler = new ConquestMapFileAdapter(); // Switch to Conquest format
@@ -131,8 +128,7 @@ public class GameMapFileHandlerTest {
     @Test
     public void testSaveMap_Domination() {
         mapFileHandler.loadMap(gameSession, "europe.map");
-        gameMapController.saveMap(gameSession.getMap(), "saved_europe.map");
-        // Re-load to confirm it's saved correctly
+        mapFileHandler.saveMap(gameSession.getMap(), "saved_europe.map");
         mapFileHandler.loadMap(gameSession, "saved_europe.map");
         assertTrue(gameMapController.validateMap(gameSession.getMap()));
     }
