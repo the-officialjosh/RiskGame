@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * This strategy does not consider long-term planning or optimization and is mainly used to simulate non-deterministic
  * behavior for AI-controlled players.
  *
- * @author
+ * @author Kawshik
  */
 public class RandomPlayer implements PlayerStrategy, Serializable {
 
