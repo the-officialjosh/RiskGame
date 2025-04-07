@@ -1,0 +1,288 @@
+[Continents]
+Arabia=6
+Austria-Hungary=8
+Balkans=6
+Belgian & Portuguese Africa=3
+British India=22
+British West Africa=3
+China=25
+East Africa=7
+East Indies=8
+Egypt & Cyprus=4
+Ethiopian Empire=3
+France=11
+French Africa=8
+French IndoChina=5
+German African Territories=5
+German Empire=11
+Great Britain & Ireland=7
+Italy=8
+Japan=6
+Low Countries=2
+Mongolia & Tuva=6
+Ottoman Empire=19
+Persia & Afghanistan=4
+Philippines=3
+Russian Empire=28
+Russian in Asia=16
+Scandinavia=4
+Siam=4
+Spain & Portugal=9
+Switzerland=1
+Tibet=3
+[Territories]
+Al Hasa,0,0,Arabia,Nejd,Trucial Coast,Basrah
+Asir,0,0,Arabia,Nejd,Yemen,Hejaz,Empty Quarter
+Empty Quarter,0,0,Arabia,Nejd,Asir,Yemen,Trucial Coast,Bombay Presidency-Aden,Muscat & Oman
+Muscat & Oman,0,0,Arabia,Trucial Coast,Empty Quarter,Bombay Presidency-Aden,Baluchistan
+Nejd,0,0,Arabia,Asir,Al Hasa,Hejaz,Empty Quarter,Trucial Coast,Basrah,Damascus,Mosul & Dayr Al-Zur,Halab,Baghdad
+Trucial Coast,0,0,Arabia,Nejd,Al Hasa,Muscat & Oman,Empty Quarter,Iran-British Sphere
+Austria,0,0,Austria-Hungary,Slovakia & Ruthenia,Bohemia & Moravia,Switzerland,Hungary,Baden Wurttemberg & Hesse,Lombardy Piedmont & Venetia,Croatia & Slovenia,Bavaria
+Bohemia & Moravia,0,0,Austria-Hungary,Austria,Slovakia & Ruthenia,Saxony,Galicia,Prussia-Silesia & Posen,Bavaria
+Bosnia & Herzegovina,0,0,Austria-Hungary,Croatia & Slovenia,Serbia & Montenegro
+Croatia & Slovenia,0,0,Austria-Hungary,Austria,Bosnia & Herzegovina,Hungary,Lombardy Piedmont & Venetia,Serbia & Montenegro
+Galicia,0,0,Austria-Hungary,Slovakia & Ruthenia,Romania,Hungary,Poland,Volhynia Kiev & Podolia,Transylvania & Banat,Bohemia & Moravia,Prussia-Silesia & Posen
+Hungary,0,0,Austria-Hungary,Austria,Croatia & Slovenia,Galicia,Slovakia & Ruthenia,Transylvania & Banat,Serbia & Montenegro
+Slovakia & Ruthenia,0,0,Austria-Hungary,Austria,Bohemia & Moravia,Galicia,Hungary
+Transylvania & Banat,0,0,Austria-Hungary,Galicia,Hungary,Romania,Serbia & Montenegro
+Albania,0,0,Balkans,Greece,Serbia & Montenegro,Naples
+Bulgaria,0,0,Balkans,Romania,Edirne & Istanbul,Greece,Serbia & Montenegro
+Crete,0,0,Balkans,Greece,Aydin,Sicily,Cyrenaica,Cyprus
+Greece,0,0,Balkans,Crete,Albania,Bulgaria,Serbia & Montenegro,Aydin
+Romania,0,0,Balkans,Galicia,Transylvania & Banat,Bulgaria,Volhynia Kiev & Podolia,Bessarabia,Serbia & Montenegro
+Serbia & Montenegro,0,0,Balkans,Romania,Bosnia & Herzegovina,Croatia & Slovenia,Hungary,Transylvania & Banat,Albania,Bulgaria,Greece
+Angola,0,0,Belgian & Portuguese Africa,Belgian Congo,Katanga,Middle Congo,Gabon
+Belgian Congo,0,0,Belgian & Portuguese Africa,Angola,Katanga,Middle Congo,German East Africa,Oubangui-Shari,Ruanda-Urundi,Uganda,Sudan
+Katanga,0,0,Belgian & Portuguese Africa,Angola,Belgian Congo,German East Africa
+Assam,0,0,British India,Upper Burma,Bengal Presidency,Bhutan & Sikkim,Lower Burma,Wei,Kham
+Baluchistan,0,0,British India,North-West Frontier Provinces,Bombay Presidency,Punjab,Afghanistan,Muscat & Oman,Iran-British Sphere
+Bengal Presidency,0,0,British India,Assam,Bihar & Orissa,Lower Burma,Bhutan & Sikkim,Nepal
+Bhutan & Sikkim,0,0,British India,Assam,Bengal Presidency,Nepal,Wei
+Bihar & Orissa,0,0,British India,Bengal Presidency,Madras Presidency,Central Provinces,United Provinces of Agra & Oudh,Nepal
+Bombay Presidency,0,0,British India,Baluchistan,Madras Presidency,Rajputana Agency,Hyderabad,Punjab,Mysore,Central India Agency,Bombay Presidency-Aden,Central Provinces
+Bombay Presidency-Aden,0,0,British India,Empty Quarter,Muscat & Oman,Yemen,French Somaliland,Bombay Presidency
+Central India Agency,0,0,British India,Bombay Presidency,Central Provinces,Rajputana Agency,United Provinces of Agra & Oudh
+Central Provinces,0,0,British India,Bihar & Orissa,Madras Presidency,Hyderabad,Central India Agency,United Provinces of Agra & Oudh,Bombay Presidency
+Ceylon,0,0,British India,Madras Presidency,Lower Burma,Sumatra
+Hyderabad,0,0,British India,Bombay Presidency,Central Provinces,Madras Presidency,Mysore
+Kashmir,0,0,British India,North-West Frontier Provinces,Chinese Turkestan,Punjab,Ngari,Afghanistan
+Lower Burma,0,0,British India,Assam,Bengal Presidency,Upper Burma,Ceylon,Northern Siam,Central Siam,Southern Siam
+Madras Presidency,0,0,British India,Bihar & Orissa,Bombay Presidency,Central Provinces,Hyderabad,Mysore,Travancore & Cochin,Ceylon
+Mysore,0,0,British India,Bombay Presidency,Hyderabad,Madras Presidency
+Nepal,0,0,British India,Bengal Presidency,Bhutan & Sikkim,Bihar & Orissa,United Provinces of Agra & Oudh,Ngari,Wei
+North-West Frontier Provinces,0,0,British India,Baluchistan,Kashmir,Punjab,Afghanistan
+Punjab,0,0,British India,Baluchistan,Bombay Presidency,Kashmir,North-West Frontier Provinces,Rajputana Agency,United Provinces of Agra & Oudh,Ngari
+Rajputana Agency,0,0,British India,Bombay Presidency,Central India Agency,Punjab,United Provinces of Agra & Oudh
+Travancore & Cochin,0,0,British India,Madras Presidency,Kenya
+United Provinces of Agra & Oudh,0,0,British India,Bihar & Orissa,Central Provinces,Nepal,Punjab,Rajputana Agency,Central India Agency,Ngari
+Upper Burma,0,0,British India,Assam,Lower Burma,Northern Siam,Laos,Szecgwab,Yunnan,Kham
+Gold Coast,0,0,British West Africa,Upper Senegal & Niger,Togoland,Ivory Coast & French Guinea
+Nigeria,0,0,British West Africa,Kamerun,Dahomey,Oubangui-Shari,Northern Nigeria,Niger
+Northern Nigeria,0,0,British West Africa,Nigeria,Kamerun,Dahomey
+Chekiang,0,0,China,Kiang,Nganwhei,Fukien,Kiangsi
+Chili,0,0,China,Shengking,Shantung,Inner Mongolia,Honan,Shansi
+Chinese Turkestan,0,0,China,Kashmir,Kokonor,Kansu,Turkmenistan,Ngari,Akmolinsk,Dzungaria,Afghanistan
+Dzungaria,0,0,China,Chinese Turkestan,Zasagt Khanate,Kansu,Akmolinsk,Omsk,Khovd
+Fukien,0,0,China,Chekiang,Kiangsi,Kwangtung,Takasago Koku
+Hainan,0,0,China,Kwangtung,Takasago Koku,Luzon,Annam
+Holungkiang,0,0,China,Transbaikalia,Inner Mongolia,Amur,Kirin,Setsen Khanate
+Honan,0,0,China,Chili,Hupeh,Shantung,Kiang,Nganwhei,Shensi,Shansi
+Hunan & Kweichow,0,0,China,Hupeh,Szecgwab,Yunnan,Kwangsi,Kiangsi,Kwangtung
+Hupeh,0,0,China,Honan,Hunan & Kweichow,Szecgwab,Nganwhei,Kiangsi,Shensi
+Inner Mongolia,0,0,China,Chili,Holungkiang,Tusheet Khanate,Shengking,Sain Noyon Khanate,Kansu,Kirin,Shensi,Shansi,Setsen Khanate
+Kansu,0,0,China,Chinese Turkestan,Dzungaria,Inner Mongolia,Szecgwab,Kokonor,Shensi,Zasagt Khanate,Sain Noyon Khanate
+Kiang,0,0,China,Chekiang,Honan,Shantung,Nganwhei
+Kiangsi,0,0,China,Chekiang,Fukien,Hunan & Kweichow,Hupeh,Nganwhei,Kwangtung
+Kirin,0,0,China,Holungkiang,Inner Mongolia,Shengking,Korea,Amur,Maritime Province-Southern
+Kokonor,0,0,China,Chinese Turkestan,Kansu,Szecgwab,Ngari,Wei,Kham
+Kwangsi,0,0,China,Hunan & Kweichow,Yunnan,Kwangtung,Tonkin
+Kwangtung,0,0,China,Fukien,Kiangsi,Kwangsi,Hainan,Hunan & Kweichow,Tonkin
+Nganwhei,0,0,China,Chekiang,Honan,Hupeh,Kiang,Kiangsi
+Shansi,0,0,China,Chili,Honan,Inner Mongolia,Shensi
+Shantung,0,0,China,Chili,Honan,Kiang,Korea
+Shengking,0,0,China,Chili,Inner Mongolia,Kirin,Korea
+Shensi,0,0,China,Honan,Hupeh,Inner Mongolia,Kansu,Shansi,Szecgwab
+Szecgwab,0,0,China,Upper Burma,Hunan & Kweichow,Hupeh,Kansu,Kokonor,Shensi,Yunnan,Kham
+Yunnan,0,0,China,Upper Burma,Hunan & Kweichow,Kwangsi,Szecgwab,Laos,Tonkin
+British Somaliland,0,0,East Africa,Italian Somaliland,French Somaliland,Gallaland & Somaliland
+Eritrea,0,0,East Africa,Abyssinia,Aussa,Sudan,French Somaliland,Yemen
+French Somaliland,0,0,East Africa,British Somaliland,Eritrea,Aussa,Gallaland & Somaliland,Bombay Presidency-Aden
+Italian Somaliland,0,0,East Africa,British Somaliland,Jubaland,Gallaland & Somaliland
+Jubaland,0,0,East Africa,Italian Somaliland,Gallaland & Somaliland,Kenya
+Kenya,0,0,East Africa,Jubaland,Abyssinia,German East Africa,Gallaland & Somaliland,Uganda,Sudan,Travancore & Cochin
+Uganda,0,0,East Africa,Belgian Congo,Kenya,Sudan,German East Africa,Ruanda-Urundi
+British Borneo,0,0,East Indies,Dutch Borneo,Malaya,Cochin China,Mindanao,Visayas
+Celebes,0,0,East Indies,Java,Dutch Borneo,Lesser Sunda Islands,Mindanao
+Dutch Borneo,0,0,East Indies,Java,Celebes,Sumatra,British Borneo
+Java,0,0,East Indies,Sumatra,Celebes,Dutch Borneo,Lesser Sunda Islands,German East Africa
+Lesser Sunda Islands,0,0,East Indies,Java,Celebes,Netherlands New Guinea
+Malaya,0,0,East Indies,British Borneo,Sumatra,Southern Siam,Cochin China
+Netherlands New Guinea,0,0,East Indies,Lesser Sunda Islands,Mindanao
+Sumatra,0,0,East Indies,Java,Malaya,Dutch Borneo,Ceylon
+Cyprus,0,0,Egypt & Cyprus,Egypt,Crete,Beirut,Adana
+Darfur Sultanate,0,0,Egypt & Cyprus,Sudan,Oubangui-Shari
+Egypt,0,0,Egypt & Cyprus,Cyprus,Hejaz,Sudan,Damascus,Cyrenaica,Fezzan,Oubangui-Shari
+Sudan,0,0,Egypt & Cyprus,Egypt,Darfur Sultanate,Eritrea,Uganda,Kenya,Abyssinia,Belgian Congo,Oubangui-Shari
+Abyssinia,0,0,Ethiopian Empire,Eritrea,Kenya,Sudan,Aussa,Gallaland & Somaliland
+Aussa,0,0,Ethiopian Empire,Eritrea,French Somaliland,Abyssinia,Gallaland & Somaliland
+Gallaland & Somaliland,0,0,Ethiopian Empire,British Somaliland,French Somaliland,Italian Somaliland,Jubaland,Kenya,Abyssinia,Aussa
+Algerian Southern Territories,0,0,France,Algiers,Mauritania,Upper Senegal & Niger,Fezzan,Spanish Sahara,Morocco,Tunisia,Niger
+Algiers,0,0,France,Algerian Southern Territories,Spanish Morocco,Morocco,Tunisia,Balearic Islands
+Central France,0,0,France,Eastern France,Northern France,Western France,Southern France,SouthWestern France
+Corsica,0,0,France,Southern France,Sardinia,Lombardy Piedmont & Venetia,Balearic Islands
+Eastern France,0,0,France,Central France,Northern France,Southern France,Switzerland,Alsace-Lorraine,Belgium & Luxembourg
+Morocco,0,0,France,Algerian Southern Territories,Algiers,Spanish Morocco,Spanish Sahara
+Northern France,0,0,France,Central France,Eastern France,Western France,Belgium & Luxembourg,Ireland,South East England,South West England
+SouthWestern France,0,0,France,Central France,Western France,Southern France,Catalonia & Valencia,Aragon & Navarre
+Southern France,0,0,France,Central France,Eastern France,SouthWestern France,Corsica,Switzerland,Catalonia & Valencia,Lombardy Piedmont & Venetia
+Tunisia,0,0,France,Algiers,Fezzan,Tripoltania,Algerian Southern Territories,Sicily,Sardinia
+Western France,0,0,France,Central France,Northern France,SouthWestern France
+Dahomey,0,0,French Africa,Nigeria,Northern Nigeria,Upper Senegal & Niger,Togoland,Niger
+Gabon,0,0,French Africa,Angola,Neukamerun,Middle Congo
+Ivory Coast & French Guinea,0,0,French Africa,Gold Coast,Upper Senegal & Niger
+Mauritania,0,0,French Africa,Algerian Southern Territories,Upper Senegal & Niger,Spanish Sahara
+Middle Congo,0,0,French Africa,Oubangui-Shari,Angola,Belgian Congo,Gabon,Neukamerun
+Niger,0,0,French Africa,Nigeria,Algerian Southern Territories,Dahomey,Upper Senegal & Niger,Fezzan,Oubangui-Shari
+Oubangui-Shari,0,0,French Africa,Middle Congo,Belgian Congo,Nigeria,Egypt,Sudan,Niger,Neukamerun,Darfur Sultanate,Kamerun,Fezzan
+Upper Senegal & Niger,0,0,French Africa,Gold Coast,Algerian Southern Territories,Dahomey,Ivory Coast & French Guinea,Mauritania,Niger,Togoland
+Annam,0,0,French IndoChina,Laos,Cochin China,Cambodia,Tonkin,Hainan
+Cambodia,0,0,French IndoChina,Annam,Isaan,Laos,Central Siam,Cochin China
+Cochin China,0,0,French IndoChina,Annam,Cambodia,Malaya,British Borneo
+Laos,0,0,French IndoChina,Upper Burma,Yunnan,Annam,Cambodia,Isaan,Northern Siam,Tonkin
+Tonkin,0,0,French IndoChina,Kwangsi,Yunnan,Annam,Laos,Kwangtung
+German East Africa,0,0,German African Territories,Belgian Congo,Katanga,Kenya,Uganda,Ruanda-Urundi,Java
+Kamerun,0,0,German African Territories,Nigeria,Northern Nigeria,Oubangui-Shari,Neukamerun
+Neukamerun,0,0,German African Territories,Gabon,Middle Congo,Oubangui-Shari,Kamerun
+Ruanda-Urundi,0,0,German African Territories,Belgian Congo,Uganda,German East Africa
+Togoland,0,0,German African Territories,Gold Coast,Dahomey,Upper Senegal & Niger
+Alsace-Lorraine,0,0,German Empire,Eastern France,Switzerland,Baden Wurttemberg & Hesse,Belgium & Luxembourg,Prussia-Westphalia & Rhineland
+Baden Wurttemberg & Hesse,0,0,German Empire,Austria,Alsace-Lorraine,Prussia-Hanover & Saxony,Switzerland,Prussia-Westphalia & Rhineland,Bavaria
+Bavaria,0,0,German Empire,Austria,Bohemia & Moravia,Baden Wurttemberg & Hesse,Prussia-Hanover & Saxony,Saxony
+Mecklenburg,0,0,German Empire,Prussia-Hanover & Saxony,Prussia-Pomerania,Prussia-Brandenburg,Denmark
+Prussia-Brandenburg,0,0,German Empire,Mecklenburg,Prussia-East&West,Prussia-Hanover & Saxony,Prussia-Pomerania,Saxony,Prussia-Silesia & Posen
+Prussia-East&West,0,0,German Empire,Prussia-Brandenburg,Prussia-Pomerania,Poland,Prussia-Silesia & Posen,Vilna & Kovno
+Prussia-Hanover & Saxony,0,0,German Empire,Baden Wurttemberg & Hesse,Bavaria,Mecklenburg,Prussia-Brandenburg,Saxony,Netherlands,Prussia-Westphalia & Rhineland,Denmark
+Prussia-Pomerania,0,0,German Empire,Mecklenburg,Prussia-Brandenburg,Prussia-East&West,Sweden
+Prussia-Silesia & Posen,0,0,German Empire,Saxony,Galicia,Bohemia & Moravia,Prussia-Brandenburg,Prussia-East&West,Poland
+Prussia-Westphalia & Rhineland,0,0,German Empire,Alsace-Lorraine,Baden Wurttemberg & Hesse,Prussia-Hanover & Saxony,Netherlands,Belgium & Luxembourg
+Saxony,0,0,German Empire,Bavaria,Prussia-Silesia & Posen,Bohemia & Moravia,Prussia-Brandenburg,Prussia-Hanover & Saxony
+Ireland,0,0,Great Britain & Ireland,Scotland,Wales,Iceland,Galicia & Asturias,Northern France
+Midlands,0,0,Great Britain & Ireland,South East England,Northern England,Wales,South West England
+Northern England,0,0,Great Britain & Ireland,Midlands,Scotland,Denmark,Wales
+Scotland,0,0,Great Britain & Ireland,Northern England,Ireland,Norway
+South East England,0,0,Great Britain & Ireland,Midlands,South West England,Northern France,Netherlands
+South West England,0,0,Great Britain & Ireland,Midlands,South East England,Wales,Northern France
+Wales,0,0,Great Britain & Ireland,Midlands,South West England,Ireland,Northern England
+Cyrenaica,0,0,Italy,Fezzan,Tripoltania,Egypt,Crete
+Fezzan,0,0,Italy,Tunisia,Niger,Oubangui-Shari,Cyrenaica,Tripoltania,Egypt,Algerian Southern Territories
+Lazio Tuscany & Emilia,0,0,Italy,Sardinia,Naples,Lombardy Piedmont & Venetia
+Lombardy Piedmont & Venetia,0,0,Italy,Austria,Croatia & Slovenia,Southern France,Lazio Tuscany & Emilia,Switzerland,Corsica
+Naples,0,0,Italy,Lazio Tuscany & Emilia,Sicily,Albania
+Sardinia,0,0,Italy,Sicily,Corsica,Balearic Islands,Lazio Tuscany & Emilia,Tunisia
+Sicily,0,0,Italy,Naples,Sardinia,Tripoltania,Crete,Tunisia
+Tripoltania,0,0,Italy,Tunisia,Cyrenaica,Fezzan,Sicily
+Hokkaido,0,0,Japan,Honshu,Karafuto,Maritime Province-Northern
+Honshu,0,0,Japan,Hokkaido,Kyushu & Shikoku,Korea
+Karafuto,0,0,Japan,Hokkaido,Maritime Province-Southern,Maritime Province-Northern
+Korea,0,0,Japan,Honshu,Takasago Koku,Kirin,Shengking,Shantung,Maritime Province-Southern
+Kyushu & Shikoku,0,0,Japan,Honshu,Takasago Koku
+Takasago Koku,0,0,Japan,Korea,Kyushu & Shikoku,Fukien,Hainan,Luzon
+Belgium & Luxembourg,0,0,Low Countries,Eastern France,Northern France,Alsace-Lorraine,Prussia-Westphalia & Rhineland,Netherlands
+Netherlands,0,0,Low Countries,Prussia-Hanover & Saxony,Prussia-Westphalia & Rhineland,Belgium & Luxembourg,South East England
+Khovd,0,0,Mongolia & Tuva,Dzungaria,Zasagt Khanate,Tusheet Khanate,Irkutsk,Sain Noyon Khanate,Omsk,Urjanchai
+Sain Noyon Khanate,0,0,Mongolia & Tuva,Inner Mongolia,Khovd,Zasagt Khanate,Tusheet Khanate,Kansu
+Setsen Khanate,0,0,Mongolia & Tuva,Holungkiang,Inner Mongolia,Tusheet Khanate,Transbaikalia
+Tusheet Khanate,0,0,Mongolia & Tuva,Inner Mongolia,Khovd,Sain Noyon Khanate,Setsen Khanate,Transbaikalia,Irkutsk
+Urjanchai,0,0,Mongolia & Tuva,Khovd,Yeniseisk,Irkutsk,Omsk
+Zasagt Khanate,0,0,Mongolia & Tuva,Dzungaria,Khovd,Sain Noyon Khanate,Kansu
+Adana,0,0,Ottoman Empire,Ankara,Konya,Sivas & Marmuret el Aziz,Halab,Cyprus
+Ankara,0,0,Ottoman Empire,Adana,Bursa,Konya,Kastamonu,Sivas & Marmuret el Aziz
+Aydin,0,0,Ottoman Empire,Bursa,Konya,Greece,Crete
+Baghdad,0,0,Ottoman Empire,Nejd,Iran-Neutral Sphere,Basrah,Mosul & Dayr Al-Zur
+Basrah,0,0,Ottoman Empire,Al Hasa,Nejd,Baghdad,Iran-Neutral Sphere
+Beirut,0,0,Ottoman Empire,Damascus,Halab,Cyprus
+Bursa,0,0,Ottoman Empire,Ankara,Aydin,Konya,Kastamonu,Edirne & Istanbul
+Damascus,0,0,Ottoman Empire,Nejd,Egypt,Beirut,Hejaz,Halab
+Diyarbakir & Van,0,0,Ottoman Empire,Iran-Russian Sphere,Erzerum,Sivas & Marmuret el Aziz,Mosul & Dayr Al-Zur,Halab
+Edirne & Istanbul,0,0,Ottoman Empire,Bulgaria,Bursa,Kastamonu,Taurida Kherson & Ekaterinoslav
+Erzerum,0,0,Ottoman Empire,Diyarbakir & Van,Trabzon,Sivas & Marmuret el Aziz,Erevan & Kars,Iran-Russian Sphere
+Halab,0,0,Ottoman Empire,Nejd,Adana,Beirut,Damascus,Diyarbakir & Van,Sivas & Marmuret el Aziz,Mosul & Dayr Al-Zur
+Hejaz,0,0,Ottoman Empire,Yemen,Asir,Nejd,Egypt,Damascus
+Kastamonu,0,0,Ottoman Empire,Ankara,Bursa,Edirne & Istanbul,Trabzon,Sivas & Marmuret el Aziz
+Konya,0,0,Ottoman Empire,Adana,Ankara,Aydin,Bursa
+Mosul & Dayr Al-Zur,0,0,Ottoman Empire,Nejd,Baghdad,Diyarbakir & Van,Halab,Iran-Russian Sphere,Iran-Neutral Sphere
+Sivas & Marmuret el Aziz,0,0,Ottoman Empire,Adana,Ankara,Diyarbakir & Van,Erzerum,Halab,Kastamonu,Trabzon
+Trabzon,0,0,Ottoman Empire,Erzerum,Kastamonu,Sivas & Marmuret el Aziz,Tiflis & Kutais,Erevan & Kars,Taurida Kherson & Ekaterinoslav
+Yemen,0,0,Ottoman Empire,Hejaz,Asir,Empty Quarter,Bombay Presidency-Aden,Eritrea
+Afghanistan,0,0,Persia & Afghanistan,Baluchistan,Kashmir,North-West Frontier Provinces,Chinese Turkestan,Transcaspia,Bukhara Emirate,Iran-Neutral Sphere,Turkmenistan,Iran-British Sphere,Iran-Russian Sphere
+Iran-British Sphere,0,0,Persia & Afghanistan,Iran-Neutral Sphere,Afghanistan,Baluchistan,Trucial Coast
+Iran-Neutral Sphere,0,0,Persia & Afghanistan,Iran-British Sphere,Baghdad,Basrah,Mosul & Dayr Al-Zur,Afghanistan,Iran-Russian Sphere
+Iran-Russian Sphere,0,0,Persia & Afghanistan,Diyarbakir & Van,Mosul & Dayr Al-Zur,Iran-Neutral Sphere,Erevan & Kars,Baku & Elizavetpol,Transcaspia,Afghanistan,Erzerum
+Luzon,0,0,Philippines,Visayas,Hainan,Takasago Koku
+Mindanao,0,0,Philippines,Visayas,British Borneo,Celebes,Netherlands New Guinea
+Visayas,0,0,Philippines,Luzon,Mindanao,British Borneo
+Arkhangelsk,0,0,Russian Empire,Vologda,Norway,Novgorod Tver & Olonets,Yaroslav Vladimir & Kostroma,Finland Grand Duchy,Tobolsk
+Baku & Elizavetpol,0,0,Russian Empire,Iran-Russian Sphere,Terek & Dagestan,Erevan & Kars,Tiflis & Kutais
+Bessarabia,0,0,Russian Empire,Romania,Volhynia Kiev & Podolia,Taurida Kherson & Ekaterinoslav
+Chernigov Kharkov & Poltava,0,0,Russian Empire,Don Cossak Host,Volhynia Kiev & Podolia,Kursk Oryol & Voronezh,Taurida Kherson & Ekaterinoslav,Minsk Grodno & Mogilev
+Don Cossak Host,0,0,Russian Empire,Chernigov Kharkov & Poltava,Ural Cossaks & Astrakhan,Kursk Oryol & Voronezh,Ekaterinodar & Stavropol,Samara Penzov & Saratov,Tula Ryazan & Tambov,Taurida Kherson & Ekaterinoslav
+Ekaterinodar & Stavropol,0,0,Russian Empire,Don Cossak Host,Terek & Dagestan,Ural Cossaks & Astrakhan,Tiflis & Kutais,Taurida Kherson & Ekaterinoslav
+Erevan & Kars,0,0,Russian Empire,Erzerum,Iran-Russian Sphere,Baku & Elizavetpol,Tiflis & Kutais,Trabzon
+Finland Grand Duchy,0,0,Russian Empire,Arkhangelsk,Sweden,Norway,Novgorod Tver & Olonets,St Petersburg Pskov & Vitebsk,Reval Livland & Kurland
+Kazan Smbirsk & Nizhny Novgorod,0,0,Russian Empire,Yaroslav Vladimir & Kostroma,Perm & Vyatka,Samara Penzov & Saratov,Orenburg & Ufa
+Kursk Oryol & Voronezh,0,0,Russian Empire,Chernigov Kharkov & Poltava,Don Cossak Host,Tula Ryazan & Tambov,Moscow Smolensk & Kaluga,Minsk Grodno & Mogilev
+Minsk Grodno & Mogilev,0,0,Russian Empire,Reval Livland & Kurland,Poland,Vilna & Kovno,Moscow Smolensk & Kaluga,Volhynia Kiev & Podolia,St Petersburg Pskov & Vitebsk,Kursk Oryol & Voronezh,Chernigov Kharkov & Poltava
+Moscow Smolensk & Kaluga,0,0,Russian Empire,Kursk Oryol & Voronezh,Minsk Grodno & Mogilev,Tula Ryazan & Tambov,Novgorod Tver & Olonets,Yaroslav Vladimir & Kostroma,St Petersburg Pskov & Vitebsk
+Novgorod Tver & Olonets,0,0,Russian Empire,Arkhangelsk,Finland Grand Duchy,Moscow Smolensk & Kaluga,Yaroslav Vladimir & Kostroma,St Petersburg Pskov & Vitebsk
+Orenburg & Ufa,0,0,Russian Empire,Kazan Smbirsk & Nizhny Novgorod,Perm & Vyatka,Turgai,Tobolsk,Uralsk,Samara Penzov & Saratov
+Perm & Vyatka,0,0,Russian Empire,Kazan Smbirsk & Nizhny Novgorod,Orenburg & Ufa,Vologda,Yaroslav Vladimir & Kostroma,Tobolsk
+Poland,0,0,Russian Empire,Galicia,Prussia-East&West,Prussia-Silesia & Posen,Minsk Grodno & Mogilev,Vilna & Kovno,Volhynia Kiev & Podolia
+Reval Livland & Kurland,0,0,Russian Empire,Minsk Grodno & Mogilev,Vilna & Kovno,St Petersburg Pskov & Vitebsk,Finland Grand Duchy,Sweden
+Samara Penzov & Saratov,0,0,Russian Empire,Don Cossak Host,Kazan Smbirsk & Nizhny Novgorod,Orenburg & Ufa,Tula Ryazan & Tambov,Yaroslav Vladimir & Kostroma,Ural Cossaks & Astrakhan,Uralsk
+St Petersburg Pskov & Vitebsk,0,0,Russian Empire,Finland Grand Duchy,Minsk Grodno & Mogilev,Moscow Smolensk & Kaluga,Novgorod Tver & Olonets,Reval Livland & Kurland
+Taurida Kherson & Ekaterinoslav,0,0,Russian Empire,Bessarabia,Chernigov Kharkov & Poltava,Volhynia Kiev & Podolia,Ekaterinodar & Stavropol,Don Cossak Host,Trabzon,Edirne & Istanbul
+Terek & Dagestan,0,0,Russian Empire,Baku & Elizavetpol,Ekaterinodar & Stavropol,Ural Cossaks & Astrakhan,Tiflis & Kutais
+Tiflis & Kutais,0,0,Russian Empire,Trabzon,Baku & Elizavetpol,Ekaterinodar & Stavropol,Erevan & Kars,Terek & Dagestan
+Tula Ryazan & Tambov,0,0,Russian Empire,Kursk Oryol & Voronezh,Moscow Smolensk & Kaluga,Samara Penzov & Saratov,Yaroslav Vladimir & Kostroma,Don Cossak Host
+Ural Cossaks & Astrakhan,0,0,Russian Empire,Don Cossak Host,Ekaterinodar & Stavropol,Samara Penzov & Saratov,Terek & Dagestan,Uralsk
+Vilna & Kovno,0,0,Russian Empire,Prussia-East&West,Minsk Grodno & Mogilev,Poland,Reval Livland & Kurland
+Volhynia Kiev & Podolia,0,0,Russian Empire,Galicia,Romania,Bessarabia,Chernigov Kharkov & Poltava,Minsk Grodno & Mogilev,Poland,Taurida Kherson & Ekaterinoslav
+Vologda,0,0,Russian Empire,Arkhangelsk,Perm & Vyatka,Yaroslav Vladimir & Kostroma,Tobolsk
+Yaroslav Vladimir & Kostroma,0,0,Russian Empire,Arkhangelsk,Kazan Smbirsk & Nizhny Novgorod,Moscow Smolensk & Kaluga,Novgorod Tver & Olonets,Perm & Vyatka,Samara Penzov & Saratov,Tula Ryazan & Tambov,Vologda
+Akmolinsk,0,0,Russian in Asia,Chinese Turkestan,Dzungaria,Turgai,Turkmenistan,Tobolsk,Omsk
+Amur,0,0,Russian in Asia,Holungkiang,Kirin,Transbaikalia,Yakutsk,Maritime Province-Southern
+Bukhara Emirate,0,0,Russian in Asia,Khiva Khanate,Afghanistan,Transcaspia,Turkmenistan
+Irkutsk,0,0,Russian in Asia,Khovd,Tusheet Khanate,Urjanchai,Transbaikalia,Yakutsk,Yeniseisk
+Khiva Khanate,0,0,Russian in Asia,Bukhara Emirate,Transcaspia,Turkmenistan
+Maritime Province-Northern,0,0,Russian in Asia,Yakutsk,Maritime Province-Southern,Karafuto,Hokkaido
+Maritime Province-Southern,0,0,Russian in Asia,Kirin,Karafuto,Amur,Maritime Province-Northern,Yakutsk,Korea
+Omsk,0,0,Russian in Asia,Dzungaria,Khovd,Urjanchai,Akmolinsk,Yeniseisk,Tobolsk
+Tobolsk,0,0,Russian in Asia,Arkhangelsk,Orenburg & Ufa,Perm & Vyatka,Vologda,Akmolinsk,Omsk,Yeniseisk,Turgai
+Transbaikalia,0,0,Russian in Asia,Holungkiang,Setsen Khanate,Tusheet Khanate,Amur,Irkutsk,Yakutsk
+Transcaspia,0,0,Russian in Asia,Afghanistan,Iran-Russian Sphere,Bukhara Emirate,Khiva Khanate,Uralsk
+Turgai,0,0,Russian in Asia,Orenburg & Ufa,Akmolinsk,Tobolsk,Turkmenistan,Uralsk
+Turkmenistan,0,0,Russian in Asia,Chinese Turkestan,Afghanistan,Akmolinsk,Bukhara Emirate,Khiva Khanate,Turgai
+Uralsk,0,0,Russian in Asia,Orenburg & Ufa,Samara Penzov & Saratov,Ural Cossaks & Astrakhan,Transcaspia,Turgai
+Yakutsk,0,0,Russian in Asia,Amur,Irkutsk,Maritime Province-Northern,Maritime Province-Southern,Transbaikalia,Yeniseisk
+Yeniseisk,0,0,Russian in Asia,Urjanchai,Irkutsk,Omsk,Tobolsk,Yakutsk
+Denmark,0,0,Scandinavia,Norway,Sweden,Mecklenburg,Prussia-Hanover & Saxony,Northern England
+Iceland,0,0,Scandinavia,Norway,Ireland
+Norway,0,0,Scandinavia,Arkhangelsk,Denmark,Finland Grand Duchy,Sweden,Iceland,Scotland
+Sweden,0,0,Scandinavia,Denmark,Norway,Finland Grand Duchy,Reval Livland & Kurland,Prussia-Pomerania
+Central Siam,0,0,Siam,Southern Siam,Lower Burma,Cambodia,Isaan,Northern Siam
+Isaan,0,0,Siam,Cambodia,Laos,Central Siam,Northern Siam
+Northern Siam,0,0,Siam,Lower Burma,Upper Burma,Laos,Central Siam,Isaan
+Southern Siam,0,0,Siam,Central Siam,Malaya,Lower Burma
+Andalusia & Extramadura,0,0,Spain & Portugal,Portugal,Castille,Catalonia & Valencia,Spanish Morocco
+Aragon & Navarre,0,0,Spain & Portugal,SouthWestern France,Galicia & Asturias,Catalonia & Valencia,Castille
+Balearic Islands,0,0,Spain & Portugal,Catalonia & Valencia,Sardinia,Corsica,Algiers
+Castille,0,0,Spain & Portugal,Andalusia & Extramadura,Aragon & Navarre,Galicia & Asturias,Portugal,Catalonia & Valencia
+Catalonia & Valencia,0,0,Spain & Portugal,Castille,Balearic Islands,SouthWestern France,Southern France,Aragon & Navarre,Andalusia & Extramadura
+Galicia & Asturias,0,0,Spain & Portugal,Aragon & Navarre,Castille,Portugal,Ireland
+Portugal,0,0,Spain & Portugal,Andalusia & Extramadura,Castille,Galicia & Asturias,Spanish Sahara
+Spanish Morocco,0,0,Spain & Portugal,Algiers,Morocco,Andalusia & Extramadura
+Spanish Sahara,0,0,Spain & Portugal,Morocco,Mauritania,Algerian Southern Territories,Portugal
+Switzerland,0,0,Switzerland,Austria,Eastern France,Southern France,Alsace-Lorraine,Baden Wurttemberg & Hesse,Lombardy Piedmont & Venetia
+Kham,0,0,Tibet,Assam,Upper Burma,Kokonor,Szecgwab,Wei
+Ngari,0,0,Tibet,Kashmir,Nepal,Punjab,United Provinces of Agra & Oudh,Chinese Turkestan,Kokonor,Wei
+Wei,0,0,Tibet,Assam,Bhutan & Sikkim,Nepal,Kokonor,Kham,Ngari

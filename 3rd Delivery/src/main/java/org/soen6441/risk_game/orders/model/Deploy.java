@@ -86,7 +86,7 @@ public class Deploy implements Order, Serializable {
                 break;
             }
         }
-
+        System.out.println(d_numberOfDeployedArmies + " armies of player: " + d_issuer.getName() + " has been deployed to the country: " + l_country.getName() + ".");
         // Catch user action for monitoring observer
         LogEntryBuffer.getInstance().setValue(d_numberOfDeployedArmies + " armies of player: " + d_issuer.getName() + " has been deployed to the country: " + l_country.getName() + ".");
     }

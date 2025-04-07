@@ -80,7 +80,7 @@ public class Advance implements Order, Serializable {
         if(attackingCountry.getD_ownedBy().equals(defendingCountry.getD_ownedBy())){
             //move armies;
             if(d_numberOfDeployedArmies > attackingCountry.getExistingArmies()){
-                System.out.println(attacker.getName()+ "tried to moves armies from" + attackingCountry.getName()+" to "+defendingCountry.getName()+".");
+                System.out.println(attacker.getName()+ " tried to moves armies from" + attackingCountry.getName()+" to "+defendingCountry.getName()+".");
                 System.out.println(attacker.getName() + " does not have enough armies to move.");
                 LogEntryBuffer.getInstance().setValue(attacker.getName()+ "tried to moves armies from" + attackingCountry.getName()+" to "+defendingCountry.getName()+".");
                 LogEntryBuffer.getInstance().setValue("💣 " +attacker.getName() + " does not have enough armies to move.");
@@ -88,7 +88,7 @@ public class Advance implements Order, Serializable {
             }
             attackingCountry.setExistingArmies(attackingCountry.getExistingArmies() - d_numberOfDeployedArmies);
             defendingCountry.setExistingArmies(defendingCountry.getExistingArmies() + d_numberOfDeployedArmies);
-            System.out.println(attacker.getName() + "Moved armies from "+ attackingCountry.getName()+" to "+defendingCountry.getName()+"." );
+            System.out.println(attacker.getName() + " moved armies from "+ attackingCountry.getName()+" to "+defendingCountry.getName()+"." );
             LogEntryBuffer.getInstance().setValue("💣 " +attacker.getName() + "Moved armies from "+ attackingCountry.getName()+" to "+defendingCountry.getName()+"." );
         }else {
             System.out.println(attacker.getName() + " attacks " + defendingCountry.getName() + " from " + attackingCountry.getName());
