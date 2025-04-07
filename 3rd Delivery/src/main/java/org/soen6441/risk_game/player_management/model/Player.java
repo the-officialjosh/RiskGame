@@ -2,7 +2,6 @@ package org.soen6441.risk_game.player_management.model;
 
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
-import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.orders.model.*;
 import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
 
@@ -24,9 +23,9 @@ public class Player implements Serializable {
     private List<Order> d_orders;
     private List<Country> d_countries_owned;
     private int[] d_cards_owned;
-    private final DisplayToUser d_displayToUser;
     private final GameSession d_gameSession;
     private PlayerStrategy d_playerStrategy;
+
     /**
      * Constructs a player with a given name, reinforcement armies, and order list.
      *
@@ -40,7 +39,6 @@ public class Player implements Serializable {
         this.d_orders = p_orders;
         this.d_countries_owned = new ArrayList<>();
         this.d_cards_owned = new int[]{0, 0, 0, 0, 0}; //index 0 = Bomb, 1 = Reinforcement, 2 = Blockade, 3 = Airlift, 4 = Diplomacy
-        this.d_displayToUser = new DisplayToUser();
         this.d_gameSession = p_gameSession;
     }
 
@@ -51,15 +49,6 @@ public class Player implements Serializable {
      */
     public String getName() {
         return d_name;
-    }
-
-    /**
-     * Sets the player's name.
-     *
-     * @param p_name New player name.
-     */
-    public void setName(String p_name) {
-        this.d_name = p_name;
     }
 
     /**
@@ -108,11 +97,6 @@ public class Player implements Serializable {
         this.d_orders.add(p_order);
     }
 
-
-    public PlayerStrategy getD_playerStrategy() {
-        return d_playerStrategy;
-    }
-
     public void setD_playerStrategy(PlayerStrategy d_playerStrategy) {
         this.d_playerStrategy = d_playerStrategy;
     }
@@ -129,15 +113,7 @@ public class Player implements Serializable {
      *
      * @param p_done True if the player has finished issuing orders, false otherwise.
      */
-    private boolean d_doneOrder = false;
-
-    /**
-     * Sets the done order status for the player.
-     *
-     * @param p_done True if the player has finished issuing orders, false otherwise.
-     */
     public void setDoneOrder(boolean p_done) {
-        this.d_doneOrder = p_done;
     }
 
     /**

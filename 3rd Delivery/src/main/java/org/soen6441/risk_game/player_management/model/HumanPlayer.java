@@ -12,6 +12,14 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Scanner;
 
+/**
+ * Represents a human player in the game.
+ *
+ * @author Irfan Maknojia
+ * @author Joshua Onyema
+ * @author Ahmed Fakhir
+ * @version 1.0
+ */
 public class HumanPlayer implements PlayerStrategy, Serializable {
 
     private final Player d_player;

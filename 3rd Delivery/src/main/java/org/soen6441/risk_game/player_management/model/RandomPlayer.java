@@ -4,14 +4,12 @@ import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.orders.model.Advance;
 import org.soen6441.risk_game.orders.model.Deploy;
-import org.soen6441.risk_game.player_management.model.Player;
 import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 /**
  * A strategy implementation for a player that issues orders randomly.
@@ -114,7 +112,7 @@ public class RandomPlayer implements PlayerStrategy, Serializable {
         // Find source countries with more than one army
         List<Country> validSources = p_owned.stream()
                 .filter(c -> c.getExistingArmies() > 1)
-                .collect(Collectors.toList());
+                .toList();
 
         if (validSources.isEmpty()) return;
 
@@ -123,7 +121,7 @@ public class RandomPlayer implements PlayerStrategy, Serializable {
         // Get adjacent countries to the selected source
         List<Country> adjacent = source.getAdjacentCountries().stream()
                 .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+                .toList();
 
         if (adjacent.isEmpty()) return;
 

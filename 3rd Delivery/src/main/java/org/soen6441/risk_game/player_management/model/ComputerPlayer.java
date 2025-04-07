@@ -6,6 +6,14 @@ import org.soen6441.risk_game.orders.model.Order;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Represents a computer player in the game.
+ *
+ * @author Irfan Maknojia
+ * @author Joshua Onyema
+ * @author Ahmed Fakhir
+ * @version 1.0
+ */
 public class ComputerPlayer extends Player implements Serializable {
     private String d_playerBehavior;
     public ComputerPlayer(String p_name, int p_numberOfReinforcementsArmies, List<Order> p_orders, GameSession p_gameSession, String p_playerBehavior) {
@@ -17,7 +25,4 @@ public class ComputerPlayer extends Player implements Serializable {
         return d_playerBehavior;
     }
 
-    public void setD_playerBehavior(String d_playerBehavior) {
-        this.d_playerBehavior = d_playerBehavior;
-    }
 }
