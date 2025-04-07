@@ -19,7 +19,9 @@ public class StartUpPhaseTest {
                 loadmap europe.map
                 mapeditordone
                 gameplayer -add Ahmed
+                1
                 gameplayer -add Irfan
+                1
                 assigncountries
                 """
                 +
@@ -29,7 +31,9 @@ public class StartUpPhaseTest {
                 loadmap europe.map
                 mapeditordone
                 gameplayer -add Ahmed
+                1
                 gameplayer -add Irfan
+                1
                 assigncountries
                 """)
                 .getBytes()));
