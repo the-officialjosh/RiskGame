@@ -6,39 +6,44 @@ import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.player_management.controller.PlayerController;
 
 /**
- * Class for Startup phase
+ * Class for Startup phase of the game.
+ * Handles map management, player loading, and country assignment.
  */
 public class StartupPhase implements Phase {
-    private GameMapController d_gameMapController;
-    private PlayerController d_playerController;
-    private DisplayToUser d_displayToUser;
+
+    private final GameMapController gameMapController;
+    private final PlayerController playerController;
+    private final DisplayToUser displayToUser;
 
     /**
-     * Constructor for class.
+     * Constructor for StartupPhase.
      */
     public StartupPhase() {
-        d_gameMapController = new GameMapController();
-        d_playerController = new PlayerController();
-        d_displayToUser = new DisplayToUser();
+        this.gameMapController = new GameMapController();
+        this.playerController = new PlayerController();
+        this.displayToUser = new DisplayToUser();
     }
 
     /**
-     * {@inheritDoc}
+     * Handles the startup phase of the game.
+     *
+     * @param gameSession The game session.
      */
-    public void handlePhase(GameSession p_gameSession) {
-        // Show startup start message
-        d_displayToUser.startupPhaseBeginningMessage();
+    @Override
+    public void handlePhase(GameSession gameSession) {
+        // Display startup phase beginning message
+        displayToUser.startupPhaseBeginningMessage();
 
         // Map management step
-        d_gameMapController.handleMapManagementStep(p_gameSession);
+        gameMapController.handleMapManagementStep(gameSession);
 
-        // Load countries step
-        d_playerController.loadPlayers(p_gameSession);
+        // Load players step
+        playerController.loadPlayers(gameSession);
 
         // Assign countries step
-        d_gameMapController.assignCountries(p_gameSession);
+        gameMapController.assignCountries(gameSession);
 
-        // Show startup end message
-        d_displayToUser.startupPhaseEndMessage();
+        // Display startup phase end message
+        displayToUser.startupPhaseEndMessage();
     }
 }

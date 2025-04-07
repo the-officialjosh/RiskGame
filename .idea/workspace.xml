@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ccf494d0-52e5-4e49-a480-6a6e3f26bd2f" name="Changes" comment="Create two separate folders for 2nd and 3rd deliveries">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RiskGame" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,27 +31,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.GameDriver.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.GameEngine.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.TournamentPhaseTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.java in Riskgame.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;implement-tournament-mode&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/AhmedFakhir/Desktop/repo/RiskGame/3rd Delivery&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Color Scheme Font&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.GameDriver.executor": "Debug",
+    "Application.GameEngine.executor": "Debug",
+    "JUnit.TournamentPhaseTest.executor": "Debug",
+    "JUnit.controller in Riskgame.executor": "Run",
+    "JUnit.java in Riskgame.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/AhmedFakhir/Desktop/repo/RiskGame/3rd Delivery",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Color Scheme Font",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="JUnit.java in Riskgame">
+}]]></component>
+  <component name="RunManager">
     <configuration name="TournamentPhaseTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Riskgame" />
       <extension name="coverage">
@@ -68,10 +71,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="java in Riskgame" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="controller in Riskgame" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Riskgame" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/src/test/java" />
+      <dir value="$PROJECT_DIR$/3rd Delivery/src/main/java/org/soen6441/risk_game/game_engine/controller" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -89,7 +94,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.java in Riskgame" />
+        <item itemvalue="JUnit.controller in Riskgame" />
         <item itemvalue="JUnit.TournamentPhaseTest" />
       </list>
     </recent_temporary>
