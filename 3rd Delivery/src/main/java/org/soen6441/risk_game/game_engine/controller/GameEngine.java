@@ -3,12 +3,16 @@ package org.soen6441.risk_game.game_engine.controller;
 import org.soen6441.risk_game.game_engine.controller.state.*;
 import org.soen6441.risk_game.game_engine.controller.user_input.UserInputScanner;
 import org.soen6441.risk_game.game_engine.model.GameSession;
+import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.monitoring.LogEntryBufferObserver;
 import org.soen6441.risk_game.player_management.model.Player;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -61,16 +65,20 @@ public class GameEngine {
     }
 
     public static boolean isGameFinished(GameSession l_gameSession, DisplayToUser displayToUser){
-        for(Player player: l_gameSession.getPlayers()){
+        Iterator<Player> listOfPlayers = l_gameSession.getPlayers().iterator();
+        while (listOfPlayers.hasNext()){
+            Player player = listOfPlayers.next();
             if(player.getD_countries_owned().size() == l_gameSession.getMap().getCountries().size()){
+                GameMapController gameMapController = new GameMapController();
+                gameMapController.showMap(l_gameSession.getMap());
                 displayToUser.instructionMessage("===========Game Finished=========");
                 displayToUser.instructionMessage("Congratulations !!!"+ player.getName()+ " has conquered the whole map");
                 LogEntryBuffer.getInstance().setValue("Congratulations !!!"+ player.getName()+ " has conquered the whole map");
                 displayToUser.instructionMessage("===========Game Finished=========");
                 return true;
             }
-            if(player.getD_countries_owned().isEmpty()){
-                l_gameSession.getPlayers().remove(player);
+            else if(player.getD_countries_owned().isEmpty()){
+                listOfPlayers.remove();
                 displayToUser.instructionMessage(player.getName()+" looses all his owned countries and is out of game");
                 LogEntryBuffer.getInstance().setValue(player.getName()+" looses all his owned countries and is out of game");
             }

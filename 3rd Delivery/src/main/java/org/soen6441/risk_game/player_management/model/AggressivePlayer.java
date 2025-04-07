@@ -127,12 +127,12 @@ public class AggressivePlayer implements PlayerStrategy, Serializable {
                 .filter(c -> c.getAdjacentCountries().contains(d_strongestCountry))
                 .findFirst()
                 .ifPresent(source -> {
-                    if (source.getExistingArmies() > 1) {
+                    if ( d_strongestCountry.getExistingArmies() != 0 && source.getExistingArmies() <= d_strongestCountry.getExistingArmies()) {
                         Advance moveOrder = new Advance(
                                 d_player,
-                                source,
                                 d_strongestCountry,
-                                source.getExistingArmies() - 1
+                                source,
+                                d_strongestCountry.getExistingArmies() - 1
                         );
                         moveOrder.setD_gameSession(d_gameSession);
                         d_player.setOrders(moveOrder);
