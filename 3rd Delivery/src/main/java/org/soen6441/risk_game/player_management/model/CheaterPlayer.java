@@ -120,4 +120,9 @@ public class CheaterPlayer implements PlayerStrategy, Serializable {
             d_gameSession.getPlayers().remove(p_player);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Cheater";
+    }
 }

@@ -8,37 +8,28 @@ map sudamerica_map.gif
 crd sudamerica.cards
 
 [continents]
-Argentina 4 #ff80d9
+Argentina 3 #ff80d9
 Uruguay 1 #ff9680
-Brasil 6 #808cff
-Paraguay 1 #b480ff
-Bolivia 2 #d380ff
-Chile 2 #ff808e
-Perú 3 #e4ff80
-Ecuador 1 #ff80c2
-Colombia 2 #fff580
-Venezuela 2 #b1ff80
-Guyana 1 #80ffb9
-Surinam 1 #8dff80
-Guyana_Francesa 1 #fff780
+Brasil 2 #808cff
+
 
 [countries]
 1 Islas_Malvinas 1 608 227
 2 Tierra_del_Fuego 1 642 281
 3 Santa_Cruz 1 584 309
-4 Río_Negro 1 530 289
-5 Neuquén 1 509 304
+4 Rï¿½o_Negro 1 530 289
+5 Neuquï¿½n 1 509 304
 6 La_Pampa 1 467 286
 7 Buenos_Aires 1 441 218
-8 Córdoba 1 398 265
+8 Cï¿½rdoba 1 398 265
 9 Mendoza 1 435 299
 10 San_Juan 1 381 293
-11 Entre_Ríos 1 389 222
+11 Entre_Rï¿½os 1 389 222
 12 Chaco 1 357 238
 13 Misiones 1 363 206
-14 Tucumán 1 356 273
+14 Tucumï¿½n 1 356 273
 15 Jujuy 1 318 255
-16 Paysandú 2 389 199
+16 Paysandï¿½ 2 389 199
 17 Maldonado 2 399 178
 18 Montevideo 2 409 192
 19 Rio_Grande_do_Sul 3 368 181
@@ -46,73 +37,22 @@ Guyana_Francesa 1 #fff780
 21 Rio_de_Janeiro 3 291 118
 22 Bahia 3 246 75
 23 Rio_Grande_do_Norte 3 199 49
-24 Ceará 3 161 62
+24 Cearï¿½ 3 161 62
 25 Maranhao 3 150 133
-26 Amapá 3 115 164
+26 Amapï¿½ 3 115 164
 27 Roraima 3 98 242
-28 Pará 3 126 193
+28 Parï¿½ 3 126 193
 29 Amazonas 3 161 277
 30 Amazonas_Este 3 133 223
 31 Amazonas_Oeste 3 121 283
 32 Acre 3 187 263
-33 Rondónia 3 208 234
+33 Rondï¿½nia 3 208 234
 34 Matto_Grosso 3 237 210
 35 Mato_Grosso_do_Sul 3 269 182
-36 Piuaí 3 206 122
+36 Piuaï¿½ 3 206 122
 37 Brasilia 3 251 141
 38 Sao_Paulo 3 323 156
 39 Tocantins 3 189 172
-40 Alto_Paraguay 4 287 221
-41 Boqueron 4 306 224
-42 Alto_Paraná 4 332 190
-43 Asunción 4 314 202
-44 Pando 5 225 273
-45 La_Paz 5 253 286
-46 Beni 5 246 241
-47 Santa_Cruz_de_la_Sierra 5 263 224
-48 Cochabamba 5 270 263
-49 Potosí 5 294 279
-50 Tarija 5 289 248
-51 Tarapacá 6 300 299
-52 Antofagasta 6 338 305
-53 Santiago 6 383 313
-54 Maule 6 427 321
-55 Araucanía 6 468 325
-56 Los_Lagos 6 545 330
-57 Magallanes 6 624 317
-58 Arequipa 7 253 311
-59 Puno 7 227 309
-60 Cuzco 7 205 327
-61 Lima 7 225 347
-62 Ancash 7 196 360
-63 Piura 7 166 385
-64 Cajamarca 7 159 361
-65 Loreto 7 144 335
-66 Ucayali 7 176 342
-67 Quito 8 124 381
-68 Loja 8 146 378
-69 Sucumbios 8 126 359
-70 Putamayo 9 123 323
-71 Cauca 9 98 355
-72 Choco 9 61 357
-73 Magdalena 9 40 338
-74 Bogotá 9 96 330
-75 Santander 9 70 320
-76 Vichada 9 88 299
-77 Zulia 10 35 310
-78 Falcón 10 36 287
-79 Apure 10 55 291
-80 Bolivar 10 70 270
-81 Amazonas_(Venezuela) 10 95 270
-82 Zona_en_Reclamación 10 75 248
-83 Delta_Amacuro 10 53 239
-84 Caracas 10 44 258
-85 Georgetown 11 70 211
-86 Alto_Tacutu_Esequibo 11 94 215
-87 Paramaribo 12 66 183
-88 Sipaliwini 12 84 193
-89 Cayenne 13 75 163
-90 Camopi 13 95 172
 
 [borders]
 1 2 3 4

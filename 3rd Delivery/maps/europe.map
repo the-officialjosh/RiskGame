@@ -8,10 +8,9 @@ map europe_map.gif
 crd europe.cards
 
 [continents]
-North_Europe 5 red
-East_Europe 4 magenta
-South_Europe 5 green
 West_Europe 3 blue
+East_Europe 2 blue
+North_Europe 3 blue
 
 [countries]
 1 England 1 164 126
@@ -21,23 +20,16 @@ West_Europe 3 blue
 5 Wales 1 141 109
 6 Belgum 1 213 153
 7 Netherlands 1 226 128
-8 Denmark 2 275 76
-9 Germany 2 261 149
-10 Poland 2 346 141
-11 Czech_Rep 2 308 173
-12 Slovakia 2 356 190
-13 Hungary 3 347 220
-14 Austria 3 306 210
-15 Switzerland 3 233 217
-16 Italy 3 264 249
-17 Sicily 3 294 363
-18 Sardinia 3 240 321
-19 Corsica 3 242 286
-20 Majorca 4 184 319
-21 France 4 176 202
-22 Spain 4 96 285
-23 Portugal 4 38 290
-24 Luxembourg 4 227 172
+8 Denmark 1 275 76
+9 Germany 1 261 149
+10 Poland 1 346 141
+11 Czech_Rep 1 308 173
+12 Slovakia 1 356 190
+13 Hungary 1 347 220
+14 Austria 1 306 210
+15 Switzerland 1 233 217
+16 Italy 1 264 249
+17 Sicily 1 294 363
 
 [borders]
 1 8 21 6 7 5 2 3 4

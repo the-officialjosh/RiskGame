@@ -9,11 +9,8 @@ crd canada.cards
 
 [continents]
 Atlantic_Provinces 3 blue
-Ontario_and_Quebec 4 cyan
-Western_Provinces-South 3 green
-Western_Provinces-North 2 orange
-Nunavut 3 yellow
-Northwestern_Territories 2 red
+Centre 3 blue
+South 3 blue
 
 [countries]
 1 New_Brunswick 1 501 350
@@ -21,32 +18,19 @@ Northwestern_Territories 2 red
 3 Nova_Scotia 1 545 349
 4 N&L-Newfoundland 1 553 298
 5 N&L-Labrador 1 496 270
-6 Quebec-North 2 430 261
-7 Quebec-Central 2 460 310
-8 Quebec-South 2 439 348
-9 Ontario-South 2 391 363
-10 Ontario-West 2 345 337
-11 Ontario-North 2 353 303
-12 Manitoba-South 3 283 328
-13 Saskatchewan-South 3 238 319
-14 Alberta-South 3 195 304
-15 British_Columbia-South 3 144 288
-16 BC-Vancouver_Island 3 104 283
-17 British_Columbia-North 4 149 228
-18 Alberta-North 4 203 251
-19 Saskatchewan-North 4 248 266
-20 Manitoba-North 4 296 277
-21 Nunavut-Continental 5 307 189
-22 NU-Southern_Islands 5 356 217
-23 NU-Baffin_Island 5 400 139
-24 NU-Victoria_Island-East 5 283 131
-25 NU-Northern_Islands 5 319 94
-26 NU-Ellesmere_Island 5 361 24
-27 NT-Northern_Islands 6 280 62
-28 NT-Banks_Island 6 251 90
-29 NT-Victoria_Island-West 6 263 112
-30 Northwest_Territories-Continental 6 217 178
-31 Yukon_Territory 6 147 145
+6 Quebec-North 1 430 261
+7 Quebec-Central 1 460 310
+8 Quebec-South 1 439 348
+9 Ontario-South 1 391 363
+10 Ontario-West 1 345 337
+11 Ontario-North 1 353 303
+12 Manitoba-South 1 283 328
+13 Saskatchewan-South 1 238 319
+14 Alberta-South 1 195 304
+15 British_Columbia-South 1 144 288
+16 BC-Vancouver_Island 1 104 283
+17 British_Columbia-North 1 149 228
+31 Yukon_Territory 1 147 145
 
 [borders]
 1 8 2 3

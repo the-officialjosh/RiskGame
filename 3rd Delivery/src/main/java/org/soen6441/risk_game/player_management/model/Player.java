@@ -1,6 +1,7 @@
 package org.soen6441.risk_game.player_management.model;
 
 import org.soen6441.risk_game.game_engine.model.GameSession;
+import org.soen6441.risk_game.game_map.model.Continent;
 import org.soen6441.risk_game.game_map.model.Country;
 import org.soen6441.risk_game.orders.model.*;
 import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
@@ -42,6 +43,16 @@ public class Player implements Serializable {
         this.d_gameSession = p_gameSession;
     }
 
+    public Player(GameSession d_gameSession, int d_numberOfReinforcementsArmies, String d_name, List<Order> d_orders, List<Country> d_countries_owned, int[] d_cards_owned, PlayerStrategy d_playerStrategy) {
+        this.d_gameSession = d_gameSession;
+        this.d_numberOfReinforcementsArmies = d_numberOfReinforcementsArmies;
+        this.d_name = d_name;
+        this.d_orders = d_orders;
+        this.d_countries_owned = d_countries_owned;
+        this.d_cards_owned = d_cards_owned;
+        this.d_playerStrategy = d_playerStrategy;
+    }
+
     /**
      * Gets the player's name.
      *
@@ -75,7 +86,19 @@ public class Player implements Serializable {
      * @param p_minimumNumberOfReinforcementsArmies Minimum reinforcement armies per round.
      */
     public void reinforcement(int p_minimumNumberOfReinforcementsArmies) {
-        int l_totalNewArmies = Math.max(d_countries_owned.size() / 3, p_minimumNumberOfReinforcementsArmies);
+        //int l_totalNewArmies = Math.max(d_countries_owned.size() / 3, p_minimumNumberOfReinforcementsArmies);
+        int l_totalNewArmies = d_countries_owned.size() / 3;
+        for (Continent continent : d_gameSession.getMap().getContinents()) {
+            boolean isAllCountriesInContinentControlledByPlayer = true;
+            for (Country country : continent.getCountries()) {
+                if (!country.getD_ownedBy().equals(this)) {
+                    isAllCountriesInContinentControlledByPlayer = false;
+                    break;
+                }
+            }
+            if (isAllCountriesInContinentControlledByPlayer)
+                l_totalNewArmies += continent.getControlValue();
+        }
         setNumberOfReinforcementsArmies(l_totalNewArmies);
     }
 
@@ -99,6 +122,10 @@ public class Player implements Serializable {
 
     public void setD_playerStrategy(PlayerStrategy d_playerStrategy) {
         this.d_playerStrategy = d_playerStrategy;
+    }
+
+    public PlayerStrategy getD_playerStrategy() {
+        return d_playerStrategy;
     }
 
     /**
