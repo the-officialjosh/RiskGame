@@ -1,5 +1,6 @@
 package org.soen6441.risk_game.game_engine.controller.state;
 
+import org.soen6441.risk_game.game_engine.controller.GameEngine;
 import org.soen6441.risk_game.game_engine.model.GameSession;
 import org.soen6441.risk_game.game_map.adapter.ConquestMapFileAdapter;
 import org.soen6441.risk_game.game_map.adapter.DominationMapFileHandler;
@@ -8,8 +9,8 @@ import org.soen6441.risk_game.game_map.adapter.MapFormatDetector;
 import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
-import org.soen6441.risk_game.player_management.model.ComputerPlayer;
-import org.soen6441.risk_game.player_management.model.Player;
+import org.soen6441.risk_game.player_management.model.*;
+import org.soen6441.risk_game.player_management.strategy.PlayerStrategy;
 
 import java.util.ArrayList;
 
@@ -89,7 +90,7 @@ public class TournamentPhase implements Phase {
                         G: %d
                         D: %d
                         
-                        |                               |""",
+                        |                              |""",
                 l_gameMapsFileNames, l_computerPlayerStrategies, l_numberOfGames, l_maxTurnsPerEachGame));
 
         for (int i = 0; i < l_numberOfGames; i++) {
@@ -107,14 +108,36 @@ public class TournamentPhase implements Phase {
                 // Set computer players
                 ArrayList<Player> l_players = new ArrayList<>();
                 for (int j = 0; j < l_computerPlayerStrategies.size(); j++) {
-                    ComputerPlayer player = new ComputerPlayer(
+                    PlayerStrategy l_playerStrategy;
+                    ComputerPlayer l_player = new ComputerPlayer(
                             "Player " + (j + 1),
                             0,
                             new ArrayList<>(),
-                            l_gameSession,
-                            l_computerPlayerStrategies.get(j)
+                            l_gameSession
                     );
-                    l_players.add(player);
+                    switch (l_computerPlayerStrategies.get(j)) {
+                        case "Aggressive": {
+                            l_playerStrategy = new AggressivePlayer(l_player, l_gameSession);
+                            break;
+                        }
+                        case "Benevolent": {
+                            l_playerStrategy = new BenevolentPlayer(l_player, l_gameSession);
+                            break;
+                        }
+                        case "Cheater": {
+                            l_playerStrategy = new CheaterPlayer(l_player, l_gameSession);
+                            break;
+                        }
+                        case "Random": {
+                            l_playerStrategy = new RandomPlayer(l_player, l_gameSession);
+                            break;
+                        }
+                        default:
+                            d_displayToUser.instructionMessage("Invalid Player Behavior. Using Aggressive behavior instead.");
+                            l_playerStrategy = new AggressivePlayer(l_player, l_gameSession);
+                    }
+                    l_player.setD_playerStrategy(l_playerStrategy);
+                    l_players.add(l_player);
                 }
                 l_gameSession.setPlayers(l_players);
 
@@ -138,11 +161,31 @@ public class TournamentPhase implements Phase {
 
                 d_displayToUser.startupPhaseEndMessage();
 
-                // Note: Here you should run the game logic, but it is TODO in your original code.
+                // Tournament Game loop
+                int turnCounter = 0;
+                boolean isPlayerWonTheGame;
+                do {
+                    // Issue Order Phase
+                    Phase phase = new IssueOrderPhase();
+                    phase.handlePhase(l_gameSession);
 
-                // Report (Dummy result for now)
-                l_resultReport.append(" ")
-                        .append(String.format("%-" + 21 + "s", ((ComputerPlayer) l_gameSession.getPlayers().getFirst()).getD_playerBehavior()))
+                    // Execute order phase
+                    phase = new ExecuteOrderPhase();
+                    phase.handlePhase(l_gameSession);
+                    isPlayerWonTheGame = GameEngine.isGameFinished(l_gameSession, new DisplayToUser());
+                    turnCounter++;
+                } while (!isPlayerWonTheGame && (turnCounter != l_maxTurnsPerEachGame));
+
+                // Update the final report
+                if (!isPlayerWonTheGame)
+                    // In this case the game did not finish because a player won
+                    // the game but because the maximum counter was reached
+                    l_resultReport.append(" ")
+                            .append(String.format("%-" + 21 + "s", "Draw"))
+                            .append(" |");
+                else
+                    l_resultReport.append(" ")
+                        .append(String.format("%-" + 21 + "s",  l_gameSession.getPlayers().getFirst().getD_playerStrategy().toString()))
                         .append(" |");
 
                 System.out.print("\n\n........................... ⚔️ Map " + l_gameMap + " - Game " + (i + 1) + " End Game ..........................\n");

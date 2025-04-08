@@ -135,4 +135,9 @@ public class RandomPlayer implements PlayerStrategy, Serializable {
         advanceOrder.setD_gameSession(d_gameSession);
         d_player.setOrders(advanceOrder);
     }
+
+    @Override
+    public String toString() {
+        return "Random";
+    }
 }

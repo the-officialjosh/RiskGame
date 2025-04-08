@@ -123,4 +123,9 @@ public class BenevolentPlayer implements PlayerStrategy, Serializable {
                 .filter(neighbor -> neighbor.getD_ownedBy().equals(d_player))
                 .max(Comparator.comparingInt(Country::getExistingArmies));
     }
+
+    @Override
+    public String toString() {
+        return "Benevolent";
+    }
 }

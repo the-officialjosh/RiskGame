@@ -78,6 +78,14 @@ public class Deploy implements Order, Serializable {
      */
     public void execute() {
         Country l_country = d_issuer.findCountryById(d_issuer.getD_countries_owned(), d_countryId);
+        // If no country was retrieved, then probably the country was taken from the
+        // player by another player after the deployer order was issued and so the
+        // order can not be executed
+        if (l_country == null) {
+            System.out.println( "Player: " + d_issuer.getName() + " can not deploy to the country: " + d_countryId +
+                    "since it was invaded by another player after the order was issued.");
+            return;
+        }
         for (int i = 0; i < d_gameSession.getMap().getCountries().size(); i++) {
             if (d_gameSession.getMap().getCountries().get(i).getCountryId() == l_country.getCountryId()) {
                 Country actualCountry = d_gameSession.getMap().getCountries().get(i);

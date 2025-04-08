@@ -170,4 +170,9 @@ public class AggressivePlayer implements PlayerStrategy, Serializable {
                 .max(Comparator.comparingInt(Country::getExistingArmies))
                 .orElse(null);
     }
+
+    @Override
+    public String toString() {
+        return "Aggressive";
+    }
 }

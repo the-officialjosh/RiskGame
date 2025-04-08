@@ -4,70 +4,31 @@ map solar_map.gif
 crd solar.cards
 
 [continents]
-Mercury 6 yellow  
-Venus 8 yellow    
-Earth 10 yellow   
-Mars 10 yellow    
-Comet 4 yellow    
-Jupiter 12 yellow 
-Saturn 8 yellow   
-Uranus 6 yellow   
-Neptune 6 yellow  
-Pluto 2 yellow    
+Solar-System 6 yellow
+Solar-2 5
+Solar-3 7
 
 [countries]
 1 Mercury-South 1 523 359
 2 Mercury-East 1 534 333
-3 Mercury-West 1 500 345 
+3 Mercury-West 1 500 345
 4 Mercury-North 1 510 323
-5 Venus-South 2 536 246
-6 Venus-East 2 548 197
-7 Venus-Southwest 2 514 226
-8 Venus-Northwest 2 505 201
-9 Venus-North 2 505 174
-10 Earth-SouthPole 3 429 295
-11 Earth-SouthAmerica 3 458 255
-12 Earth-Atlantic 3 452 216
-13 Earth-Pacific 3 407 258
-14 Earth-NorthAmerica 3 420 200
-15 Earth-NorthPole 3 385 196
-16 Earth-NorthPacific 3 370 229
-17 Mars-South 4 419 415
-18 Mars-Southeast 4 401 374
-19 Mars-Southwest 4 355 412
-20 Mars-Central 4 371 371
-21 Mars-Northeast 4 364 344
-22 Mars-Northwest 4 336 369
-23 Mars-North 4 337 334
-24 Comet-Head 5 163 383
-25 Comet-Tail 5 89 361
-26 Jupiter-South 6 264 252
-27 Jupiter-Southeast 6 285 210
-28 Jupiter-Southwest 6 212 230
-29 Jupiter-RedSpot 6 240 203
-30 Jupiter-East 6 300 160
-31 Jupiter-Central 6 247 172
-32 Jupiter-West 6 187 187
-33 Jupiter-Northeast 6 257 130
-34 Jupiter-Northwest 6 182 149
-35 Jupiter-North 6 218 102
-36 Saturn-South 7 426 124
-37 Saturn-Southeast 7 420 77
-38 Saturn-Southwest 7 372 118
-39 Saturn-EastRings 7 458 23
-40 Saturn-WestRings 7 342 103
-41 Saturn-North 7 359 51
-42 Uranus-South 8 103 193
-43 Uranus-Southeast 8 102 161
-44 Uranus-West 8 61 183
-45 Uranus-Northeast 8 83 144
-46 Uranus-North 8 46 132
-47 Neptune-South 9 139 130
-48 Neptune-East 9 145 94
-49 Neptune-West 9 111 109
-50 Neptune-North 9 103 78
-51 Pluto-East 10 80 31
-52 Pluto-West 10 61 29
+5 Venus-South 1 536 246
+6 Venus-East 1 548 197
+7 Venus-Southwest 1 514 226
+8 Venus-Northwest 1 505 201
+9 Venus-North 1 505 174
+10 Earth-SouthPole 1 429 295
+11 Earth-SouthAmerica 1 458 255
+12 Earth-Atlantic 1 452 216
+13 Earth-Pacific 1 407 258
+14 Earth-NorthAmerica 1 420 200
+15 Earth-NorthPole 1 385 196
+16 Earth-NorthPacific 1 370 229
+17 Mars-South 1 419 415
+18 Mars-Southeast 1 401 374
+19 Mars-Southwest 1 355 412
+20 Mars-Central 1 371 371
 
 [borders]
 1 2 3 17
