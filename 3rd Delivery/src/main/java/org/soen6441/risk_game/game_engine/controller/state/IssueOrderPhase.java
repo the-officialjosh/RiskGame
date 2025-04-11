@@ -27,18 +27,9 @@ public class IssueOrderPhase implements Phase, Serializable {
      */
     @Override
     public void handlePhase(GameSession p_gameSession) {
-        //int playersHasReinforcementCount = 0;
-
-        // Assign reinforcements step
-        //for (Player player : p_gameSession.getPlayers()) {
-        //    if (player.isReinforcementArmiesDeployed()) playersHasReinforcementCount++;
-        //}
-        //if (playersHasReinforcementCount == p_gameSession.getPlayers().size())
-        //    d_gameMapController.assignReinforcements(p_gameSession);
-
         // Issue order step
         d_gameMapController.assignReinforcements(p_gameSession);
-        d_playerController.issueOrderPhase(p_gameSession);
+        d_playerController.issueOrderPhase(p_gameSession, 0);
     }
 
 }
