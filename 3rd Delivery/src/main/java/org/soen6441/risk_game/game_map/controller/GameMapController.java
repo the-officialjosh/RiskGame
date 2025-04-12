@@ -176,26 +176,34 @@ public class GameMapController implements Serializable {
     /**
      * Displays the map in a readable format.
      */
-    public void showMap(GameMap gameMap) {
-        if (gameMap == null) {
-            d_displayToUser.instructionMessage("Cannot show map. No map is loaded.");
+    public void showMap(GameMap p_gameMap) {
+        if (p_gameMap == null) {
+            d_displayToUser.instructionMessage("Can not run \"showMap\" since not map was loaded.");
             return;
         }
-
         System.out.println("==============================================================================");
-        System.out.println("                             GAME MAP OVERVIEW                                ");
+        System.out.println("                                  GAME MAP OVERVIEW                           ");
         System.out.println("==============================================================================");
+        for (Continent l_continent : p_gameMap.getContinents()) {
+            System.out.println("                               Continent: " + l_continent.getName());
+            System.out.println("------------------------------------------------------------------------------");
+            for (Country l_country : l_continent.getCountries()) {
+                System.out.println("Country: " + l_country.getName() + " (ID: " + l_country.getCountryId() + ")");
+                System.out.println(">>>> Owned by: " + (l_country.getD_ownedBy() == null ? "Unclaimed Territory" : l_country.getD_ownedBy().getName()));
 
-        for (Continent continent : gameMap.getContinents()) {
-            System.out.println("Continent: " + continent.getName() + " (Control Value: " + continent.getControlValue() + ")");
-            for (Country country : continent.getCountries()) {
-                System.out.println("  Country: " + country.getName() + " (ID: " + country.getCountryId() + ")");
-                System.out.print("    Neighbors: ");
-                country.getAdjacentCountries().forEach(neighbor -> System.out.print(neighbor.getName() + " "));
-                System.out.println();
+                System.out.println(">>>> Armies:");
+                if (l_country.getD_ownedBy() != null)
+                    System.out.println(" - " + l_country.getExistingArmies() + " units under the command of " + l_country.getD_ownedBy().getName());
+
+                System.out.print(">>>> Neighbors: ");
+                for (Country neighbor : l_country.getAdjacentCountries()) {
+                    System.out.print(neighbor.getName() + " ");
+                }
+                System.out.println("\n------------------------------------------------------------------------------");
             }
         }
-
+        System.out.println("==============================================================================");
+        System.out.println("                                  END OF MAP OVERVIEW                         ");
         System.out.println("==============================================================================");
     }
 

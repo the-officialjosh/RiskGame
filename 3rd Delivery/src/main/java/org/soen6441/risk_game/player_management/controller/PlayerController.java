@@ -162,10 +162,10 @@ public class PlayerController implements Serializable {
      *
      * @param p_gameSession The game session.
      */
-    public void issueOrderPhase(GameSession p_gameSession) {
+    public void issueOrderPhase(GameSession p_gameSession, int playerNumber) {
         d_gameMapController.showMap(p_gameSession.getMap());
         //for (Player player : p_gameSession.getPlayers()) {
-        for (int i = 0; i < p_gameSession.getPlayers().size(); i++) {
+        for (int i = playerNumber; i < p_gameSession.getPlayers().size(); i++) {
             d_displayToUser.instructionMessage("\n⚔ Issue Order Phase");
             d_displayToUser.instructionMessage("==========================");
             d_displayToUser.instructionMessage("Use \"Deploy <country_id> <number_of_armies>\" to deploy.");

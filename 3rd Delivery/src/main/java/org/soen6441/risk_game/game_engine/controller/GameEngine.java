@@ -7,6 +7,7 @@ import org.soen6441.risk_game.game_map.controller.GameMapController;
 import org.soen6441.risk_game.game_map.view.DisplayToUser;
 import org.soen6441.risk_game.monitoring.LogEntryBuffer;
 import org.soen6441.risk_game.monitoring.LogEntryBufferObserver;
+import org.soen6441.risk_game.player_management.controller.PlayerController;
 import org.soen6441.risk_game.player_management.model.Player;
 
 import java.io.File;
@@ -38,6 +39,8 @@ public class GameEngine {
 
         // View object
         DisplayToUser l_displayToUser = new DisplayToUser();
+        GameMapController l_gameMapController = new GameMapController();
+        PlayerController l_playerController = new PlayerController();
 
         // Configure Observer pattern for monitoring
         LogEntryBuffer.getInstance().addObserver(new LogEntryBufferObserver(outputFolder + "observed_actions.txt"));
@@ -48,6 +51,21 @@ public class GameEngine {
         if (!loadSaveGame(l_gameSession)) {
             // Startup Phase
             phase = new StartupPhase();
+            phase.handlePhase(l_gameSession);
+        } else {
+            int playersHasReinforcementCount = 0;
+
+            // Assign reinforcements step
+            for (Player player : l_gameSession.getPlayers()) {
+                if (player.isReinforcementArmiesDeployed()) playersHasReinforcementCount++;
+            }
+            if (playersHasReinforcementCount == l_gameSession.getPlayers().size())
+                l_gameMapController.assignReinforcements(l_gameSession);
+
+            l_playerController.issueOrderPhase(l_gameSession,(playersHasReinforcementCount%l_gameSession.getPlayers().size()));
+
+            // Execute order phase
+            phase = new ExecuteOrderPhase();
             phase.handlePhase(l_gameSession);
         }
 

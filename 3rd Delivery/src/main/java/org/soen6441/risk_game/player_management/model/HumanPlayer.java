@@ -116,10 +116,11 @@ public class HumanPlayer implements PlayerStrategy, Serializable {
     private void processSaveGameCommand(String filename) {
         String folderName = "out/saved-games";
         File folder = new File(folderName);
-        if (!folder.mkdir()) {
-            System.out.println("Error occurred. Please try again.");
-            return;
-        }
+//        if (!folder.mkdir()) {
+//            System.out.println("Error occurred. Please try again.");
+//            return;
+//        }
+        folder.mkdir();
 
         String file_name = "out/saved-games/" + filename + ".dat";
         File file = new File(file_name);
